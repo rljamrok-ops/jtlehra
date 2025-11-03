@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JamrokTabla Lehra 2026</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 50%, #CD853F 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 248, 220, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 3px solid #DAA520;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #8B4513;
+            margin: 0 0 25px 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(210, 180, 140, 0.3);
+            border-radius: 10px;
+            border: 2px solid #CD853F;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        label {
+            font-weight: bold;
+            color: #8B4513;
+            font-size: 0.9em;
+        }
+        
+        input[type="number"], input[type="range"], select {
+            padding: 8px;
+            border: 2px solid #CD853F;
+            border-radius: 5px;
+            background: white;
+            font-size: 1em;
+        }
+        
+        input[type="range"] {
+            cursor: pointer;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 24px;
+            font-size: 1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .play-btn {
+            background: linear-gradient(135deg, #228B22, #32CD32);
+            color: white;
+        }
+        
+        .stop-btn {
+            background: linear-gradient(135deg, #DC143C, #FF6347);
+            color: white;
+        }
+        
+        .clear-btn {
+            background: linear-gradient(135deg, #FF8C00, #FFA500);
+            color: white;
+        }
+        
+        .grid-wrapper {
+            overflow-x: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 3px solid #DAA520;
+        }
+        
+        .grid-container {
+            display: inline-block;
+            min-width: 100%;
+        }
+        
+        .grid-header {
+            display: flex;
+            margin-bottom: 0;
+        }
+        
+        .grid-label-space {
+            width: 60px;
+            flex-shrink: 0;
+        }
+        
+        .beat-numbers {
+            display: flex;
+            flex: 1;
+        }
+        
+        .beat-number {
+            font-weight: bold;
+            text-align: center;
+            color: #8B4513;
+            font-size: 0.9em;
+            padding: 5px 0;
+            border-bottom: 2px solid #CD853F;
+        }
+        
+        .grid-row {
+            display: flex;
+            margin: 0;
+        }
+        
+        .pitch-label {
+            width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #8B4513;
+            background: rgba(210, 180, 140, 0.3);
+            border-right: 2px solid #CD853F;
+            flex-shrink: 0;
+        }
+        
+        .grid-cells {
+            display: flex;
+            flex: 1;
+        }
+        
+        .grid-cell {
+            aspect-ratio: 1;
+            border: 1px solid #CD853F;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+        }
+        
+        .grid-cell:hover {
+            background: rgba(218, 165, 32, 0.2);
+        }
+        
+        .grid-cell.active {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .grid-cell.playing {
+            background: linear-gradient(135deg, #FF6347, #DC143C);
+            animation: pulse 0.3s;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .metronome-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: #ccc;
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .toggle-switch.active {
+            background: #32CD32;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: left 0.3s;
+        }
+        
+        .toggle-switch.active .toggle-slider {
+            left: 27px;
+        }
+        
+        .value-display {
+            display: inline-block;
+            min-width: 40px;
+            text-align: center;
+            font-weight: bold;
+            color: #8B4513;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 JamrokTabla Lehra 2026 🎵</h1>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label>Beats (Horizontal):</label>
+                <input type="number" id="beats" min="1" max="99" value="16">
+            </div>
+            
+            <div class="control-group">
+                <label>Pitches (Vertical):</label>
+                <select id="pitchRange">
+                    <option value="chromatic">Chromatic (All)</option>
+                    <option value="major">Major Scale</option>
+                    <option value="minor">Minor Scale</option>
+                    <option value="pentatonic">Pentatonic</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>BPM: <span class="value-display" id="bpmValue">120</span></label>
+                <input type="range" id="bpm" min="12" max="600" value="120">
+            </div>
+            
+            <div class="control-group">
+                <label>Volume: <span class="value-display" id="volumeValue">70</span></label>
+                <input type="range" id="volume" min="0" max="100" value="70">
+            </div>
+            
+            <div class="control-group">
+                <label>Metronome:</label>
+                <div class="metronome-toggle">
+                    <div class="toggle-switch" id="metronomeToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                    <span id="metronomeStatus">Off</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="button-group">
+            <button class="play-btn" id="playBtn">▶ Play</button>
+            <button class="stop-btn" id="stopBtn">■ Stop</button>
+            <button class="clear-btn" id="clearBtn">Clear Grid</button>
+            <button class="clear-btn" id="applyBtn">Apply Grid Size</button>
+        </div>
+        
+        <div class="grid-wrapper">
+            <div class="grid-container" id="gridContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        let isPlaying = false;
+        let currentBeat = 0;
+        let intervalId = null;
+        let metronomeEnabled = false;
+        let activeOscillators = [];
+        
+        // Note frequencies from G3 to G5
+        const allNotes = [
+            { name: 'G5', freq: 783.99 },
+            { name: 'F#5', freq: 739.99 },
+            { name: 'F5', freq: 698.46 },
+            { name: 'E5', freq: 659.25 },
+            { name: 'D#5', freq: 622.25 },
+            { name: 'D5', freq: 587.33 },
+            { name: 'C#5', freq: 554.37 },
+            { name: 'C5', freq: 523.25 },
+            { name: 'B4', freq: 493.88 },
+            { name: 'A#4', freq: 466.16 },
+            { name: 'A4', freq: 440.00 },
+            { name: 'G#4', freq: 415.30 },
+            { name: 'G4', freq: 392.00 },
+            { name: 'F#4', freq: 369.99 },
+            { name: 'F4', freq: 349.23 },
+            { name: 'E4', freq: 329.63 },
+            { name: 'D#4', freq: 311.13 },
+            { name: 'D4', freq: 293.66 },
+            { name: 'C#4', freq: 277.18 },
+            { name: 'C4', freq: 261.63 },
+            { name: 'B3', freq: 246.94 },
+            { name: 'A#3', freq: 233.08 },
+            { name: 'A3', freq: 220.00 },
+            { name: 'G#3', freq: 207.65 },
+            { name: 'G3', freq: 196.00 }
+        ];
+        
+        const scales = {
+            chromatic: allNotes,
+            major: allNotes.filter(n => ['G', 'A', 'B', 'C', 'D', 'E', 'F#'].some(note => n.name.startsWith(note))),
+            minor: allNotes.filter(n => ['G', 'A', 'A#', 'C', 'D', 'D#', 'F'].some(note => n.name.startsWith(note))),
+            pentatonic: allNotes.filter(n => ['G', 'A', 'C', 'D', 'E'].some(note => n.name.startsWith(note)))
+        };
+        
+        let currentNotes = scales.chromatic;
+        let grid = [];
+        
+        // Initialize grid
+        function initGrid() {
+            const beats = parseInt(document.getElementById('beats').value);
+            const pitchRange = document.getElementById('pitchRange').value;
+            currentNotes = scales[pitchRange];
+            
+            grid = Array(currentNotes.length).fill().map(() => Array(beats).fill(false));
+            renderGrid();
+        }
+        
+        function renderGrid() {
+            const container = document.getElementById('gridContainer');
+            const beats = grid[0].length;
+            
+            let html = '<div class="grid-header">';
+            html += '<div class="grid-label-space"></div>';
+            html += '<div class="beat-numbers">';
+            for (let b = 0; b < beats; b++) {
+                html += `<div class="beat-number" style="flex: 1">${b + 1}</div>`;
+            }
+            html += '</div></div>';
+            
+            currentNotes.forEach((note, noteIdx) => {
+                html += '<div class="grid-row">';
+                html += `<div class="pitch-label">${note.name}</div>`;
+                html += '<div class="grid-cells">';
+                for (let b = 0; b < beats; b++) {
+                    const active = grid[noteIdx][b] ? 'active' : '';
+                    html += `<div class="grid-cell ${active}" data-note="${noteIdx}" data-beat="${b}" style="flex: 1"></div>`;
+                }
+                html += '</div></div>';
+            });
+            
+            container.innerHTML = html;
+            
+            // Add click handlers
+            document.querySelectorAll('.grid-cell').forEach(cell => {
+                cell.addEventListener('click', function() {
+                    const noteIdx = parseInt(this.dataset.note);
+                    const beat = parseInt(this.dataset.beat);
+                    grid[noteIdx][beat] = !grid[noteIdx][beat];
+                    this.classList.toggle('active');
+                });
+            });
+        }
+        
+        function playTone(frequency, duration) {
+            const osc = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            osc.type = 'sine';
+            osc.frequency.value = frequency;
+            
+            const volume = parseInt(document.getElementById('volume').value) / 100;
+            gainNode.gain.setValueAtTime(volume * 0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+            
+            osc.start(audioContext.currentTime);
+            osc.stop(audioContext.currentTime + duration);
+            
+            activeOscillators.push({ osc, gainNode });
+            
+            setTimeout(() => {
+                const idx = activeOscillators.findIndex(o => o.osc === osc);
+                if (idx !== -1) activeOscillators.splice(idx, 1);
+            }, duration * 1000);
+        }
+        
+        function playMetronome() {
+            const osc = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            osc.type = 'square';
+            osc.frequency.value = currentBeat === 0 ? 1000 : 800;
+            
+            const volume = parseInt(document.getElementById('volume').value) / 100;
+            gainNode.gain.setValueAtTime(volume * 0.15, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
+            
+            osc.start(audioContext.currentTime);
+            osc.stop(audioContext.currentTime + 0.05);
+        }
+        
+        function playBeat() {
+            const beats = grid[0].length;
+            const bpm = parseInt(document.getElementById('bpm').value);
+            const beatDuration = 60 / bpm;
+            
+            // Remove previous playing highlights
+            document.querySelectorAll('.grid-cell.playing').forEach(cell => {
+                cell.classList.remove('playing');
+            });
+            
+            // Play metronome
+            if (metronomeEnabled) {
+                playMetronome();
+            }
+            
+            // Play active notes
+            currentNotes.forEach((note, noteIdx) => {
+                if (grid[noteIdx][currentBeat]) {
+                    playTone(note.freq, beatDuration * 0.8);
+                    const cell = document.querySelector(`[data-note="${noteIdx}"][data-beat="${currentBeat}"]`);
+                    if (cell) cell.classList.add('playing');
+                }
+            });
+            
+            currentBeat = (currentBeat + 1) % beats;
+        }
+        
+        function startPlayback() {
+            if (isPlaying) return;
+            isPlaying = true;
+            currentBeat = 0;
+            
+            const bpm = parseInt(document.getElementById('bpm').value);
+            const interval = (60 / bpm) * 1000;
+            
+            playBeat();
+            intervalId = setInterval(playBeat, interval);
+        }
+        
+        function stopPlayback() {
+            isPlaying = false;
+            if (intervalId) {
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+            currentBeat = 0;
+            
+            // Stop all oscillators
+            activeOscillators.forEach(({ osc, gainNode }) => {
+                try {
+                    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                    osc.stop();
+                } catch (e) {}
+            });
+            activeOscillators = [];
+            
+            // Remove playing highlights
+            document.querySelectorAll('.grid-cell.playing').forEach(cell => {
+                cell.classList.remove('playing');
+            });
+        }
+        
+        // Event listeners
+        document.getElementById('playBtn').addEventListener('click', startPlayback);
+        document.getElementById('stopBtn').addEventListener('click', stopPlayback);
+        
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            grid = grid.map(row => row.map(() => false));
+            renderGrid();
+        });
+        
+        document.getElementById('applyBtn').addEventListener('click', () => {
+            stopPlayback();
+            initGrid();
+        });
+        
+        document.getElementById('bpm').addEventListener('input', (e) => {
+            document.getElementById('bpmValue').textContent = e.target.value;
+            if (isPlaying) {
+                stopPlayback();
+                startPlayback();
+            }
+        });
+        
+        document.getElementById('volume').addEventListener('input', (e) => {
+            document.getElementById('volumeValue').textContent = e.target.value;
+        });
+        
+        document.getElementById('metronomeToggle').addEventListener('click', function() {
+            metronomeEnabled = !metronomeEnabled;
+            this.classList.toggle('active');
+            document.getElementById('metronomeStatus').textContent = metronomeEnabled ? 'On' : 'Off';
+        });
+        
+        // Initialize
+        initGrid();
+    </script>
+</body>
+</html>
