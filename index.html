@@ -5,17 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JamrokTabla Lehra 2026</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
         body {
             margin: 0;
             padding: 20px;
-            font-family: 'Georgia', serif;
+            font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #8B4513 0%, #D2691E 50%, #CD853F 100%);
             min-height: 100vh;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
+            margin-left: 80px;
             background: rgba(255, 248, 220, 0.95);
             border-radius: 15px;
             padding: 30px;
@@ -23,6 +26,7 @@
             border: 3px solid #DAA520;
         }
         
+        /* Updated Title */
         h1 {
             text-align: center;
             color: #8B4513;
@@ -33,13 +37,31 @@
         
         .controls {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(4, 1fr); /* 4 columns for controls */
             gap: 15px;
             margin-bottom: 25px;
             padding: 20px;
             background: rgba(210, 180, 140, 0.3);
             border-radius: 10px;
             border: 2px solid #CD853F;
+        }
+        
+        /* Manual placement for 3 rows */
+        .control-group.row-1-col-1 { grid-area: 1 / 1 / 2 / 2; }
+        .control-group.row-1-col-2 { grid-area: 1 / 2 / 2 / 3; }
+        .control-group.row-1-col-3 { grid-area: 1 / 3 / 2 / 4; }
+        .control-group.row-2-col-1 { grid-area: 2 / 1 / 3 / 2; }
+        .control-group.row-2-col-2 { grid-area: 2 / 2 / 3 / 3; }
+        .control-group.row-2-col-3 { grid-area: 2 / 3 / 3 / 4; }
+        .control-group.row-3-col-1 { grid-area: 3 / 1 / 4 / 3; } /* Spanning 2 columns */
+        .control-group.row-3-col-3 { grid-area: 3 / 3 / 4 / 4; }
+
+        @media (max-width: 1200px) {
+            .controls {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            .control-group.row-3-col-1 { grid-area: auto; }
+            .control-group.row-3-col-3 { grid-area: auto; }
         }
         
         .control-group {
@@ -61,15 +83,20 @@
             background: white;
             font-size: 1em;
         }
-        
-        input[type="range"] {
-            cursor: pointer;
+
+        /* Added style for small number inputs next to sliders */
+        .control-group input[type="number"] {
+            padding: 4px;
+            margin-right: 5px;
+            width: 50px; 
+            font-size: 0.9em;
         }
         
         .button-group {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
+            margin-bottom: 20px;
         }
         
         button {
@@ -102,97 +129,17 @@
             background: linear-gradient(135deg, #FF8C00, #FFA500);
             color: white;
         }
-        
-        .grid-wrapper {
-            overflow-x: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            border: 3px solid #DAA520;
+
+        .transpose-btn {
+            background: linear-gradient(135deg, #5D3FD3, #8A2BE2);
+            color: white;
         }
         
-        .grid-container {
-            display: inline-block;
-            min-width: 100%;
-        }
-        
-        .grid-header {
-            display: flex;
-            margin-bottom: 0;
-        }
-        
-        .grid-label-space {
-            width: 60px;
-            flex-shrink: 0;
-        }
-        
-        .beat-numbers {
-            display: flex;
-            flex: 1;
-        }
-        
-        .beat-number {
-            font-weight: bold;
-            text-align: center;
-            color: #8B4513;
+        .preset-btn {
+            background: linear-gradient(135deg, #4169E1, #6495ED);
+            color: white;
             font-size: 0.9em;
-            padding: 5px 0;
-            border-bottom: 2px solid #CD853F;
-        }
-        
-        .grid-row {
-            display: flex;
-            margin: 0;
-        }
-        
-        .pitch-label {
-            width: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #8B4513;
-            background: rgba(210, 180, 140, 0.3);
-            border-right: 2px solid #CD853F;
-            flex-shrink: 0;
-        }
-        
-        .grid-cells {
-            display: flex;
-            flex: 1;
-        }
-        
-        .grid-cell {
-            aspect-ratio: 1;
-            border: 1px solid #CD853F;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: white;
-        }
-        
-        .grid-cell:hover {
-            background: rgba(218, 165, 32, 0.2);
-        }
-        
-        .grid-cell.active {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
-        }
-        
-        .grid-cell.playing {
-            background: linear-gradient(135deg, #FF6347, #DC143C);
-            animation: pulse 0.3s;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        .metronome-toggle {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            padding: 8px 16px;
         }
         
         .toggle-switch {
@@ -231,46 +178,278 @@
             font-weight: bold;
             color: #8B4513;
         }
+        
+        .grid-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 3px solid #DAA520;
+            margin-bottom: 20px;
+            position: relative;
+            /* New style for positioning the grid away from the left edge (80px in .container) */
+            left: -50px;
+        }
+        
+        .grid-with-sargam {
+            position: relative;
+        }
+        
+        .sargam-wheel {
+            position: absolute;
+            /* Allow horizontal movement, initial position is set by JS */
+            left: 0px; 
+            top: 0px;
+            background: rgba(210, 180, 140, 0.95);
+            border: 2px solid #CD853F;
+            border-radius: 5px;
+            padding: 5px 8px;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            cursor: grab; /* Indicates drag capability */
+            user-select: none;
+        }
+        
+        .sargam-note {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+            color: #8B4513;
+            background: rgba(139, 69, 19, 0.15);
+            border-radius: 3px;
+            font-size: 0.85em;
+            margin: 0;
+            min-width: 45px;
+        }
+        
+        .sargam-note.blank {
+            background: rgba(139, 69, 19, 0.05);
+            border: 1px dashed #CD853F;
+        }
+        
+        .grid-wrapper {
+            overflow-x: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            /* Push grid content over to make space for sargam wheel */
+            padding-left: 55px; 
+        }
+        
+        .grid-row {
+            display: flex;
+            margin: 0;
+        }
+        
+        .tehai-row, .beat-label-row, .playback-row {
+            min-height: 30px;
+        }
+        
+        .beat-label-row {
+            min-height: 35px;
+        }
+        
+        .pitch-row {
+            min-height: 40px;
+        }
+        
+        .playback-row {
+            min-height: 25px;
+        }
+        
+        .row-label {
+            width: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #8B4513;
+            background: rgba(210, 180, 140, 0.3);
+            border-right: 2px solid #CD853F;
+            flex-shrink: 0;
+            font-size: 0.85em;
+        }
+        
+        .grid-cells {
+            display: flex;
+            flex: 1;
+        }
+        
+        .grid-cell {
+            border: 1px solid #CD853F;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        
+        .grid-cell:hover {
+            background: rgba(218, 165, 32, 0.2);
+        }
+        
+        /* Tehai Color Coding */
+        .grid-cell.tehai-group-1 {
+            background: #90EE90; /* Light Green */
+        }
+        .grid-cell.tehai-group-2 {
+            background: #FFB6C1; /* Light Red/Pink */
+        }
+        .grid-cell.tehai-group-3 {
+            background: rgba(139, 69, 19, 0.15); /* Brown */
+        }
+
+        /* Active/Playing states for Tehai cells */
+        .grid-cell.active {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        .grid-cell.tehai-group-1.active {
+            background: linear-gradient(135deg, #00FF00, #32CD32);
+        }
+        .grid-cell.tehai-group-2.active {
+            background: linear-gradient(135deg, #FF4500, #DC143C);
+        }
+        .grid-cell.tehai-group-3.active {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+        }
+        
+        .grid-cell.playing {
+            background: linear-gradient(135deg, #FF6347, #DC143C);
+            animation: pulse 0.3s;
+        }
+        
+        /* --- START OF USER-REQUESTED CSS CHANGES --- */
+        .beat-label-input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-size: 0.75em;
+            color: #8B4513; /* Typed/Filled text color: Dark Brown (to stand out) */
+            font-weight: bold; /* Typed/Filled text is bold */
+            padding: 2px;
+        }
+
+        /* Style the placeholder text (the pre-filled beat number) */
+        .beat-label-input::placeholder {
+            color: #AAAAAA; /* Light grey for the pre-filled number */
+            font-weight: normal; /* Ensure the pre-filled number is not bold */
+            opacity: 1; /* For cross-browser visibility of color */
+        }
+        
+        /* --- END OF USER-REQUESTED CSS CHANGES --- */
+
+        .beat-label-input:focus {
+            outline: 2px solid #3b82f6;
+            background: white;
+        }
+        
+        .measure-start {
+            border-left: 3px solid #8B4513;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .preset-section {
+            background: rgba(210, 180, 140, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .preset-list {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
+    <div class="sargam-wheel" id="sargamWheel" style="display: none;">
+        </div>
+
     <div class="container">
-        <h1>🎵 JamrokTabla Lehra 2026 🎵</h1>
+        <h1>JamrokTabla Lehra 2026</h1>
+        
+        <div class="preset-section">
+            <label>Preset melodies:</label>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <select id="presetSelect" style="flex-grow: 1;">
+                    </select>
+                <button class="preset-btn" onclick="loadSelectedPreset()">Load</button>
+                <button class="preset-btn" onclick="saveCurrentAsPreset()">💾 Save Current</button>
+            </div>
+        </div>
         
         <div class="controls">
-            <div class="control-group">
-                <label>Beats (Horizontal):</label>
-                <input type="number" id="beats" min="1" max="99" value="16">
+            <div class="control-group row-1-col-1">
+                <label>Beats:</label>
+                <input type="number" id="beats" min="1" max="201" value="16" onchange="initGrid()">
             </div>
             
-            <div class="control-group">
-                <label>Pitches (Vertical):</label>
-                <select id="pitchRange">
-                    <option value="chromatic">Chromatic (All)</option>
-                    <option value="major">Major Scale</option>
-                    <option value="minor">Minor Scale</option>
-                    <option value="pentatonic">Pentatonic</option>
+            <div class="control-group row-1-col-2">
+                <label>Sound Type:</label>
+                <select id="soundType">
+                    <option value="smooth">Smooth (Sine)</option>
+                    <option value="sharp">Sharp (Square)</option>
+                    <option value="octave" selected>Note + Low Octave</option>
                 </select>
             </div>
-            
-            <div class="control-group">
-                <label>BPM: <span class="value-display" id="bpmValue">120</span></label>
-                <input type="range" id="bpm" min="12" max="600" value="120">
-            </div>
-            
-            <div class="control-group">
-                <label>Volume: <span class="value-display" id="volumeValue">70</span></label>
-                <input type="range" id="volume" min="0" max="100" value="70">
-            </div>
-            
-            <div class="control-group">
+
+            <div class="control-group row-1-col-3">
                 <label>Metronome:</label>
-                <div class="metronome-toggle">
+                <div style="display: flex; align-items: center; gap: 10px;">
                     <div class="toggle-switch" id="metronomeToggle">
                         <div class="toggle-slider"></div>
                     </div>
                     <span id="metronomeStatus">Off</span>
                 </div>
+            </div>
+            
+            <div class="control-group row-2-col-1">
+                <label>Division:</label>
+                <select id="divisionSelect">
+                    <option value="1">Quarter Notes</option>
+                    <option value="2" selected>Eighth Notes</option>
+                    <option value="4">16th Notes</option>
+                    <option value="8">32nd Notes</option>
+                </select>
+            </div>
+            
+            <div class="control-group row-2-col-2">
+                <label>BPM: <input type="number" id="bpmInput" min="12" max="600" value="120" style="width: 50px;"> <span class="value-display" id="bpmValue">120</span></label>
+                <input type="range" id="bpm" min="12" max="600" value="120">
+            </div>
+            
+            <div class="control-group row-2-col-3">
+                <label>Volume: <input type="number" id="volumeInput" min="0" max="200" value="70" style="width: 50px;"> <span class="value-display" id="volumeValue">70</span></label>
+                <input type="range" id="volume" min="0" max="200" value="70">
+            </div>
+            
+            <div class="control-group row-3-col-1">
+                <label>Jamrok Rectangle of Tehai:</label>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                    <div class="toggle-switch active" id="tehaiToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                    <span id="tehaiStatus">On</span>
+                </div>
+            </div>
+
+            <div class="control-group row-3-col-3">
+                <label>Cell Width: <input type="number" id="cellWidthInput" min="0" max="100" value="0" style="width: 50px;"> <span class="value-display" id="cellWidthValue">Auto</span></label>
+                <input type="range" id="cellWidth" min="0" max="100" value="0">
             </div>
         </div>
         
@@ -278,11 +457,16 @@
             <button class="play-btn" id="playBtn">▶ Play</button>
             <button class="stop-btn" id="stopBtn">■ Stop</button>
             <button class="clear-btn" id="clearBtn">Clear Grid</button>
-            <button class="clear-btn" id="applyBtn">Apply Grid Size</button>
+            <button class="clear-btn" id="applyBtn">Apply Settings</button>
+            <button class="transpose-btn" onclick="transposeMelody('up')">▲ Transpose Up</button>
+            <button class="transpose-btn" onclick="transposeMelody('down')">▼ Transpose Down</button>
         </div>
         
-        <div class="grid-wrapper">
-            <div class="grid-container" id="gridContainer"></div>
+        <div class="grid-section">
+            <div class="grid-with-sargam">
+                <div class="sargam-wheel" id="sargamWheel"></div>
+                <div class="grid-wrapper" id="gridWrapper"></div>
+            </div>
         </div>
     </div>
 
@@ -292,105 +476,965 @@
         let currentBeat = 0;
         let intervalId = null;
         let metronomeEnabled = false;
+        let tehaiEnabled = true;
         let activeOscillators = [];
+
+        // Sargam Scroller Persistence Variables
+        let lastSargamTop = null; 
+        let lastSargamLeft = null; 
+
+        // Dragging variables
+        let sargamDragging = false;
+        let sargamStartY = 0;
+        let sargamStartTop = 0;
+        let sargamStartX = 0;
+        let sargamStartLeft = 0;
         
-        // Note frequencies from G3 to G5
+        // Tehai patterns derived from the provided CSV data (Taal, L1, L2, L3, DS1, DS2, DS3)
+const tehaiPatterns = {
+	1: { L1: 0, L2: 1, L3: 0, DS1: 2, DS2: 1, DS3: 3 },
+	2: { L1: 1, L2: 1, L3: 1, DS1: 1, DS2: 2, DS3: 3 },
+	3: { L1: 0, L2: 1, L3: 2, DS1: 3, DS2: 3, DS3: 3 },
+	4: { L1: 1, L2: 3, L3: 3, DS1: 2, DS2: 1, DS3: 3 },
+	5: { L1: 2, L2: 3, L3: 4, DS1: 1, DS2: 2, DS3: 3 },
+	6: { L1: 1, L2: 3, L3: 5, DS1: 3, DS2: 3, DS3: 3 },
+	7: { L1: 2, L2: 5, L3: 6, DS1: 2, DS2: 1, DS3: 3 },
+	8: { L1: 3, L2: 5, L3: 7, DS1: 1, DS2: 2, DS3: 3 },
+	9: { L1: 2, L2: 5, L3: 8, DS1: 3, DS2: 3, DS3: 3 },
+	10: { L1: 3, L2: 7, L3: 9, DS1: 2, DS2: 1, DS3: 3 },
+	11: { L1: 4, L2: 7, L3: 10, DS1: 1, DS2: 2, DS3: 3 },
+	12: { L1: 3, L2: 7, L3: 11, DS1: 3, DS2: 3, DS3: 3 },
+	13: { L1: 4, L2: 9, L3: 12, DS1: 2, DS2: 1, DS3: 3 },
+	14: { L1: 5, L2: 9, L3: 13, DS1: 1, DS2: 2, DS3: 3 },
+	15: { L1: 4, L2: 9, L3: 14, DS1: 3, DS2: 3, DS3: 3 },
+	16: { L1: 5, L2: 11, L3: 15, DS1: 2, DS2: 1, DS3: 3 },
+	17: { L1: 6, L2: 11, L3: 16, DS1: 1, DS2: 2, DS3: 3 },
+	18: { L1: 5, L2: 11, L3: 17, DS1: 3, DS2: 3, DS3: 3 },
+	19: { L1: 6, L2: 13, L3: 18, DS1: 2, DS2: 1, DS3: 3 },
+	20: { L1: 7, L2: 13, L3: 19, DS1: 1, DS2: 2, DS3: 3 },
+	21: { L1: 6, L2: 13, L3: 20, DS1: 3, DS2: 3, DS3: 3 },
+	22: { L1: 7, L2: 15, L3: 21, DS1: 2, DS2: 1, DS3: 3 },
+	23: { L1: 8, L2: 15, L3: 22, DS1: 1, DS2: 2, DS3: 3 },
+	24: { L1: 7, L2: 15, L3: 23, DS1: 3, DS2: 3, DS3: 3 },
+	25: { L1: 8, L2: 17, L3: 24, DS1: 2, DS2: 1, DS3: 3 },
+	26: { L1: 9, L2: 17, L3: 25, DS1: 1, DS2: 2, DS3: 3 },
+	27: { L1: 8, L2: 17, L3: 26, DS1: 3, DS2: 3, DS3: 3 },
+	28: { L1: 9, L2: 19, L3: 27, DS1: 2, DS2: 1, DS3: 3 },
+	29: { L1: 10, L2: 19, L3: 28, DS1: 1, DS2: 2, DS3: 3 },
+	30: { L1: 9, L2: 19, L3: 29, DS1: 3, DS2: 3, DS3: 3 },
+	31: { L1: 10, L2: 21, L3: 30, DS1: 2, DS2: 1, DS3: 3 },
+	32: { L1: 11, L2: 21, L3: 31, DS1: 1, DS2: 2, DS3: 3 },
+	33: { L1: 10, L2: 21, L3: 32, DS1: 3, DS2: 3, DS3: 3 },
+	34: { L1: 11, L2: 23, L3: 33, DS1: 2, DS2: 1, DS3: 3 },
+	35: { L1: 12, L2: 23, L3: 34, DS1: 1, DS2: 2, DS3: 3 },
+	36: { L1: 11, L2: 23, L3: 35, DS1: 3, DS2: 3, DS3: 3 },
+	37: { L1: 12, L2: 25, L3: 36, DS1: 2, DS2: 1, DS3: 3 },
+	38: { L1: 13, L2: 25, L3: 37, DS1: 1, DS2: 2, DS3: 3 },
+	39: { L1: 12, L2: 25, L3: 38, DS1: 3, DS2: 3, DS3: 3 },
+	40: { L1: 13, L2: 27, L3: 39, DS1: 2, DS2: 1, DS3: 3 },
+	41: { L1: 14, L2: 27, L3: 40, DS1: 1, DS2: 2, DS3: 3 },
+	42: { L1: 13, L2: 27, L3: 41, DS1: 3, DS2: 3, DS3: 3 },
+	43: { L1: 14, L2: 29, L3: 42, DS1: 2, DS2: 1, DS3: 3 },
+	44: { L1: 15, L2: 29, L3: 43, DS1: 1, DS2: 2, DS3: 3 },
+	45: { L1: 14, L2: 29, L3: 44, DS1: 3, DS2: 3, DS3: 3 },
+	46: { L1: 15, L2: 31, L3: 45, DS1: 2, DS2: 1, DS3: 3 },
+	47: { L1: 16, L2: 31, L3: 46, DS1: 1, DS2: 2, DS3: 3 },
+	48: { L1: 15, L2: 31, L3: 47, DS1: 3, DS2: 3, DS3: 3 },
+	49: { L1: 16, L2: 33, L3: 48, DS1: 2, DS2: 1, DS3: 3 },
+	50: { L1: 17, L2: 33, L3: 49, DS1: 1, DS2: 2, DS3: 3 },
+	51: { L1: 16, L2: 33, L3: 50, DS1: 3, DS2: 3, DS3: 3 },
+	52: { L1: 17, L2: 35, L3: 51, DS1: 2, DS2: 1, DS3: 3 },
+	53: { L1: 18, L2: 35, L3: 52, DS1: 1, DS2: 2, DS3: 3 },
+	54: { L1: 17, L2: 35, L3: 53, DS1: 3, DS2: 3, DS3: 3 },
+	55: { L1: 18, L2: 37, L3: 54, DS1: 2, DS2: 1, DS3: 3 },
+	56: { L1: 19, L2: 37, L3: 55, DS1: 1, DS2: 2, DS3: 3 },
+	57: { L1: 18, L2: 37, L3: 56, DS1: 3, DS2: 3, DS3: 3 },
+	58: { L1: 19, L2: 39, L3: 57, DS1: 2, DS2: 1, DS3: 3 },
+	59: { L1: 20, L2: 39, L3: 58, DS1: 1, DS2: 2, DS3: 3 },
+	60: { L1: 19, L2: 39, L3: 59, DS1: 3, DS2: 3, DS3: 3 },
+	61: { L1: 20, L2: 41, L3: 60, DS1: 2, DS2: 1, DS3: 3 },
+	62: { L1: 21, L2: 41, L3: 61, DS1: 1, DS2: 2, DS3: 3 },
+	63: { L1: 20, L2: 41, L3: 62, DS1: 3, DS2: 3, DS3: 3 },
+	64: { L1: 21, L2: 43, L3: 63, DS1: 2, DS2: 1, DS3: 3 },
+	65: { L1: 22, L2: 43, L3: 64, DS1: 1, DS2: 2, DS3: 3 },
+	66: { L1: 21, L2: 43, L3: 65, DS1: 3, DS2: 3, DS3: 3 },
+	67: { L1: 22, L2: 45, L3: 66, DS1: 2, DS2: 1, DS3: 3 },
+	68: { L1: 23, L2: 45, L3: 67, DS1: 1, DS2: 2, DS3: 3 },
+	69: { L1: 22, L2: 45, L3: 68, DS1: 3, DS2: 3, DS3: 3 },
+	70: { L1: 23, L2: 47, L3: 69, DS1: 2, DS2: 1, DS3: 3 },
+	71: { L1: 24, L2: 47, L3: 70, DS1: 1, DS2: 2, DS3: 3 },
+	72: { L1: 23, L2: 47, L3: 71, DS1: 3, DS2: 3, DS3: 3 },
+	73: { L1: 24, L2: 49, L3: 72, DS1: 2, DS2: 1, DS3: 3 },
+	74: { L1: 25, L2: 49, L3: 73, DS1: 1, DS2: 2, DS3: 3 },
+	75: { L1: 24, L2: 49, L3: 74, DS1: 3, DS2: 3, DS3: 3 },
+	76: { L1: 25, L2: 51, L3: 75, DS1: 2, DS2: 1, DS3: 3 },
+	77: { L1: 26, L2: 51, L3: 76, DS1: 1, DS2: 2, DS3: 3 },
+	78: { L1: 25, L2: 51, L3: 77, DS1: 3, DS2: 3, DS3: 3 },
+	79: { L1: 26, L2: 53, L3: 78, DS1: 2, DS2: 1, DS3: 3 },
+	80: { L1: 27, L2: 53, L3: 79, DS1: 1, DS2: 2, DS3: 3 },
+	81: { L1: 26, L2: 53, L3: 80, DS1: 3, DS2: 3, DS3: 3 },
+	82: { L1: 27, L2: 55, L3: 81, DS1: 2, DS2: 1, DS3: 3 },
+	83: { L1: 28, L2: 55, L3: 82, DS1: 1, DS2: 2, DS3: 3 },
+	84: { L1: 27, L2: 55, L3: 83, DS1: 3, DS2: 3, DS3: 3 },
+	85: { L1: 28, L2: 57, L3: 84, DS1: 2, DS2: 1, DS3: 3 },
+	86: { L1: 29, L2: 57, L3: 85, DS1: 1, DS2: 2, DS3: 3 },
+	87: { L1: 28, L2: 57, L3: 86, DS1: 3, DS2: 3, DS3: 3 },
+	88: { L1: 29, L2: 59, L3: 87, DS1: 2, DS2: 1, DS3: 3 },
+	89: { L1: 30, L2: 59, L3: 88, DS1: 1, DS2: 2, DS3: 3 },
+	90: { L1: 29, L2: 59, L3: 89, DS1: 3, DS2: 3, DS3: 3 },
+	91: { L1: 30, L2: 61, L3: 90, DS1: 2, DS2: 1, DS3: 3 },
+	92: { L1: 31, L2: 61, L3: 91, DS1: 1, DS2: 2, DS3: 3 },
+	93: { L1: 30, L2: 61, L3: 92, DS1: 3, DS2: 3, DS3: 3 },
+	94: { L1: 31, L2: 63, L3: 93, DS1: 2, DS2: 1, DS3: 3 },
+	95: { L1: 32, L2: 63, L3: 94, DS1: 1, DS2: 2, DS3: 3 },
+	96: { L1: 31, L2: 63, L3: 95, DS1: 3, DS2: 3, DS3: 3 },
+	97: { L1: 32, L2: 65, L3: 96, DS1: 2, DS2: 1, DS3: 3 },
+	98: { L1: 33, L2: 65, L3: 97, DS1: 1, DS2: 2, DS3: 3 },
+	99: { L1: 32, L2: 65, L3: 98, DS1: 3, DS2: 3, DS3: 3 },
+	100: { L1: 33, L2: 67, L3: 99, DS1: 2, DS2: 1, DS3: 3 },
+	101: { L1: 34, L2: 67, L3: 100, DS1: 1, DS2: 2, DS3: 3 },
+	102: { L1: 33, L2: 67, L3: 101, DS1: 3, DS2: 3, DS3: 3 },
+	103: { L1: 34, L2: 69, L3: 102, DS1: 2, DS2: 1, DS3: 3 },
+	104: { L1: 35, L2: 69, L3: 103, DS1: 1, DS2: 2, DS3: 3 },
+	105: { L1: 34, L2: 69, L3: 104, DS1: 3, DS2: 3, DS3: 3 },
+	106: { L1: 35, L2: 71, L3: 105, DS1: 2, DS2: 1, DS3: 3 },
+	107: { L1: 36, L2: 71, L3: 106, DS1: 1, DS2: 2, DS3: 3 },
+	108: { L1: 35, L2: 71, L3: 107, DS1: 3, DS2: 3, DS3: 3 },
+	109: { L1: 36, L2: 73, L3: 108, DS1: 2, DS2: 1, DS3: 3 },
+	110: { L1: 37, L2: 73, L3: 109, DS1: 1, DS2: 2, DS3: 3 },
+	111: { L1: 36, L2: 73, L3: 110, DS1: 3, DS2: 3, DS3: 3 },
+	112: { L1: 37, L2: 75, L3: 111, DS1: 2, DS2: 1, DS3: 3 },
+	113: { L1: 38, L2: 75, L3: 112, DS1: 1, DS2: 2, DS3: 3 },
+	114: { L1: 37, L2: 75, L3: 113, DS1: 3, DS2: 3, DS3: 3 },
+	115: { L1: 38, L2: 77, L3: 114, DS1: 2, DS2: 1, DS3: 3 },
+	116: { L1: 39, L2: 77, L3: 115, DS1: 1, DS2: 2, DS3: 3 },
+	117: { L1: 38, L2: 77, L3: 116, DS1: 3, DS2: 3, DS3: 3 },
+	118: { L1: 39, L2: 79, L3: 117, DS1: 2, DS2: 1, DS3: 3 },
+	119: { L1: 40, L2: 79, L3: 118, DS1: 1, DS2: 2, DS3: 3 },
+	120: { L1: 39, L2: 79, L3: 119, DS1: 3, DS2: 3, DS3: 3 },
+	121: { L1: 40, L2: 81, L3: 120, DS1: 2, DS2: 1, DS3: 3 },
+	122: { L1: 41, L2: 81, L3: 121, DS1: 1, DS2: 2, DS3: 3 },
+	123: { L1: 40, L2: 81, L3: 122, DS1: 3, DS2: 3, DS3: 3 },
+	124: { L1: 41, L2: 83, L3: 123, DS1: 2, DS2: 1, DS3: 3 },
+	125: { L1: 42, L2: 83, L3: 124, DS1: 1, DS2: 2, DS3: 3 },
+	126: { L1: 41, L2: 83, L3: 125, DS1: 3, DS2: 3, DS3: 3 },
+	127: { L1: 42, L2: 85, L3: 126, DS1: 2, DS2: 1, DS3: 3 },
+	128: { L1: 43, L2: 85, L3: 127, DS1: 1, DS2: 2, DS3: 3 },
+	129: { L1: 42, L2: 85, L3: 128, DS1: 3, DS2: 3, DS3: 3 },
+	130: { L1: 43, L2: 87, L3: 129, DS1: 2, DS2: 1, DS3: 3 },
+	131: { L1: 44, L2: 87, L3: 130, DS1: 1, DS2: 2, DS3: 3 },
+	132: { L1: 43, L2: 87, L3: 131, DS1: 3, DS2: 3, DS3: 3 },
+	133: { L1: 44, L2: 89, L3: 132, DS1: 2, DS2: 1, DS3: 3 },
+	134: { L1: 45, L2: 89, L3: 133, DS1: 1, DS2: 2, DS3: 3 },
+	135: { L1: 44, L2: 89, L3: 134, DS1: 3, DS2: 3, DS3: 3 },
+	136: { L1: 45, L2: 91, L3: 135, DS1: 2, DS2: 1, DS3: 3 },
+	137: { L1: 46, L2: 91, L3: 136, DS1: 1, DS2: 2, DS3: 3 },
+	138: { L1: 45, L2: 91, L3: 137, DS1: 3, DS2: 3, DS3: 3 },
+	139: { L1: 46, L2: 93, L3: 138, DS1: 2, DS2: 1, DS3: 3 },
+	140: { L1: 47, L2: 93, L3: 139, DS1: 1, DS2: 2, DS3: 3 },
+	141: { L1: 46, L2: 93, L3: 140, DS1: 3, DS2: 3, DS3: 3 },
+	142: { L1: 47, L2: 95, L3: 141, DS1: 2, DS2: 1, DS3: 3 },
+	143: { L1: 48, L2: 95, L3: 142, DS1: 1, DS2: 2, DS3: 3 },
+	144: { L1: 47, L2: 95, L3: 143, DS1: 3, DS2: 3, DS3: 3 },
+	145: { L1: 48, L2: 97, L3: 144, DS1: 2, DS2: 1, DS3: 3 },
+	146: { L1: 49, L2: 97, L3: 145, DS1: 1, DS2: 2, DS3: 3 },
+	147: { L1: 48, L2: 97, L3: 146, DS1: 3, DS2: 3, DS3: 3 },
+	148: { L1: 49, L2: 99, L3: 147, DS1: 2, DS2: 1, DS3: 3 },
+	149: { L1: 50, L2: 99, L3: 148, DS1: 1, DS2: 2, DS3: 3 },
+	150: { L1: 49, L2: 99, L3: 149, DS1: 3, DS2: 3, DS3: 3 },
+	151: { L1: 50, L2: 101, L3: 150, DS1: 2, DS2: 1, DS3: 3 },
+	152: { L1: 51, L2: 101, L3: 151, DS1: 1, DS2: 2, DS3: 3 },
+	153: { L1: 50, L2: 101, L3: 152, DS1: 3, DS2: 3, DS3: 3 },
+	154: { L1: 51, L2: 103, L3: 153, DS1: 2, DS2: 1, DS3: 3 },
+	155: { L1: 52, L2: 103, L3: 154, DS1: 1, DS2: 2, DS3: 3 },
+	156: { L1: 51, L2: 103, L3: 155, DS1: 3, DS2: 3, DS3: 3 },
+	157: { L1: 52, L2: 105, L3: 156, DS1: 2, DS2: 1, DS3: 3 },
+	158: { L1: 53, L2: 105, L3: 157, DS1: 1, DS2: 2, DS3: 3 },
+	159: { L1: 52, L2: 105, L3: 158, DS1: 3, DS2: 3, DS3: 3 },
+	160: { L1: 53, L2: 107, L3: 159, DS1: 2, DS2: 1, DS3: 3 },
+	161: { L1: 54, L2: 107, L3: 160, DS1: 1, DS2: 2, DS3: 3 },
+	162: { L1: 53, L2: 107, L3: 161, DS1: 3, DS2: 3, DS3: 3 },
+	163: { L1: 54, L2: 109, L3: 162, DS1: 2, DS2: 1, DS3: 3 },
+	164: { L1: 55, L2: 109, L3: 163, DS1: 1, DS2: 2, DS3: 3 },
+	165: { L1: 54, L2: 109, L3: 164, DS1: 3, DS2: 3, DS3: 3 },
+	166: { L1: 55, L2: 111, L3: 165, DS1: 2, DS2: 1, DS3: 3 },
+	167: { L1: 56, L2: 111, L3: 166, DS1: 1, DS2: 2, DS3: 3 },
+	168: { L1: 55, L2: 111, L3: 167, DS1: 3, DS2: 3, DS3: 3 },
+	169: { L1: 56, L2: 113, L3: 168, DS1: 2, DS2: 1, DS3: 3 },
+	170: { L1: 57, L2: 113, L3: 169, DS1: 1, DS2: 2, DS3: 3 },
+	171: { L1: 56, L2: 113, L3: 170, DS1: 3, DS2: 3, DS3: 3 },
+	172: { L1: 57, L2: 115, L3: 171, DS1: 2, DS2: 1, DS3: 3 },
+	173: { L1: 58, L2: 115, L3: 172, DS1: 1, DS2: 2, DS3: 3 },
+	174: { L1: 57, L2: 115, L3: 173, DS1: 3, DS2: 3, DS3: 3 },
+	175: { L1: 58, L2: 117, L3: 174, DS1: 2, DS2: 1, DS3: 3 },
+	176: { L1: 59, L2: 117, L3: 175, DS1: 1, DS2: 2, DS3: 3 },
+	177: { L1: 58, L2: 117, L3: 176, DS1: 3, DS2: 3, DS3: 3 },
+	178: { L1: 59, L2: 119, L3: 177, DS1: 2, DS2: 1, DS3: 3 },
+	179: { L1: 60, L2: 119, L3: 178, DS1: 1, DS2: 2, DS3: 3 },
+	180: { L1: 59, L2: 119, L3: 179, DS1: 3, DS2: 3, DS3: 3 },
+	181: { L1: 60, L2: 121, L3: 180, DS1: 2, DS2: 1, DS3: 3 },
+	182: { L1: 61, L2: 121, L3: 181, DS1: 1, DS2: 2, DS3: 3 },
+	183: { L1: 60, L2: 121, L3: 182, DS1: 3, DS2: 3, DS3: 3 },
+	184: { L1: 61, L2: 123, L3: 183, DS1: 2, DS2: 1, DS3: 3 },
+	185: { L1: 62, L2: 123, L3: 184, DS1: 1, DS2: 2, DS3: 3 },
+	186: { L1: 61, L2: 123, L3: 185, DS1: 3, DS2: 3, DS3: 3 },
+	187: { L1: 62, L2: 125, L3: 186, DS1: 2, DS2: 1, DS3: 3 },
+	188: { L1: 63, L2: 125, L3: 187, DS1: 1, DS2: 2, DS3: 3 },
+	189: { L1: 62, L2: 125, L3: 188, DS1: 3, DS2: 3, DS3: 3 },
+	190: { L1: 63, L2: 127, L3: 189, DS1: 2, DS2: 1, DS3: 3 },
+	191: { L1: 64, L2: 127, L3: 190, DS1: 1, DS2: 2, DS3: 3 },
+	192: { L1: 63, L2: 127, L3: 191, DS1: 3, DS2: 3, DS3: 3 },
+	193: { L1: 64, L2: 129, L3: 192, DS1: 2, DS2: 1, DS3: 3 },
+	194: { L1: 65, L2: 129, L3: 193, DS1: 1, DS2: 2, DS3: 3 },
+	195: { L1: 64, L2: 129, L3: 194, DS1: 3, DS2: 3, DS3: 3 },
+	196: { L1: 65, L2: 131, L3: 195, DS1: 2, DS2: 1, DS3: 3 },
+	197: { L1: 66, L2: 131, L3: 196, DS1: 1, DS2: 2, DS3: 3 },
+	198: { L1: 65, L2: 131, L3: 197, DS1: 3, DS2: 3, DS3: 3 },
+	199: { L1: 66, L2: 133, L3: 198, DS1: 2, DS2: 1, DS3: 3 },
+	200: { L1: 67, L2: 133, L3: 199, DS1: 1, DS2: 2, DS3: 3 },
+	201: { L1: 66, L2: 133, L3: 200, DS1: 3, DS2: 3, DS3: 3 }
+};
+        
         const allNotes = [
-            { name: 'G5', freq: 783.99 },
-            { name: 'F#5', freq: 739.99 },
-            { name: 'F5', freq: 698.46 },
-            { name: 'E5', freq: 659.25 },
-            { name: 'D#5', freq: 622.25 },
-            { name: 'D5', freq: 587.33 },
-            { name: 'C#5', freq: 554.37 },
-            { name: 'C5', freq: 523.25 },
-            { name: 'B4', freq: 493.88 },
-            { name: 'A#4', freq: 466.16 },
-            { name: 'A4', freq: 440.00 },
-            { name: 'G#4', freq: 415.30 },
-            { name: 'G4', freq: 392.00 },
-            { name: 'F#4', freq: 369.99 },
-            { name: 'F4', freq: 349.23 },
-            { name: 'E4', freq: 329.63 },
-            { name: 'D#4', freq: 311.13 },
-            { name: 'D4', freq: 293.66 },
-            { name: 'C#4', freq: 277.18 },
-            { name: 'C4', freq: 261.63 },
-            { name: 'B3', freq: 246.94 },
-            { name: 'A#3', freq: 233.08 },
-            { name: 'A3', freq: 220.00 },
-            { name: 'G#3', freq: 207.65 },
-            { name: 'G3', freq: 196.00 }
+            { name: 'D5', freq: 587.33, sargam: 'Re' },
+            { name: 'C#5', freq: 554.37, sargam: 'blank' },
+            { name: 'C5', freq: 523.25, sargam: 'Sa' },
+            { name: 'B4', freq: 493.88, sargam: 'Ni' },
+            { name: 'A#4', freq: 466.16, sargam: 'blank' },
+            { name: 'A4', freq: 440.00, sargam: 'Dha' },
+            { name: 'G#4', freq: 415.30, sargam: 'blank' },
+            { name: 'G4', freq: 392.00, sargam: 'Pa' },
+            { name: 'F#4', freq: 369.99, sargam: 'blank' },
+            { name: 'F4', freq: 349.23, sargam: 'Ma' },
+            { name: 'E4', freq: 329.63, sargam: 'Ga' },
+            { name: 'D#4', freq: 311.13, sargam: 'blank' },
+            { name: 'D4', freq: 293.66, sargam: 'Re' },
+            { name: 'C#4', freq: 277.18, sargam: 'blank' },
+            { name: 'C4', freq: 261.63, sargam: 'Sa' },
+            { name: 'B3', freq: 246.94, sargam: 'Ni' },
+            { name: 'A#3', freq: 233.08, sargam: 'blank' },
+            { name: 'A3', freq: 220.00, sargam: 'Dha' },
+            { name: 'G#3', freq: 207.65, sargam: 'blank' },
+            { name: 'G3', freq: 196.00, sargam: 'Pa' }
         ];
-        
-        const scales = {
-            chromatic: allNotes,
-            major: allNotes.filter(n => ['G', 'A', 'B', 'C', 'D', 'E', 'F#'].some(note => n.name.startsWith(note))),
-            minor: allNotes.filter(n => ['G', 'A', 'A#', 'C', 'D', 'D#', 'F'].some(note => n.name.startsWith(note))),
-            pentatonic: allNotes.filter(n => ['G', 'A', 'C', 'D', 'E'].some(note => n.name.startsWith(note)))
+
+        // Mapping from note name to index in allNotes array (from top to bottom)
+        const noteToIdx = {};
+        allNotes.forEach((note, index) => {
+            noteToIdx[note.name] = index;
+        });
+
+        // UPDATED Presets: Renamed, Corrected, and Added New
+        const newPresets = {
+            '7': {
+                beats: 7,
+                division: 2,
+                soundType: 'octave',
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['C5'], 4], [noteToIdx['C#5'], 5], 
+                    [noteToIdx['B4'], 6], [noteToIdx['G#4'], 8], [noteToIdx['B4'], 10], [noteToIdx['C#5'], 12]
+                ]
+          },
+            '8': {
+                beats: 8, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['E4'], 0], [noteToIdx['F4'], 4], [noteToIdx['E4'], 5], [noteToIdx['G4'], 6], 
+                    [noteToIdx['F4'], 7], [noteToIdx['D#4'], 8], [noteToIdx['C4'], 11], [noteToIdx['B3'], 12], 
+                    [noteToIdx['C4'], 14]
+                ]
+    },
+            '9': {
+                beats: 9,
+                division: 2,
+                soundType: 'octave',
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['G#4'], 2], [noteToIdx['F4'], 4], [noteToIdx['D#4'], 6], 
+                    [noteToIdx['D4'], 8], [noteToIdx['A#3'], 10], [noteToIdx['D4'], 12], [noteToIdx['D#4'], 14], 
+                    [noteToIdx['F4'], 16]
+                ]
+            },
+            '10': {
+                beats: 10,
+                division: 2,
+                soundType: 'octave',
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['B4'], 4], [noteToIdx['A#4'], 5], 
+                    [noteToIdx['B4'], 6], [noteToIdx['C5'], 8], [noteToIdx['B4'], 10], [noteToIdx['A#4'], 11], 
+                    [noteToIdx['F4'], 12], [noteToIdx['E4'], 14], [noteToIdx['A#4'], 16], [noteToIdx['B4'], 18]
+                ]
+            },
+            '11': {
+                beats: 11, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['B4'], 4], [noteToIdx['G#4'], 6], 
+                    [noteToIdx['D#4'], 8], [noteToIdx['F4'], 10], [noteToIdx['D#4'], 12], [noteToIdx['C4'], 14], 
+                    [noteToIdx['D#4'], 16], [noteToIdx['G#4'], 18], [noteToIdx['B4'], 20]
+                ]
+ },
+            '11 (5.5)': {
+                beats: 11, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['E4'], 0], [noteToIdx['E4'], 4], [noteToIdx['F4'], 6], [noteToIdx['G4'], 8], 
+                    [noteToIdx['F4'], 12], [noteToIdx['E4'], 14], [noteToIdx['D4'], 16], [noteToIdx['C4'], 20]
+                ]
+            },
+            '12': { 
+                beats: 12,
+                division: 2,
+                soundType: 'octave',
+                pattern: [
+                    [noteToIdx['C5'], 0],   // Beat 1
+                    [noteToIdx['A#4'], 4],  // Beat 3
+                    [noteToIdx['G#4'], 6],  // Beat 4
+                    [noteToIdx['A#4'], 8],  // Beat 5
+                    [noteToIdx['G#4'], 10], // Beat 6
+                    [noteToIdx['F#4'], 12], // Beat 7
+                    [noteToIdx['G#4'], 16], // Beat 9
+                    [noteToIdx['G4'], 18],  // Beat 10
+                    [noteToIdx['D#5'], 20], // Beat 11
+                    [noteToIdx['D5'], 22]   // Beat 12
+                ]
+  },
+            '13': {
+                beats: 13, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['D5'], 4], [noteToIdx['C5'], 6], 
+                    [noteToIdx['A#4'], 8], [noteToIdx['C5'], 10], [noteToIdx['A#4'], 12], [noteToIdx['A4'], 13], 
+                    [noteToIdx['A#4'], 14], [noteToIdx['F4'], 16], [noteToIdx['E4'], 18], [noteToIdx['F4'], 20], 
+                    [noteToIdx['A4'], 22], [noteToIdx['A#4'], 24]
+                ]
+  },
+            '13 (6.5)': {
+                beats: 13, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['B4'], 4], [noteToIdx['G4'], 8], [noteToIdx['E4'], 12], 
+                    [noteToIdx['B3'], 16], [noteToIdx['C4'], 18], [noteToIdx['E4'], 20], [noteToIdx['G4'], 22], 
+                    [noteToIdx['B4'], 24]
+]
+            },
+            '14': { 
+                beats: 14,
+                division: 2,
+                soundType: 'octave',
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['A#4'], 2], [noteToIdx['G#4'], 4], [noteToIdx['E4'], 6], 
+                    [noteToIdx['F4'], 8], [noteToIdx['D4'], 10], [noteToIdx['C4'], 12], [noteToIdx['G#3'], 14], 
+                    [noteToIdx['A#3'], 16], [noteToIdx['C4'], 18], [noteToIdx['E4'], 20], [noteToIdx['F4'], 22], 
+                    [noteToIdx['B4'], 24], // Beat 13
+                    [noteToIdx['A#4'], 26]  // Beat 14
+                ]
+            },
+            '15': {
+                beats: 15, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['C4'], 0], [noteToIdx['C4'], 2], [noteToIdx['E4'], 4], [noteToIdx['E4'], 6], 
+                    [noteToIdx['E4'], 8], [noteToIdx['G4'], 10], [noteToIdx['G4'], 12], [noteToIdx['G4'], 14], 
+                    [noteToIdx['G4'], 16], [noteToIdx['G4'], 18], [noteToIdx['E4'], 20], [noteToIdx['E4'], 22], 
+                    [noteToIdx['D#4'], 24], [noteToIdx['D#4'], 26], [noteToIdx['D#4'], 28]
+                ]
+            },
+            '15 (7.5)': {
+                beats: 15, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['C5'], 4], [noteToIdx['G4'], 8], [noteToIdx['D4'], 12], 
+                    [noteToIdx['A#3'], 16], [noteToIdx['E4'], 20], [noteToIdx['A#4'], 24], [noteToIdx['G4'], 26], 
+                    [noteToIdx['A4'], 28]
+                ]
+            },
+            '16 Ust Tari Khan w Pt Ramesh Mishra': { 
+                beats: 16,
+                division: 2,
+                soundType: 'octave',
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['C5'], 4], [noteToIdx['C5'], 6], 
+                    [noteToIdx['B4'], 8], [noteToIdx['B4'], 10], [noteToIdx['A4'], 11], [noteToIdx['E4'], 12], 
+                    [noteToIdx['F#4'], 13], [noteToIdx['A4'], 14], [noteToIdx['C5'], 15], [noteToIdx['B4'], 16], 
+                    [noteToIdx['B4'], 18], [noteToIdx['A4'], 19], [noteToIdx['E4'], 20], [noteToIdx['F#4'], 21], 
+                    [noteToIdx['E4'], 22], [noteToIdx['C4'], 23], [noteToIdx['E4'], 24], [noteToIdx['F#4'], 26], 
+                    [noteToIdx['A4'], 28], 
+                    [noteToIdx['B4'], 30] // New: B4 on Beat 16 (first eighth note)
+                ]
+            },
+            '16 Pt Anindo Chatterjee Dover Lane': {
+                beats: 16, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['C4'], 0], [noteToIdx['C4'], 2], [noteToIdx['C4'], 4], [noteToIdx['C4'], 6], 
+                    [noteToIdx['D#4'], 7], [noteToIdx['G4'], 8], [noteToIdx['G4'], 10], [noteToIdx['G4'], 12], 
+                    [noteToIdx['G4'], 14], [noteToIdx['G#4'], 15], [noteToIdx['F4'], 16], [noteToIdx['D#4'], 18], 
+                    [noteToIdx['D4'], 20], [noteToIdx['D#4'], 22], [noteToIdx['F4'], 23], [noteToIdx['D#4'], 24], 
+                    [noteToIdx['C4'], 26], [noteToIdx['G#3'], 28], [noteToIdx['B3'], 30]
+                ]
+            },
+            '16 Ust Wajid Hussain Khan': {
+                beats: 16, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['C5'], 4], [noteToIdx['C5'], 6], 
+                    [noteToIdx['B4'], 8], [noteToIdx['G#4'], 10], [noteToIdx['B4'], 12], [noteToIdx['C5'], 14], 
+                    [noteToIdx['B4'], 16], [noteToIdx['G#4'], 18], [noteToIdx['F4'], 20], [noteToIdx['C4'], 22], 
+                    [noteToIdx['D#4'], 24], [noteToIdx['F4'], 26], [noteToIdx['G#4'], 28], [noteToIdx['B4'], 30]
+                ]
+            },
+            '16 Pt Shyamal Bose Pt Shankar Ghosh Tabla Duet': {
+                beats: 16, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['C5'], 4], [noteToIdx['C5'], 6], 
+                    [noteToIdx['C5'], 7], [noteToIdx['B4'], 8], [noteToIdx['B4'], 10], [noteToIdx['A4'], 11], 
+                    [noteToIdx['B4'], 12], [noteToIdx['C5'], 14], [noteToIdx['C5'], 15], [noteToIdx['B4'], 16], 
+                    [noteToIdx['B4'], 18], [noteToIdx['A4'], 19], [noteToIdx['F4'], 20], [noteToIdx['E4'], 22], 
+                    [noteToIdx['C4'], 23], [noteToIdx['E4'], 24], [noteToIdx['F4'], 26], [noteToIdx['A4'], 28], 
+                    [noteToIdx['B4'], 30]
+                ]
+            },
+            '17': {
+                beats: 17, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['C5'], 4], [noteToIdx['C5'], 6], 
+                    [noteToIdx['A#4'], 8], [noteToIdx['A#4'], 10], [noteToIdx['A#4'], 12], [noteToIdx['A#4'], 14], 
+                    [noteToIdx['G4'], 16], [noteToIdx['F4'], 18], [noteToIdx['D4'], 20], [noteToIdx['F4'], 22], 
+                    [noteToIdx['C4'], 24], [noteToIdx['D4'], 26], [noteToIdx['F4'], 28], [noteToIdx['G4'], 30], 
+                    [noteToIdx['B4'], 32]
+                ]
+            },
+            '17 (8.5)': {
+                beats: 17, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['B4'], 4], [noteToIdx['A#4'], 8], [noteToIdx['A#4'], 10], 
+                    [noteToIdx['G#4'], 12], [noteToIdx['G#4'], 14], [noteToIdx['F4'], 16], [noteToIdx['F4'], 18], 
+                    [noteToIdx['D#4'], 20], [noteToIdx['D#4'], 22], [noteToIdx['C4'], 24], [noteToIdx['F4'], 28], 
+                    [noteToIdx['G#4'], 30], [noteToIdx['B4'], 32]
+                ]
+            },
+            '18': {
+                beats: 18, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['G4'], 0], [noteToIdx['G4'], 2], [noteToIdx['F#4'], 4], [noteToIdx['E4'], 6], 
+                    [noteToIdx['F#4'], 8], [noteToIdx['F#4'], 10], [noteToIdx['E4'], 12], [noteToIdx['C#4'], 14], 
+                    [noteToIdx['E4'], 16], [noteToIdx['E4'], 18], [noteToIdx['C#4'], 20], [noteToIdx['C4'], 22], 
+                    [noteToIdx['B3'], 24], [noteToIdx['C#4'], 26], [noteToIdx['E4'], 28], [noteToIdx['C#4'], 30], 
+                    [noteToIdx['E4'], 32], [noteToIdx['F#4'], 34]
+                ]          
+  },
+            '19': {
+                beats: 19, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['C5'], 4], [noteToIdx['D5'], 6], [noteToIdx['D#5'], 7],
+                    [noteToIdx['D5'], 8], [noteToIdx['B4'], 10], [noteToIdx['G4'], 12], [noteToIdx['G4'], 14], [noteToIdx['B4'], 15],
+                    [noteToIdx['A4'], 16], [noteToIdx['G4'], 18], [noteToIdx['F#4'], 20], [noteToIdx['G4'], 21], [noteToIdx['D#4'], 22], 
+                   [noteToIdx['B3'], 23], [noteToIdx['C4'], 24], [noteToIdx['D#4'], 26], [noteToIdx['F#4'], 28], [noteToIdx['G4'], 30], 
+                    [noteToIdx['B4'], 32], [noteToIdx['B4'], 33], [noteToIdx['A4'], 34], [noteToIdx['G4'], 35], [noteToIdx['F#4'], 36], [noteToIdx['G4'], 37]
+                ]       
+     },
+            '19 (9.5)': {
+                beats: 19, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['E4'], 0], [noteToIdx['F4'], 4], [noteToIdx['E4'], 6], [noteToIdx['C4'], 8], 
+                    [noteToIdx['B3'], 10], [noteToIdx['C4'], 12], [noteToIdx['E4'], 14], [noteToIdx['F4'], 16], 
+                    [noteToIdx['G4'], 18], [noteToIdx['B4'], 20], [noteToIdx['B4'], 22], [noteToIdx['C5'], 24], 
+                    [noteToIdx['G4'], 28], [noteToIdx['E4'], 32], [noteToIdx['F4'], 36]                ]            },
+            '20': {
+                beats: 20, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['B4'], 4], [noteToIdx['A#4'], 5], [noteToIdx['B4'], 6], 
+                    [noteToIdx['C5'], 8], [noteToIdx['B4'], 10], [noteToIdx['A#4'], 11], [noteToIdx['F4'], 12], [noteToIdx['E4'], 14], 
+                    [noteToIdx['A#4'], 16], [noteToIdx['B4'], 18], [noteToIdx['B4'], 20], [noteToIdx['A#4'], 21], [noteToIdx['B4'], 22], 
+                    [noteToIdx['B4'], 24], [noteToIdx['A#4'], 25], [noteToIdx['B4'], 26], [noteToIdx['C5'], 28], [noteToIdx['B4'], 30], 
+                    [noteToIdx['F4'], 32], [noteToIdx['E4'], 34], [noteToIdx['A#4'], 36], [noteToIdx['B4'], 38]
+                ]            },
+            '21': {
+                beats: 21, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['C5'], 4], [noteToIdx['B4'], 6], 
+                    [noteToIdx['G#4'], 8], [noteToIdx['G4'], 10], [noteToIdx['F#4'], 12], [noteToIdx['E4'], 14], 
+                    [noteToIdx['C#4'], 16], [noteToIdx['C4'], 18], [noteToIdx['F4'], 20], [noteToIdx['F4'], 22], 
+                    [noteToIdx['E4'], 24], [noteToIdx['F#4'], 26], [noteToIdx['E4'], 28], [noteToIdx['C#4'], 30], 
+                    [noteToIdx['C4'], 32], [noteToIdx['E4'], 34], [noteToIdx['F#4'], 36], [noteToIdx['G#4'], 38], [noteToIdx['B4'], 40]
+                ]            },
+            '21 (10.5)': {
+                beats: 21, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['C5'], 4], [noteToIdx['C5'], 8], [noteToIdx['C#5'], 10], 
+                    [noteToIdx['A#4'], 12], [noteToIdx['C5'], 14], [noteToIdx['A#4'], 16], [noteToIdx['G#4'], 18], 
+                    [noteToIdx['F4'], 20], [noteToIdx['C#4'], 24], [noteToIdx['D#4'], 26], [noteToIdx['C4'], 28], 
+                    [noteToIdx['C#4'], 32], [noteToIdx['D#4'], 34], [noteToIdx['C4'], 36], [noteToIdx['A#3'], 38], 
+                    [noteToIdx['C4'], 40]
+                ]            },
+            '21 (5.25)': {
+                beats: 21, division: 2, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['C5'], 0], [noteToIdx['C5'], 4], [noteToIdx['A#4'], 8], [noteToIdx['A#4'], 12], 
+                    [noteToIdx['A4'], 16], [noteToIdx['A4'], 20], [noteToIdx['F#4'], 24], [noteToIdx['F#4'], 28], 
+                    [noteToIdx['F4'], 32], [noteToIdx['F#4'], 34], [noteToIdx['F4'], 36], [noteToIdx['F#4'], 38], 
+                    [noteToIdx['A#4'], 40]
+                ]
+            },
+            // FIX: Corrected 29 (7 1/4) preset to match the user's requested 29-beat pattern.
+            '29 (7 1/4)': { 
+                beats: 29,
+                division: 2,
+                soundType: 'octave',
+                pattern: [
+                    [noteToIdx['C5'], 0],   // Beat 1
+                    [noteToIdx['C5'], 2],   // Beat 2
+                    [noteToIdx['C5'], 4],   // Beat 3
+                    [noteToIdx['C5'], 6],   // Beat 4
+                    [noteToIdx['B4'], 8],   // Beat 5
+                    [noteToIdx['B4'], 10],  // Beat 6
+                    [noteToIdx['B4'], 12],  // Beat 7
+                    [noteToIdx['B4'], 14],  // Beat 8
+                    [noteToIdx['A4'], 16],  // Beat 9
+                    [noteToIdx['A4'], 18],  // Beat 10
+                    [noteToIdx['A4'], 20],  // Beat 11
+                    [noteToIdx['A4'], 22],  // Beat 12
+                    [noteToIdx['A4'], 24],  // Beat 13
+                    [noteToIdx['A4'], 26],  // Beat 14
+                    [noteToIdx['A4'], 28],  // Beat 15
+                    [noteToIdx['A4'], 30],  // Beat 16
+                    [noteToIdx['G4'], 32],  // Beat 17
+                    [noteToIdx['G4'], 34],  // Beat 18
+                    [noteToIdx['G4'], 36],  // Beat 19
+                    [noteToIdx['G4'], 38],  // Beat 20
+                    [noteToIdx['G4'], 40],  // Beat 21
+                    [noteToIdx['G4'], 42],  // Beat 22
+                    [noteToIdx['G4'], 44],  // Beat 23
+                    [noteToIdx['G4'], 46],  // Beat 24
+                    [noteToIdx['F4'], 48],  // Beat 25
+                    [noteToIdx['G4'], 50],  // Beat 26
+                    [noteToIdx['F4'], 52],  // Beat 27
+                    [noteToIdx['G4'], 54],  // Beat 28
+                    [noteToIdx['B4'], 56]   // Beat 29
+                ]
+            }
         };
+
         
-        let currentNotes = scales.chromatic;
+        let currentNotes = allNotes;
         let grid = [];
+        let beatLabels = [];
+        let division = 2; // Default to eighth notes (Division: 2)
+        let cellWidthOverride = 0;
         
-        // Initialize grid
         function initGrid() {
             const beats = parseInt(document.getElementById('beats').value);
-            const pitchRange = document.getElementById('pitchRange').value;
-            currentNotes = scales[pitchRange];
+            division = parseInt(document.getElementById('divisionSelect').value);
+            const totalBeats = beats * division;
             
-            grid = Array(currentNotes.length).fill().map(() => Array(beats).fill(false));
+            // Tehai logic remains the same
+            if (beats < 7 || !tehaiPatterns[beats]) {
+                tehaiEnabled = false;
+                document.getElementById('tehaiToggle').classList.remove('active');
+                document.getElementById('tehaiStatus').textContent = 'Off';
+            } else {
+                 if (document.getElementById('tehaiToggle').classList.contains('active')) {
+                     tehaiEnabled = true;
+                     document.getElementById('tehaiStatus').textContent = 'On';
+                 } else {
+                    tehaiEnabled = false;
+                 }
+            }
+
+            grid = Array(currentNotes.length).fill().map(() => Array(totalBeats).fill(false));
+            
+            // Re-initialize beatLabels to the new length
+            const oldBeatLabels = [...beatLabels];
+            beatLabels = Array(totalBeats).fill('');
+            oldBeatLabels.forEach((label, idx) => {
+                if (idx < totalBeats) {
+                    beatLabels[idx] = label;
+                }
+            });
+            
             renderGrid();
         }
         
-        function renderGrid() {
-            const container = document.getElementById('gridContainer');
-            const beats = grid[0].length;
+        // Function to transpose the entire melody up or down one pitch
+        function transposeMelody(direction) {
+            stopPlayback();
+            // Array index 0 is the highest note (D5), so 'up' is a -1 index shift.
+            const shift = direction === 'up' ? -1 : 1; 
+            const numPitches = currentNotes.length;
+            const totalBeats = grid[0].length;
+
+            const newGrid = Array(numPitches).fill().map(() => Array(totalBeats).fill(false));
+
+            for (let i = 0; i < numPitches; i++) {
+                for (let j = 0; j < totalBeats; j++) {
+                    if (grid[i][j]) {
+                        let newIndex = i + shift;
+                        
+                        // Wrap around logic
+                        if (newIndex < 0) {
+                            newIndex = numPitches - 1; // Top wraps to bottom
+                        } else if (newIndex >= numPitches) {
+                            newIndex = 0; // Bottom wraps to top
+                        }
+                        
+                        newGrid[newIndex][j] = true;
+                    }
+                }
+            }
+
+            grid = newGrid;
+            renderGrid();
+        }
+
+        // Function to populate the dropdown menu, including saved presets
+        function populatePresetDropdown() {
+            const select = document.getElementById('presetSelect');
+            select.innerHTML = '';
             
-            let html = '<div class="grid-header">';
-            html += '<div class="grid-label-space"></div>';
-            html += '<div class="beat-numbers">';
+            // Add a default prompt option
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = '--- Select a Preset Melody ---';
+            select.appendChild(defaultOption);
+
+            // Add built-in presets
+            Object.keys(newPresets).sort((a, b) => {
+                // Custom sorting to keep 29 (7 1/4) in numerical order
+                const numA = parseInt(a);
+                const numB = parseInt(b);
+                if (numA !== numB) return numA - numB;
+                return a.localeCompare(b);
+            }).forEach(name => {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                select.appendChild(option);
+            });
+
+            // Add saved custom presets from localStorage
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('preset_')) {
+                    const presetName = key.substring(7); // Remove 'preset_'
+                    const option = document.createElement('option');
+                    option.value = key;
+                    try {
+                        const data = JSON.parse(localStorage.getItem(key));
+                        option.textContent = 'Custom: ' + presetName + ' (' + data.beats + ' beats)';
+                    } catch (e) {
+                        option.textContent = 'Custom: ' + presetName;
+                    }
+                    select.appendChild(option);
+                }
+            }
+        }
+
+        // UPDATED function to load the selected preset
+        function loadSelectedPreset() {
+            const selectedValue = document.getElementById('presetSelect').value;
+            if (!selectedValue) return;
+
+            stopPlayback();
+            
+            let preset;
+            const beatsInput = document.getElementById('beats');
+            const divisionSelect = document.getElementById('divisionSelect');
+            const soundTypeSelect = document.getElementById('soundType');
+
+            if (selectedValue.startsWith('preset_')) {
+                // Load from localStorage (Custom Presets) - Does not override soundType
+                try {
+                    const storedData = JSON.parse(localStorage.getItem(selectedValue));
+                    preset = {
+                        beats: storedData.beats,
+                        division: storedData.division,
+                        grid: storedData.grid,
+                        labels: storedData.labels,
+                    };
+                    
+                    // Apply saved settings
+                    beatsInput.value = preset.beats;
+                    divisionSelect.value = preset.division;
+                    division = preset.division; // Update global division
+
+                    initGrid(); 
+                    
+                    // Need to ensure the new grid is the correct size before copying
+                    const totalBeats = preset.beats * preset.division;
+                    grid = Array(currentNotes.length).fill().map(() => Array(totalBeats).fill(false));
+                    
+                    // Deep copy the grid data, assuming saved grid size matches the current totalBeats
+                    preset.grid.forEach((row, rowIdx) => {
+                        row.forEach((cell, cellIdx) => {
+                            if (rowIdx < grid.length && cellIdx < grid[rowIdx].length) {
+                                grid[rowIdx][cellIdx] = cell;
+                            }
+                        });
+                    });
+                    
+                    beatLabels = preset.labels.slice(0, totalBeats); // Use the slice to prevent errors
+                    
+                } catch (e) {
+                    alert('Error loading custom preset: ' + e.message);
+                    return;
+                }
+            } else {
+                // Load from built-in presets (Applies new default settings)
+                preset = newPresets[selectedValue];
+                
+                // 1. Set Correct Beats
+                beatsInput.value = preset.beats;
+
+                // 2. Default to Eighth Notes (Division: 2)
+                divisionSelect.value = preset.division || '2';
+                division = parseInt(divisionSelect.value);
+
+                // 3. Default to Note + Low Octave
+                soundTypeSelect.value = preset.soundType || 'octave';
+
+                // Re-initialize grid size based on new beats and division
+                initGrid(); 
+                
+                // Clear the grid before applying the pattern
+                grid = grid.map(row => row.map(() => false));
+                beatLabels = beatLabels.map(() => '');
+
+                // Apply melody pattern
+                preset.pattern.forEach(([noteIdx, beat]) => {
+                    const totalBeats = preset.beats * division;
+                    if (grid[noteIdx] && beat < totalBeats) {
+                        grid[noteIdx][beat] = true;
+                    }
+                });
+            }
+
+            // Update Tehai state based on loaded beats
+            const beats = parseInt(beatsInput.value);
+            const canTehai = beats >= 7 && tehaiPatterns[beats];
+            tehaiEnabled = canTehai;
+            document.getElementById('tehaiToggle').classList.toggle('active', canTehai);
+            document.getElementById('tehaiStatus').textContent = canTehai ? 'On' : 'Off';
+            
+            renderGrid();
+        }
+        
+        function saveCurrentAsPreset() {
+            const name = prompt('Enter a name for your custom melody:');
+            if (name) {
+                // Ensure grid and labels are up-to-date with current settings
+                const beats = parseInt(document.getElementById('beats').value);
+                const division = parseInt(document.getElementById('divisionSelect').value);
+                const preset = {
+                    beats: beats,
+                    division: division,
+                    grid: grid.map(row => [...row]),
+                    labels: [...beatLabels]
+                };
+                
+                // Save to browser's localStorage
+                const key = 'preset_' + name.replace(/[^a-zA-Z0-9\s]/g, '_').replace(/\s/g, '_'); // Sanitize key
+                localStorage.setItem(key, JSON.stringify(preset));
+                alert('Preset saved! (Stored in your browser)');
+                populatePresetDropdown(); // Update the dropdown with the new saved preset
+                document.getElementById('presetSelect').value = key; // Select the new preset
+            }
+        }
+
+        // --- Other Functions (Kept as before) ---
+        
+        function getTehaiBeats() {
+            // ... (Tehai logic remains the same)
+            const taal = parseInt(document.getElementById('beats').value); 
+            const totalBeats = taal * division;
+            
+            if (taal < 7 || !tehaiPatterns[taal] || !tehaiEnabled) return [];
+            
+            const pattern = tehaiPatterns[taal];
+            const beats = [];
+            
+            const tehaiGroups = [
+                { start: pattern.L1, ds: pattern.DS1, color: 'tehai-group-1' },
+                { start: pattern.L2, ds: pattern.DS2, color: 'tehai-group-2' },
+                { start: pattern.L3, ds: pattern.DS3, color: 'tehai-group-3' }
+            ];
+
+            tehaiGroups.forEach(group => {
+                let startBeat = (group.start - 1) * division;
+                
+                for (let i = 0; i < group.ds * division; i++) {
+                    let beatIndex = (startBeat + i) % totalBeats;
+                    const type = (i === 0) ? 'Dha' : '';
+
+                    beats.push({ 
+                        beat: beatIndex, 
+                        type: type, 
+                        colorClass: group.color 
+                    });
+                }
+            });
+            
+            return beats;
+        }
+        
+        function renderGrid() {
+            const wrapper = document.getElementById('gridWrapper');
+            const beats = grid[0].length;
+            const tehaiBeats = getTehaiBeats();
+            const tehaiMap = {};
+            tehaiBeats.forEach(t => { tehaiMap[t.beat] = t; });
+            
+            const containerWidth = wrapper.offsetWidth - 100;
+            let cellWidth = cellWidthOverride || Math.max(30, Math.min(80, containerWidth / beats));
+            
+            if (cellWidthOverride > 0) {
+                cellWidth = cellWidthOverride;
+            }
+            
+            let html = '';
+            
+            // Render Sargam wheel aligned with pitch rows - BOTTOM TO TOP
+            const sargamWheel = document.getElementById('sargamWheel');
+            let sargamHtml = '';
+            
+            for (let i = 0; i < currentNotes.length; i++) {
+                const note = currentNotes[i];
+                const sargamClass = note.sargam === 'blank' ? 'sargam-note blank' : 'sargam-note';
+                const sargamText = note.sargam === 'blank' ? '' : note.sargam;
+                sargamHtml += `<div class="${sargamClass}">${sargamText}</div>`;
+            }
+            sargamWheel.innerHTML = sargamHtml;
+            sargamWheel.style.display = 'block';
+            
+            // --- Sargam Persistence Logic Update ---
+            const tehaiOffset = (tehaiEnabled && tehaiBeats.length > 0) ? 30 : 0; 
+            const beatLabelOffset = 35;
+            const defaultTopOffset = tehaiOffset + beatLabelOffset;
+
+            // Only reset to the calculated default if no last position is saved
+            if (lastSargamTop === null) {
+                sargamWheel.style.top = defaultTopOffset + 'px';
+                sargamWheel.style.left = '0px';
+                lastSargamTop = defaultTopOffset;
+                lastSargamLeft = 0;
+            } else {
+                // Update the calculated default in case the grid height changes (due to tehai)
+                // This ensures the initial top is correct, but respects drag position otherwise
+                if (parseInt(sargamWheel.style.top) === lastSargamTop) {
+                    sargamWheel.style.top = defaultTopOffset + 'px';
+                    lastSargamTop = defaultTopOffset;
+                } else {
+                    sargamWheel.style.top = lastSargamTop + 'px';
+                }
+                sargamWheel.style.left = lastSargamLeft + 'px'; // Use last drag position
+            }
+            // --- End Sargam Persistence Logic Update ---
+            
+            if (tehaiEnabled && tehaiBeats.length > 0) { 
+                html += '<div class="grid-row tehai-row">';
+                html += '<div class="row-label">Tehai</div>';
+                html += '<div class="grid-cells">';
+                for (let b = 0; b < beats; b++) {
+                    const tehai = tehaiMap[b];
+                    const classes = ['grid-cell'];
+                    if (tehai?.colorClass) classes.push(tehai.colorClass); 
+                    if (b % (4 * division) === 0) classes.push('measure-start');
+                    html += `<div class="${classes.join(' ')}" style="flex: 0 0 ${cellWidth}px; width: ${cellWidth}px;">${tehai?.type || ''}</div>`;
+                }
+                html += '</div></div>';
+            }
+            
+            html += '<div class="grid-row beat-label-row">';
+            html += '<div class="row-label">Beat #</div>';
+            html += '<div class="grid-cells">';
             for (let b = 0; b < beats; b++) {
-                html += `<div class="beat-number" style="flex: 1">${b + 1}</div>`;
+                const tehai = tehaiMap[b];
+                const classes = ['grid-cell'];
+                if (tehai?.colorClass) classes.push(tehai.colorClass); 
+                if (b % (4 * division) === 0) classes.push('measure-start');
+                html += `<div class="${classes.join(' ')}" style="flex: 0 0 ${cellWidth}px; width: ${cellWidth}px;">`;
+                // The beat number is now the placeholder
+                html += `<input type="text" class="beat-label-input" data-beat="${b}" value="${beatLabels[b]}" placeholder="${Math.floor(b / division) + 1}">`;
+                html += '</div>';
             }
             html += '</div></div>';
             
             currentNotes.forEach((note, noteIdx) => {
-                html += '<div class="grid-row">';
-                html += `<div class="pitch-label">${note.name}</div>`;
+                html += '<div class="grid-row pitch-row">';
+                html += `<div class="row-label">${note.name}</div>`;
                 html += '<div class="grid-cells">';
                 for (let b = 0; b < beats; b++) {
-                    const active = grid[noteIdx][b] ? 'active' : '';
-                    html += `<div class="grid-cell ${active}" data-note="${noteIdx}" data-beat="${b}" style="flex: 1"></div>`;
+                    const tehai = tehaiMap[b];
+                    const classes = ['grid-cell'];
+                    if (tehai?.colorClass) classes.push(tehai.colorClass); 
+                    if (grid[noteIdx][b]) classes.push('active');
+                    if (b % (4 * division) === 0) classes.push('measure-start');
+                    html += `<div class="${classes.join(' ')}" data-note="${noteIdx}" data-beat="${b}" style="flex: 0 0 ${cellWidth}px; width: ${cellWidth}px;"></div>`;
                 }
                 html += '</div></div>';
             });
             
-            container.innerHTML = html;
+            html += '<div class="grid-row playback-row">';
+            html += '<div class="row-label">Playback</div>';
+            html += '<div class="grid-cells">';
+            for (let b = 0; b < beats; b++) {
+                const hasNote = currentNotes.some((_, idx) => grid[idx][b]);
+                const tehai = tehaiMap[b];
+                const classes = ['grid-cell'];
+                if (tehai?.colorClass) classes.push(tehai.colorClass); 
+                if (hasNote) classes.push('active');
+                if (b % (4 * division) === 0) classes.push('measure-start');
+                html += `<div class="${classes.join(' ')}" data-playback="${b}" style="flex: 0 0 ${cellWidth}px; width: ${cellWidth}px;"></div>`;
+            }
+            html += '</div></div>';
             
-            // Add click handlers
-            document.querySelectorAll('.grid-cell').forEach(cell => {
+            wrapper.innerHTML = html;
+            
+            document.querySelectorAll('.grid-cell[data-note]').forEach(cell => {
                 cell.addEventListener('click', function() {
                     const noteIdx = parseInt(this.dataset.note);
                     const beat = parseInt(this.dataset.beat);
                     grid[noteIdx][beat] = !grid[noteIdx][beat];
                     this.classList.toggle('active');
+                    updatePlaybackRow();
+                });
+            });
+            
+            document.querySelectorAll('.beat-label-input').forEach(input => {
+                input.addEventListener('input', function() {
+                    const beat = parseInt(this.dataset.beat);
+                    beatLabels[beat] = this.value;
                 });
             });
         }
         
+        // --- Playback and Control Logic (Updated Metronome) ---
+
+        function updatePlaybackRow() {
+            const beats = grid[0].length;
+            for (let b = 0; b < beats; b++) {
+                const hasNote = currentNotes.some((_, idx) => grid[idx][b]);
+                const cell = document.querySelector(`[data-playback="${b}"]`);
+                if (cell) {
+                    cell.classList.toggle('active', hasNote);
+                }
+            }
+        }
+        
         function playTone(frequency, duration) {
+            const soundType = document.getElementById('soundType').value;
+            const volume = parseInt(document.getElementById('volume').value) / 100;
+            
+            if (soundType === 'octave') {
+                playOscillator(frequency, duration, volume * 0.3, 'sine');
+                playOscillator(frequency / 2, duration, volume * 0.2, 'sine');
+            } else {
+                const waveType = soundType === 'sharp' ? 'square' : 'sine';
+                playOscillator(frequency, duration, volume * 0.3, waveType);
+            }
+        }
+        
+        function playOscillator(frequency, duration, gainValue, type) {
             const osc = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
             
             osc.connect(gainNode);
             gainNode.connect(audioContext.destination);
             
-            osc.type = 'sine';
+            osc.type = type;
             osc.frequency.value = frequency;
             
-            const volume = parseInt(document.getElementById('volume').value) / 100;
-            gainNode.gain.setValueAtTime(volume * 0.3, audioContext.currentTime);
+            gainNode.gain.setValueAtTime(gainValue, audioContext.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
             
             osc.start(audioContext.currentTime);
@@ -404,7 +1448,8 @@
             }, duration * 1000);
         }
         
-        function playMetronome() {
+        // NEW: playMetronome accepts frequency argument
+        function playMetronome(frequency) {
             const osc = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
             
@@ -412,7 +1457,7 @@
             gainNode.connect(audioContext.destination);
             
             osc.type = 'square';
-            osc.frequency.value = currentBeat === 0 ? 1000 : 800;
+            osc.frequency.value = frequency; // Use the provided frequency
             
             const volume = parseInt(document.getElementById('volume').value) / 100;
             gainNode.gain.setValueAtTime(volume * 0.15, audioContext.currentTime);
@@ -425,25 +1470,30 @@
         function playBeat() {
             const beats = grid[0].length;
             const bpm = parseInt(document.getElementById('bpm').value);
-            const beatDuration = 60 / bpm;
+            const beatDuration = 60 / (bpm * division);
             
-            // Remove previous playing highlights
             document.querySelectorAll('.grid-cell.playing').forEach(cell => {
                 cell.classList.remove('playing');
             });
             
-            // Play metronome
-            if (metronomeEnabled) {
-                playMetronome();
+            // NEW: Metronome logic updated for high/low beep
+            if (metronomeEnabled && currentBeat % division === 0) {
+                // Check if it's the first *main beat* (index 0)
+                const isBeatOneStart = currentBeat === 0;
+                const frequency = isBeatOneStart ? 1000 : 800; // 1000Hz (High) on Beat 1, 800Hz (Low) on others.
+                playMetronome(frequency);
             }
             
-            // Play active notes
             currentNotes.forEach((note, noteIdx) => {
                 if (grid[noteIdx][currentBeat]) {
                     playTone(note.freq, beatDuration * 0.8);
                     const cell = document.querySelector(`[data-note="${noteIdx}"][data-beat="${currentBeat}"]`);
                     if (cell) cell.classList.add('playing');
                 }
+            });
+            
+            document.querySelectorAll(`[data-playback="${currentBeat}"]`).forEach(cell => {
+                cell.classList.add('playing');
             });
             
             currentBeat = (currentBeat + 1) % beats;
@@ -455,7 +1505,7 @@
             currentBeat = 0;
             
             const bpm = parseInt(document.getElementById('bpm').value);
-            const interval = (60 / bpm) * 1000;
+            const interval = (60 / (bpm * division)) * 1000;
             
             playBeat();
             intervalId = setInterval(playBeat, interval);
@@ -469,7 +1519,6 @@
             }
             currentBeat = 0;
             
-            // Stop all oscillators
             activeOscillators.forEach(({ osc, gainNode }) => {
                 try {
                     gainNode.gain.setValueAtTime(0, audioContext.currentTime);
@@ -478,18 +1527,17 @@
             });
             activeOscillators = [];
             
-            // Remove playing highlights
             document.querySelectorAll('.grid-cell.playing').forEach(cell => {
                 cell.classList.remove('playing');
             });
         }
         
-        // Event listeners
         document.getElementById('playBtn').addEventListener('click', startPlayback);
         document.getElementById('stopBtn').addEventListener('click', stopPlayback);
         
         document.getElementById('clearBtn').addEventListener('click', () => {
             grid = grid.map(row => row.map(() => false));
+            beatLabels = beatLabels.map(() => '');
             renderGrid();
         });
         
@@ -498,17 +1546,66 @@
             initGrid();
         });
         
-        document.getElementById('bpm').addEventListener('input', (e) => {
-            document.getElementById('bpmValue').textContent = e.target.value;
+        document.getElementById('beats').addEventListener('change', initGrid);
+        
+        // --- Input Synchronization (BPM, Volume, Cell Width) ---
+        const bpmInput = document.getElementById('bpmInput');
+        const bpmRange = document.getElementById('bpm');
+        const volumeInput = document.getElementById('volumeInput');
+        const volumeRange = document.getElementById('volume');
+        const cellWidthInput = document.getElementById('cellWidthInput');
+        const cellWidthRange = document.getElementById('cellWidth');
+
+        // BPM Synchronization
+        bpmInput.addEventListener('input', (e) => {
+            const val = parseInt(e.target.value);
+            if (isNaN(val) || val < 12 || val > 600) return;
+            bpmRange.value = val;
+            document.getElementById('bpmValue').textContent = val;
             if (isPlaying) {
                 stopPlayback();
                 startPlayback();
             }
         });
-        
-        document.getElementById('volume').addEventListener('input', (e) => {
+        bpmRange.addEventListener('input', (e) => {
+            const val = parseInt(e.target.value);
+            bpmInput.value = val;
+            document.getElementById('bpmValue').textContent = val;
+            if (isPlaying) {
+                stopPlayback();
+                startPlayback();
+            }
+        });
+
+        // Volume Synchronization
+        volumeInput.addEventListener('input', (e) => {
+            const val = parseInt(e.target.value);
+            if (isNaN(val) || val < 0 || val > 200) return;
+            volumeRange.value = val;
+            document.getElementById('volumeValue').textContent = val;
+        });
+        volumeRange.addEventListener('input', (e) => {
+            volumeInput.value = e.target.value;
             document.getElementById('volumeValue').textContent = e.target.value;
         });
+
+        // Cell Width Synchronization
+        cellWidthInput.addEventListener('input', (e) => {
+            let val = parseInt(e.target.value);
+            if (isNaN(val) || val < 0 || val > 100) return;
+            cellWidthRange.value = val;
+            cellWidthOverride = val === 0 ? 0 : val;
+            document.getElementById('cellWidthValue').textContent = val === 0 ? 'Auto' : val + 'px';
+            renderGrid();
+        });
+        cellWidthRange.addEventListener('input', (e) => {
+            const val = parseInt(e.target.value);
+            cellWidthInput.value = val;
+            cellWidthOverride = val === 0 ? 0 : val;
+            document.getElementById('cellWidthValue').textContent = val === 0 ? 'Auto' : val + 'px';
+            renderGrid();
+        });
+        // --- End Input Synchronization ---
         
         document.getElementById('metronomeToggle').addEventListener('click', function() {
             metronomeEnabled = !metronomeEnabled;
@@ -516,9 +1613,102 @@
             document.getElementById('metronomeStatus').textContent = metronomeEnabled ? 'On' : 'Off';
         });
         
-        // Initialize
+        document.getElementById('tehaiToggle').addEventListener('click', function() {
+            const beats = parseInt(document.getElementById('beats').value);
+            if (beats >= 7 && tehaiPatterns[beats]) {
+                tehaiEnabled = !tehaiEnabled;
+                this.classList.toggle('active');
+                document.getElementById('tehaiStatus').textContent = tehaiEnabled ? 'On' : 'Off';
+                renderGrid();
+            } else {
+                 alert(`The Jamrok Rectangle of Tehai is only available for 7 to 201 beats. Current beats: ${beats}`);
+                 tehaiEnabled = false;
+                 this.classList.remove('active');
+                 document.getElementById('tehaiStatus').textContent = 'Off';
+            }
+        });
+        
+        document.getElementById('divisionSelect').addEventListener('change', () => {
+            if (isPlaying) stopPlayback();
+            
+            const oldDivision = division;
+            const newDivision = parseInt(document.getElementById('divisionSelect').value);
+            
+            const oldGrid = grid.map(row => [...row]);
+            const oldLabels = [...beatLabels];
+            
+            division = newDivision;
+            const beats = parseInt(document.getElementById('beats').value);
+            const newTotalBeats = beats * division;
+            
+            grid = Array(currentNotes.length).fill().map(() => Array(newTotalBeats).fill(false));
+            beatLabels = Array(newTotalBeats).fill('');
+            
+            // Scale notes to new division
+            const ratio = newDivision / oldDivision;
+            oldGrid.forEach((row, noteIdx) => {
+                row.forEach((active, beatIdx) => {
+                    if (active) {
+                        const newBeatIdx = Math.round(beatIdx * ratio);
+                        if (newBeatIdx < newTotalBeats) {
+                            grid[noteIdx][newBeatIdx] = true;
+                        }
+                    }
+                });
+            });
+            
+            // Scale beat labels
+            oldLabels.forEach((label, beatIdx) => {
+                if (label) {
+                    const newBeatIdx = Math.round(beatIdx * ratio);
+                    if (newBeatIdx < newTotalBeats) {
+                        beatLabels[newBeatIdx] = label;
+                    }
+                }
+            });
+            
+            renderGrid();
+        });
+        
+        // --- Sargam Drag Logic (Updated for Persistence) ---
+        
+        const sargamWheel = document.getElementById('sargamWheel');
+        sargamWheel.addEventListener('mousedown', (e) => {
+            sargamDragging = true;
+            sargamStartY = e.clientY;
+            sargamStartX = e.clientX;
+            const currentTop = parseInt(sargamWheel.style.top) || lastSargamTop || 0;
+            const currentLeft = parseInt(sargamWheel.style.left) || lastSargamLeft || 0;
+            sargamStartTop = currentTop;
+            sargamStartLeft = currentLeft;
+            e.preventDefault();
+            sargamWheel.style.cursor = 'grabbing';
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (sargamDragging) {
+                const deltaY = e.clientY - sargamStartY;
+                const deltaX = e.clientX - sargamStartX;
+                const newTop = sargamStartTop + deltaY;
+                const newLeft = sargamStartLeft + deltaX;
+                sargamWheel.style.top = newTop + 'px';
+                sargamWheel.style.left = newLeft + 'px';
+            }
+        });
+        
+        document.addEventListener('mouseup', () => {
+            if (sargamDragging) {
+                // Save the final position for persistence
+                lastSargamTop = parseInt(sargamWheel.style.top);
+                lastSargamLeft = parseInt(sargamWheel.style.left);
+            }
+            sargamDragging = false;
+            sargamWheel.style.cursor = 'grab';
+        });
+
+        // Initial setup calls
+        populatePresetDropdown(); 
         initGrid();
     </script>
 </body>
-
 </html>
