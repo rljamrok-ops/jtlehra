@@ -768,6 +768,17 @@ const tehaiPatterns = {
                     [noteToIdx['F4'], 12], [noteToIdx['E4'], 14], [noteToIdx['A#4'], 16], [noteToIdx['B4'], 18]
                 ]
             },
+            '10 Ust Shahid Parvez': {
+                beats: 10,
+                division: 4,
+                soundType: 'octave',
+                pattern: [
+                    [noteToIdx['D4'], 0], [noteToIdx['E4'], 6], [noteToIdx['E4'], 7], [noteToIdx['F#4'], 8], 
+                    [noteToIdx['G4'], 10], [noteToIdx['F#4'], 12], [noteToIdx['D4'], 18], [noteToIdx['D4'], 19], 
+                    [noteToIdx['E4'], 20], [noteToIdx['C4'], 22], [noteToIdx['B3'], 24], [noteToIdx['C4'], 26], [noteToIdx['C4'], 27], [noteToIdx['B3'], 28], [noteToIdx['G3'], 31], 
+		[noteToIdx['A3'], 34], [noteToIdx['B3'], 37]
+                ]
+            },
             '11': {
                 beats: 11, division: 2, soundType: 'octave', 
                 pattern: [
@@ -888,6 +899,17 @@ const tehaiPatterns = {
                     [noteToIdx['B4'], 18], [noteToIdx['A4'], 19], [noteToIdx['F4'], 20], [noteToIdx['E4'], 22], 
                     [noteToIdx['C4'], 23], [noteToIdx['E4'], 24], [noteToIdx['F4'], 26], [noteToIdx['A4'], 28], 
                     [noteToIdx['B4'], 30]
+                ]
+},
+            '16 Ust Tafu Khan': {
+                beats: 16, division: 4, soundType: 'octave', 
+                pattern: [
+                    [noteToIdx['C#5'], 0], [noteToIdx['G#4'], 6], [noteToIdx['C#5'], 8], [noteToIdx['C#5'], 12], 
+                    [noteToIdx['G#4'], 16], [noteToIdx['E4'], 20], [noteToIdx['G#4'], 24], [noteToIdx['A4'], 26], 
+                    [noteToIdx['E4'], 28], [noteToIdx['D#4'], 29], [noteToIdx['C#4'], 30], [noteToIdx['B3'], 31], 
+                    [noteToIdx['A3'], 32], [noteToIdx['F#4'], 36], [noteToIdx['E4'], 40], [noteToIdx['D#4'], 44], 
+                    [noteToIdx['E4'], 46], [noteToIdx['C#4'], 48], [noteToIdx['E4'], 54], [noteToIdx['F#4'], 56], 
+		    [noteToIdx['A4'], 58], [noteToIdx['C#5'], 60], [noteToIdx['C5'], 62]
                 ]
             },
             '17': {
@@ -1132,12 +1154,12 @@ function updateTempoChange() {
     document.getElementById('bpmInput').value = newBPM;
     document.getElementById('bpmValue').textContent = newBPM;
     
-    // Restart playback with new tempo WITHOUT stopping first
+    // Update interval without resetting currentBeat
     if (intervalId) {
         clearInterval(intervalId);
+        const interval = (60 / (newBPM * division)) * 1000;
+        intervalId = setInterval(playBeat, interval);
     }
-    const interval = (60 / (newBPM * division)) * 1000;
-    intervalId = setInterval(playBeat, interval);
 }
 
         // Function to populate the dropdown menu, including saved presets
@@ -1624,26 +1646,30 @@ if (currentBeat === 0 && tempoChangeActive) {
         const cellWidthInput = document.getElementById('cellWidthInput');
         const cellWidthRange = document.getElementById('cellWidth');
 
-        // BPM Synchronization
-        bpmInput.addEventListener('input', (e) => {
-            const val = parseInt(e.target.value);
-            if (isNaN(val) || val < 12 || val > 600) return;
-            bpmRange.value = val;
-            document.getElementById('bpmValue').textContent = val;
-            if (isPlaying) {
-                stopPlayback();
-                startPlayback();
-            }
-        });
-        bpmRange.addEventListener('input', (e) => {
-            const val = parseInt(e.target.value);
-            bpmInput.value = val;
-            document.getElementById('bpmValue').textContent = val;
-            if (isPlaying) {
-                stopPlayback();
-                startPlayback();
-            }
-        });
+       // BPM Synchronization
+bpmInput.addEventListener('input', (e) => {
+    const val = parseInt(e.target.value);
+    if (isNaN(val) || val < 12 || val > 600) return;
+    bpmRange.value = val;
+    document.getElementById('bpmValue').textContent = val;
+    if (isPlaying) {
+        // Update interval without restarting
+        clearInterval(intervalId);
+        const interval = (60 / (val * division)) * 1000;
+        intervalId = setInterval(playBeat, interval);
+    }
+});
+bpmRange.addEventListener('input', (e) => {
+    const val = parseInt(e.target.value);
+    bpmInput.value = val;
+    document.getElementById('bpmValue').textContent = val;
+    if (isPlaying) {
+        // Update interval without restarting
+        clearInterval(intervalId);
+        const interval = (60 / (val * division)) * 1000;
+        intervalId = setInterval(playBeat, interval);
+    }
+});
 
         // Volume Synchronization
         volumeInput.addEventListener('input', (e) => {
