@@ -378,6 +378,161 @@
             flex-wrap: wrap;
             margin-top: 10px;
         }
+
+        /* ===== SOLO CONTROLLER STYLES ===== */
+        .controller-toggle-btn {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .controller-toggle-btn:hover { transform: translateY(-2px); }
+
+        .controller-panel {
+            background: rgba(30, 58, 138, 0.06);
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .controller-panel h2 {
+            color: #1e3a8a;
+            margin: 0 0 15px 0;
+            font-size: 1.4em;
+        }
+        .ctrl-status-bar {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            padding: 14px 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            color: white;
+        }
+        .ctrl-status-bar h3 { margin: 0 0 8px 0; font-size: 1.2em; }
+        .ctrl-status-info {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .ctrl-status-item {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 14px;
+            border-radius: 6px;
+            min-width: 90px;
+            text-align: center;
+        }
+        .ctrl-status-label { font-size: 0.8em; opacity: 0.9; }
+        .ctrl-status-value { font-size: 1.3em; font-weight: bold; }
+        .ctrl-beat-indicator { display: flex; gap: 4px; margin-top: 8px; flex-wrap: wrap; }
+        .ctrl-beat-dot {
+            width: 16px; height: 16px; border-radius: 50%;
+            background: #e5e7eb; transition: all 0.2s;
+        }
+        .ctrl-beat-dot.active { background: #22c55e; transform: scale(1.3); box-shadow: 0 0 8px rgba(34,197,94,0.5); }
+        .ctrl-beat-dot.sam { border: 2px solid #ef4444; }
+
+        .ctrl-main-controls {
+            display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;
+        }
+        .ctrl-start-btn { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
+        .ctrl-next-btn  { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+        .ctrl-stop-btn  { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+        .ctrl-reset-btn { background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; }
+        .ctrl-main-controls button {
+            padding: 10px 20px; font-size: 0.95em; font-weight: bold;
+            border: none; border-radius: 8px; cursor: pointer;
+            transition: all 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .ctrl-main-controls button:hover:not(:disabled) { transform: translateY(-2px); }
+        .ctrl-main-controls button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .ctrl-intro-outro {
+            background: rgba(168,85,247,0.08);
+            border: 1px solid #a855f7;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+        .ctrl-intro-outro h4 { margin: 0 0 10px 0; color: #6d28d9; }
+
+        .ctrl-toggle-row {
+            display: flex; align-items: center; gap: 10px; margin: 6px 0;
+        }
+        .ctrl-toggle {
+            position: relative; width: 44px; height: 22px;
+            background: #cbd5e1; border-radius: 11px; cursor: pointer;
+            transition: background 0.3s;
+        }
+        .ctrl-toggle.active { background: #22c55e; }
+        .ctrl-toggle-knob {
+            position: absolute; top: 2px; left: 2px;
+            width: 18px; height: 18px; background: white;
+            border-radius: 50%; transition: left 0.3s;
+        }
+        .ctrl-toggle.active .ctrl-toggle-knob { left: 24px; }
+
+        .ctrl-preset-strip {
+            background: rgba(99,102,241,0.08);
+            border: 1px solid #6366f1;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+        .ctrl-preset-strip h4 { margin: 0 0 8px 0; color: #4338ca; }
+        .ctrl-preset-strip-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+        .ctrl-preset-strip select { padding: 6px; border: 1px solid #6366f1; border-radius: 5px; font-size: 0.9em; flex: 1; min-width: 160px; }
+
+        .ctrl-sections-area { }
+        .ctrl-sections-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 10px;
+        }
+        .ctrl-sections-header h4 { margin: 0; color: #1e3a8a; }
+        .ctrl-section-item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s;
+        }
+        .ctrl-section-item.active {
+            border-color: #22c55e;
+            background: #f0fdf4;
+            box-shadow: 0 4px 6px rgba(34,197,94,0.2);
+        }
+        .ctrl-section-item.completed { opacity: 0.6; border-color: #9ca3af; }
+        .ctrl-section-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .ctrl-section-controls label { font-weight: 600; color: #1e3a8a; font-size: 0.85em; }
+        .ctrl-section-controls input[type="number"],
+        .ctrl-section-controls input[type="text"],
+        .ctrl-section-controls select {
+            padding: 6px; border: 1px solid #cbd5e1; border-radius: 5px;
+            font-size: 0.9em; width: 100%; box-sizing: border-box;
+        }
+        .ctrl-section-actions { display: flex; gap: 8px; margin-top: 8px; }
+        .ctrl-sm-btn {
+            padding: 6px 12px; font-size: 0.85em; font-weight: bold;
+            border: none; border-radius: 6px; cursor: pointer;
+            transition: all 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+        .ctrl-sm-btn:hover { transform: translateY(-1px); }
+        .ctrl-add-btn    { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
+        .ctrl-delete-btn { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+        .ctrl-load-btn   { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+        /* ===== END CONTROLLER STYLES ===== */
     </style>
 </head>
 <body>
@@ -395,9 +550,81 @@
                 <button class="preset-btn" onclick="saveCurrentAsPreset()">💾 Save Current</button>
             </div>
         </div>
+
+        <!-- ===== SOLO STRUCTURE CONTROLLER PANEL ===== -->
+        <button class="controller-toggle-btn" onclick="toggleControllerPanel()">🎵 Solo Structure Controller ▼</button>
+        <div class="controller-panel" id="controllerPanel" style="display:none;">
+            <h2>🎵 Lehra Solo Structure Controller</h2>
+
+            <div class="ctrl-status-bar">
+                <h3 id="ctrlStatusTitle">Ready to Start</h3>
+                <div class="ctrl-status-info">
+                    <div class="ctrl-status-item">
+                        <div class="ctrl-status-label">Section</div>
+                        <div class="ctrl-status-value" id="ctrlSectionDisplay">-</div>
+                    </div>
+                    <div class="ctrl-status-item">
+                        <div class="ctrl-status-label">Cycle</div>
+                        <div class="ctrl-status-value" id="ctrlCycleDisplay">0/0</div>
+                    </div>
+                    <div class="ctrl-status-item">
+                        <div class="ctrl-status-label">Beat</div>
+                        <div class="ctrl-status-value" id="ctrlBeatDisplay">-</div>
+                    </div>
+                    <div class="ctrl-status-item">
+                        <div class="ctrl-status-label">BPM</div>
+                        <div class="ctrl-status-value" id="ctrlBpmDisplay">-</div>
+                    </div>
+                </div>
+                <div class="ctrl-beat-indicator" id="ctrlBeatIndicator"></div>
+            </div>
+
+            <div class="ctrl-main-controls">
+                <button class="ctrl-start-btn" id="ctrlStartBtn">▶ Start Solo</button>
+                <button class="ctrl-next-btn" id="ctrlNextBtn" disabled style="padding:10px 20px;font-size:0.95em;font-weight:bold;border:none;border-radius:8px;cursor:pointer;">⏭ Next Section</button>
+                <button class="ctrl-stop-btn" id="ctrlStopBtn" disabled>⏹ Stop</button>
+                <button class="ctrl-reset-btn" id="ctrlResetBtn">🔄 Reset</button>
+            </div>
+
+            <div class="ctrl-intro-outro">
+                <h4>Intro &amp; Outro</h4>
+                <div class="ctrl-toggle-row">
+                    <div class="ctrl-toggle" id="ctrlIntroToggle"><div class="ctrl-toggle-knob"></div></div>
+                    <label>Play Intro Melody — start from beat:
+                        <input type="number" id="ctrlIntroBeat" value="1" min="1" style="width:55px; margin-left:6px;">
+                    </label>
+                </div>
+                <div class="ctrl-toggle-row" style="margin-top:8px;">
+                    <div class="ctrl-toggle" id="ctrlOutroToggle"><div class="ctrl-toggle-knob"></div></div>
+                    <label>Play Outro Melody — end at beat:
+                        <input type="number" id="ctrlOutroBeat" value="1" min="1" style="width:55px; margin-left:6px;">
+                    </label>
+                </div>
+            </div>
+
+            <div class="ctrl-preset-strip">
+                <h4>Solo Structure Presets</h4>
+                <select id="ctrlStructurePreset" style="width:100%; padding:6px; border:1px solid #6366f1; border-radius:5px; font-size:0.9em; margin-bottom:8px;">
+                    <option value="">--- Select a Structure Preset ---</option>
+                </select>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <button class="ctrl-sm-btn ctrl-add-btn" onclick="ctrlSaveStructurePreset()">💾 Save Structure</button>
+                    <button class="ctrl-sm-btn ctrl-load-btn" onclick="ctrlLoadStructurePreset()">📂 Load Selected</button>
+                    <button class="ctrl-sm-btn ctrl-delete-btn" onclick="ctrlDeleteStructurePreset()">🗑️ Delete</button>
+                </div>
+            </div>
+
+            <div class="ctrl-sections-area">
+                <div class="ctrl-sections-header">
+                    <h4>Solo Sections</h4>
+                    <button class="ctrl-sm-btn ctrl-add-btn" onclick="ctrlAddSection()">➕ Add Section</button>
+                </div>
+                <div id="ctrlSectionsContainer"></div>
+            </div>
+        </div>
+        <!-- ===== END CONTROLLER PANEL ===== -->
         
         <div class="controls">
-            <div class="control-group row-1-col-1">
                 <label>Beats:</label>
                 <input type="number" id="beats" min="1" max="201" value="16" onchange="initGrid()">
             </div>
@@ -405,9 +632,12 @@
             <div class="control-group row-1-col-2">
                 <label>Sound Type:</label>
                 <select id="soundType">
+                    <option value="harmonium">Harmonium (Reed)</option>
+                    <option value="harmonium_bright">Harmonium (Bright)</option>
+                    <option value="harmonium_warm" selected>Harmonium (Warm)</option>
                     <option value="smooth">Smooth (Sine)</option>
                     <option value="sharp">Sharp (Square)</option>
-                    <option value="octave" selected>Note + Low Octave</option>
+                    <option value="octave">Note + Low Octave</option>
                 </select>
             </div>
 
@@ -483,6 +713,10 @@
         let metronomeEnabled = false;
         let tehaiEnabled = true;
         let activeOscillators = [];
+
+        // Legato: one persistent voice per note row, keyed by noteIdx
+        // Each entry: { masterGain, oscillators: [], subOsc, stopAt: null }
+        const legatoVoices = {};
 
         // Sargam Scroller Persistence Variables
         let lastSargamTop = null; 
@@ -734,14 +968,14 @@ const tehaiPatterns = {
             '7': {
                 beats: 7,
                 division: 2,
-                soundType: 'octave',
+                soundType: 'harmonium_warm',
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['C5'], 4], [noteToIdx['C#5'], 5], 
                     [noteToIdx['B4'], 6], [noteToIdx['G#4'], 8], [noteToIdx['B4'], 10], [noteToIdx['C#5'], 12]
                 ]
           },
             '8': {
-                beats: 8, division: 2, soundType: 'octave', 
+                beats: 8, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['E4'], 0], [noteToIdx['F4'], 4], [noteToIdx['E4'], 5], [noteToIdx['G4'], 6], 
                     [noteToIdx['F4'], 7], [noteToIdx['D#4'], 8], [noteToIdx['C4'], 11], [noteToIdx['B3'], 12], 
@@ -751,7 +985,7 @@ const tehaiPatterns = {
             '9': {
                 beats: 9,
                 division: 2,
-                soundType: 'octave',
+                soundType: 'harmonium_warm',
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['G#4'], 2], [noteToIdx['F4'], 4], [noteToIdx['D#4'], 6], 
                     [noteToIdx['D4'], 8], [noteToIdx['A#3'], 10], [noteToIdx['D4'], 12], [noteToIdx['D#4'], 14], 
@@ -761,7 +995,7 @@ const tehaiPatterns = {
             '10': {
                 beats: 10,
                 division: 2,
-                soundType: 'octave',
+                soundType: 'harmonium_warm',
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['B4'], 4], [noteToIdx['A#4'], 5], 
                     [noteToIdx['B4'], 6], [noteToIdx['C5'], 8], [noteToIdx['B4'], 10], [noteToIdx['A#4'], 11], 
@@ -771,7 +1005,7 @@ const tehaiPatterns = {
             '10 Ust Shahid Parvez': {
                 beats: 10,
                 division: 4,
-                soundType: 'octave',
+                soundType: 'harmonium_warm',
                 pattern: [
                     [noteToIdx['D4'], 0], [noteToIdx['E4'], 6], [noteToIdx['E4'], 7], [noteToIdx['F#4'], 8], 
                     [noteToIdx['G4'], 10], [noteToIdx['F#4'], 12], [noteToIdx['D4'], 18], [noteToIdx['D4'], 19], 
@@ -780,7 +1014,7 @@ const tehaiPatterns = {
                 ]
             },
             '11': {
-                beats: 11, division: 2, soundType: 'octave', 
+                beats: 11, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['B4'], 4], [noteToIdx['G#4'], 6], 
                     [noteToIdx['D#4'], 8], [noteToIdx['F4'], 10], [noteToIdx['D#4'], 12], [noteToIdx['C4'], 14], 
@@ -788,7 +1022,7 @@ const tehaiPatterns = {
                 ]
  },
             '11 (5.5)': {
-                beats: 11, division: 2, soundType: 'octave', 
+                beats: 11, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['E4'], 0], [noteToIdx['E4'], 4], [noteToIdx['F4'], 6], [noteToIdx['G4'], 8], 
                     [noteToIdx['F4'], 12], [noteToIdx['E4'], 14], [noteToIdx['D4'], 16], [noteToIdx['C4'], 20]
@@ -797,7 +1031,7 @@ const tehaiPatterns = {
             '12': { 
                 beats: 12,
                 division: 2,
-                soundType: 'octave',
+                soundType: 'harmonium_warm',
                 pattern: [
                     [noteToIdx['C5'], 0],   // Beat 1
                     [noteToIdx['A#4'], 4],  // Beat 3
@@ -812,7 +1046,7 @@ const tehaiPatterns = {
                 ]
   },
             '13': {
-                beats: 13, division: 2, soundType: 'octave', 
+                beats: 13, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['D5'], 4], [noteToIdx['C5'], 6], 
                     [noteToIdx['A#4'], 8], [noteToIdx['C5'], 10], [noteToIdx['A#4'], 12], [noteToIdx['A4'], 13], 
@@ -821,7 +1055,7 @@ const tehaiPatterns = {
                 ]
   },
             '13 (6.5)': {
-                beats: 13, division: 2, soundType: 'octave', 
+                beats: 13, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['B4'], 4], [noteToIdx['G4'], 8], [noteToIdx['E4'], 12], 
                     [noteToIdx['B3'], 16], [noteToIdx['C4'], 18], [noteToIdx['E4'], 20], [noteToIdx['G4'], 22], 
@@ -831,7 +1065,7 @@ const tehaiPatterns = {
             '14': { 
                 beats: 14,
                 division: 2,
-                soundType: 'octave',
+                soundType: 'harmonium_warm',
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['A#4'], 2], [noteToIdx['G#4'], 4], [noteToIdx['E4'], 6], 
                     [noteToIdx['F4'], 8], [noteToIdx['D4'], 10], [noteToIdx['C4'], 12], [noteToIdx['G#3'], 14], 
@@ -841,7 +1075,7 @@ const tehaiPatterns = {
                 ]
             },
             '15': {
-                beats: 15, division: 2, soundType: 'octave', 
+                beats: 15, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['C4'], 0], [noteToIdx['C4'], 2], [noteToIdx['E4'], 4], [noteToIdx['E4'], 6], 
                     [noteToIdx['E4'], 8], [noteToIdx['G4'], 10], [noteToIdx['G4'], 12], [noteToIdx['G4'], 14], 
@@ -850,7 +1084,7 @@ const tehaiPatterns = {
                 ]
             },
             '15 (7.5)': {
-                beats: 15, division: 2, soundType: 'octave', 
+                beats: 15, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['C5'], 4], [noteToIdx['G4'], 8], [noteToIdx['D4'], 12], 
                     [noteToIdx['A#3'], 16], [noteToIdx['E4'], 20], [noteToIdx['A#4'], 24], [noteToIdx['G4'], 26], 
@@ -860,7 +1094,7 @@ const tehaiPatterns = {
             '16 Ust Tari Khan w Pt Ramesh Mishra': { 
                 beats: 16,
                 division: 2,
-                soundType: 'octave',
+                soundType: 'harmonium_warm',
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['C5'], 4], [noteToIdx['C5'], 6], 
                     [noteToIdx['B4'], 8], [noteToIdx['B4'], 10], [noteToIdx['A4'], 11], [noteToIdx['E4'], 12], 
@@ -872,7 +1106,7 @@ const tehaiPatterns = {
                 ]
             },
             '16 Pt Anindo Chatterjee Dover Lane': {
-                beats: 16, division: 2, soundType: 'octave', 
+                beats: 16, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['C4'], 0], [noteToIdx['C4'], 2], [noteToIdx['C4'], 4], [noteToIdx['C4'], 6], 
                     [noteToIdx['D#4'], 7], [noteToIdx['G4'], 8], [noteToIdx['G4'], 10], [noteToIdx['G4'], 12], 
@@ -882,7 +1116,7 @@ const tehaiPatterns = {
                 ]
             },
             '16 Ust Wajid Hussain Khan': {
-                beats: 16, division: 2, soundType: 'octave', 
+                beats: 16, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['C5'], 4], [noteToIdx['C5'], 6], 
                     [noteToIdx['B4'], 8], [noteToIdx['G#4'], 10], [noteToIdx['B4'], 12], [noteToIdx['C5'], 14], 
@@ -891,7 +1125,7 @@ const tehaiPatterns = {
                 ]
             },
             '16 Pt Shyamal Bose Pt Shankar Ghosh Tabla Duet': {
-                beats: 16, division: 2, soundType: 'octave', 
+                beats: 16, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['C5'], 4], [noteToIdx['C5'], 6], 
                     [noteToIdx['C5'], 7], [noteToIdx['B4'], 8], [noteToIdx['B4'], 10], [noteToIdx['A4'], 11], 
@@ -902,7 +1136,7 @@ const tehaiPatterns = {
                 ]
 },
             '16 Ust Tafu Khan': {
-                beats: 16, division: 4, soundType: 'octave', 
+                beats: 16, division: 4, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['C#5'], 0], [noteToIdx['G#4'], 6], [noteToIdx['C#5'], 8], [noteToIdx['C#5'], 12], 
                     [noteToIdx['G#4'], 16], [noteToIdx['E4'], 20], [noteToIdx['G#4'], 24], [noteToIdx['A4'], 26], 
@@ -913,7 +1147,7 @@ const tehaiPatterns = {
                 ]
             },
             '17': {
-                beats: 17, division: 2, soundType: 'octave', 
+                beats: 17, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['C5'], 4], [noteToIdx['C5'], 6], 
                     [noteToIdx['A#4'], 8], [noteToIdx['A#4'], 10], [noteToIdx['A#4'], 12], [noteToIdx['A#4'], 14], 
@@ -923,7 +1157,7 @@ const tehaiPatterns = {
                 ]
             },
             '17 (8.5)': {
-                beats: 17, division: 2, soundType: 'octave', 
+                beats: 17, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['B4'], 4], [noteToIdx['A#4'], 8], [noteToIdx['A#4'], 10], 
                     [noteToIdx['G#4'], 12], [noteToIdx['G#4'], 14], [noteToIdx['F4'], 16], [noteToIdx['F4'], 18], 
@@ -932,7 +1166,7 @@ const tehaiPatterns = {
                 ]
             },
             '18': {
-                beats: 18, division: 2, soundType: 'octave', 
+                beats: 18, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['G4'], 0], [noteToIdx['G4'], 2], [noteToIdx['F#4'], 4], [noteToIdx['E4'], 6], 
                     [noteToIdx['F#4'], 8], [noteToIdx['F#4'], 10], [noteToIdx['E4'], 12], [noteToIdx['C#4'], 14], 
@@ -942,7 +1176,7 @@ const tehaiPatterns = {
                 ]          
   },
             '19': {
-                beats: 19, division: 2, soundType: 'octave', 
+                beats: 19, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['C5'], 4], [noteToIdx['D5'], 6], [noteToIdx['D#5'], 7],
                     [noteToIdx['D5'], 8], [noteToIdx['B4'], 10], [noteToIdx['G4'], 12], [noteToIdx['G4'], 14], [noteToIdx['B4'], 15],
@@ -952,14 +1186,14 @@ const tehaiPatterns = {
                 ]       
      },
             '19 (9.5)': {
-                beats: 19, division: 2, soundType: 'octave', 
+                beats: 19, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['E4'], 0], [noteToIdx['F4'], 4], [noteToIdx['E4'], 6], [noteToIdx['C4'], 8], 
                     [noteToIdx['B3'], 10], [noteToIdx['C4'], 12], [noteToIdx['E4'], 14], [noteToIdx['F4'], 16], 
                     [noteToIdx['G4'], 18], [noteToIdx['B4'], 20], [noteToIdx['B4'], 22], [noteToIdx['C5'], 24], 
                     [noteToIdx['G4'], 28], [noteToIdx['E4'], 32], [noteToIdx['F4'], 36]                ]            },
             '20': {
-                beats: 20, division: 2, soundType: 'octave', 
+                beats: 20, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['B4'], 4], [noteToIdx['A#4'], 5], [noteToIdx['B4'], 6], 
                     [noteToIdx['C5'], 8], [noteToIdx['B4'], 10], [noteToIdx['A#4'], 11], [noteToIdx['F4'], 12], [noteToIdx['E4'], 14], 
@@ -968,7 +1202,7 @@ const tehaiPatterns = {
                     [noteToIdx['F4'], 32], [noteToIdx['E4'], 34], [noteToIdx['A#4'], 36], [noteToIdx['B4'], 38]
                 ]            },
             '21': {
-                beats: 21, division: 2, soundType: 'octave', 
+                beats: 21, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['C5'], 4], [noteToIdx['B4'], 6], 
                     [noteToIdx['G#4'], 8], [noteToIdx['G4'], 10], [noteToIdx['F#4'], 12], [noteToIdx['E4'], 14], 
@@ -977,7 +1211,7 @@ const tehaiPatterns = {
                     [noteToIdx['C4'], 32], [noteToIdx['E4'], 34], [noteToIdx['F#4'], 36], [noteToIdx['G#4'], 38], [noteToIdx['B4'], 40]
                 ]            },
             '21 (10.5)': {
-                beats: 21, division: 2, soundType: 'octave', 
+                beats: 21, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['C5'], 4], [noteToIdx['C5'], 8], [noteToIdx['C#5'], 10], 
                     [noteToIdx['A#4'], 12], [noteToIdx['C5'], 14], [noteToIdx['A#4'], 16], [noteToIdx['G#4'], 18], 
@@ -986,7 +1220,7 @@ const tehaiPatterns = {
                     [noteToIdx['C4'], 40]
                 ]            },
             '21 (5.25)': {
-                beats: 21, division: 2, soundType: 'octave', 
+                beats: 21, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
                     [noteToIdx['C5'], 0], [noteToIdx['C5'], 4], [noteToIdx['A#4'], 8], [noteToIdx['A#4'], 12], 
                     [noteToIdx['A4'], 16], [noteToIdx['A4'], 20], [noteToIdx['F#4'], 24], [noteToIdx['F#4'], 28], 
@@ -998,7 +1232,7 @@ const tehaiPatterns = {
             '29 (7 1/4)': { 
                 beats: 29,
                 division: 2,
-                soundType: 'octave',
+                soundType: 'harmonium_warm',
                 pattern: [
                     [noteToIdx['C5'], 0],   // Beat 1
                     [noteToIdx['C5'], 2],   // Beat 2
@@ -1496,11 +1730,68 @@ function updateTempoChange() {
             }
         }
         
-        function playTone(frequency, duration) {
+        // --- Harmonium Additive Synthesis Profiles ---
+        // Each profile defines harmonic overtones (multiplier, amplitude) and envelope shape
+        const harmoniumProfiles = {
+            harmonium: {
+                // Classic Indian harmonium: strong fundamental, prominent 2nd & 3rd harmonics, reedy upper partials
+                harmonics: [
+                    { mult: 1,    amp: 1.00 },
+                    { mult: 2,    amp: 0.55 },
+                    { mult: 3,    amp: 0.30 },
+                    { mult: 4,    amp: 0.18 },
+                    { mult: 5,    amp: 0.10 },
+                    { mult: 6,    amp: 0.07 },
+                    { mult: 7,    amp: 0.04 },
+                    { mult: 8,    amp: 0.02 },
+                ],
+                subOctave: 0.18,  // sub-octave drone blend (bellows resonance)
+                attackTime: 0.035, // slow bellows-push attack
+                decayShape: 'exponential',
+                masterGain: 0.28,
+            },
+            harmonium_bright: {
+                // Brighter, more nasal — like a smaller harmonium or higher register
+                harmonics: [
+                    { mult: 1,    amp: 0.80 },
+                    { mult: 2,    amp: 0.70 },
+                    { mult: 3,    amp: 0.50 },
+                    { mult: 4,    amp: 0.35 },
+                    { mult: 5,    amp: 0.22 },
+                    { mult: 6,    amp: 0.14 },
+                    { mult: 7,    amp: 0.08 },
+                    { mult: 8,    amp: 0.04 },
+                    { mult: 9,    amp: 0.02 },
+                ],
+                subOctave: 0.08,
+                attackTime: 0.020,
+                decayShape: 'exponential',
+                masterGain: 0.24,
+            },
+            harmonium_warm: {
+                // Warm, mellow — larger harmonium, softer reeds, bass-heavy
+                harmonics: [
+                    { mult: 1,    amp: 1.00 },
+                    { mult: 2,    amp: 0.40 },
+                    { mult: 3,    amp: 0.18 },
+                    { mult: 4,    amp: 0.08 },
+                    { mult: 5,    amp: 0.04 },
+                    { mult: 6,    amp: 0.02 },
+                ],
+                subOctave: 0.30,
+                attackTime: 0.055,
+                decayShape: 'exponential',
+                masterGain: 0.30,
+            },
+        };
+
+        function playTone(frequency, duration, noteIdx) {
             const soundType = document.getElementById('soundType').value;
             const volume = parseInt(document.getElementById('volume').value) / 100;
-            
-            if (soundType === 'octave') {
+
+            if (harmoniumProfiles[soundType]) {
+                playHarmoniumTone(frequency, duration, volume, harmoniumProfiles[soundType], noteIdx);
+            } else if (soundType === 'octave') {
                 playOscillator(frequency, duration, volume * 0.3, 'sine');
                 playOscillator(frequency / 2, duration, volume * 0.2, 'sine');
             } else {
@@ -1508,7 +1799,91 @@ function updateTempoChange() {
                 playOscillator(frequency, duration, volume * 0.3, waveType);
             }
         }
-        
+
+        function stopLegatoVoice(noteIdx) {
+            const voice = legatoVoices[noteIdx];
+            if (!voice) return;
+            const now = audioContext.currentTime;
+            const releaseTime = 0.05;
+            try {
+                voice.masterGain.gain.cancelScheduledValues(now);
+                voice.masterGain.gain.setValueAtTime(voice.masterGain.gain.value, now);
+                voice.masterGain.gain.exponentialRampToValueAtTime(0.001, now + releaseTime);
+            } catch(e) {}
+            voice.oscillators.forEach(osc => {
+                try { osc.stop(now + releaseTime + 0.01); } catch(e) {}
+            });
+            delete legatoVoices[noteIdx];
+        }
+
+        function playHarmoniumTone(frequency, duration, volume, profile, noteIdx) {
+            const now = audioContext.currentTime;
+            const targetGain = volume * profile.masterGain;
+
+            // Stop whatever was playing on this row immediately
+            stopLegatoVoice(noteIdx);
+
+            // Build new persistent voice — runs until next note fires or Stop pressed
+            const masterGain = audioContext.createGain();
+            masterGain.connect(audioContext.destination);
+            masterGain.gain.setValueAtTime(0, now);
+            masterGain.gain.linearRampToValueAtTime(targetGain, now + profile.attackTime);
+
+            const oscillators = [];
+
+            if (profile.subOctave > 0) {
+                const subOsc = audioContext.createOscillator();
+                const subGain = audioContext.createGain();
+                subOsc.type = 'sine';
+                subOsc.frequency.value = frequency / 2;
+                subGain.gain.setValueAtTime(profile.subOctave, now);
+                subOsc.connect(subGain);
+                subGain.connect(masterGain);
+                subOsc.start(now);
+                oscillators.push(subOsc);
+            }
+
+            profile.harmonics.forEach(({ mult, amp }) => {
+                const osc = audioContext.createOscillator();
+                osc.type = 'sine';
+                osc.frequency.value = frequency * mult;
+                osc.detune.value = (Math.random() - 0.5) * 4;
+                const partialGain = audioContext.createGain();
+                partialGain.gain.setValueAtTime(amp, now);
+                osc.connect(partialGain);
+                partialGain.connect(masterGain);
+                osc.start(now);
+                oscillators.push(osc);
+            });
+
+            playChiff(frequency, volume);
+
+            legatoVoices[noteIdx] = { masterGain, oscillators, frequency };
+        }
+
+        function playChiff(frequency, volume) {
+            const now = audioContext.currentTime;
+            const chiffDuration = 0.018;
+            const bufferSize = Math.floor(audioContext.sampleRate * chiffDuration);
+            const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+            const data = noiseBuffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * 0.35;
+            const noiseSource = audioContext.createBufferSource();
+            noiseSource.buffer = noiseBuffer;
+            const noiseFilter = audioContext.createBiquadFilter();
+            noiseFilter.type = 'bandpass';
+            noiseFilter.frequency.value = frequency * 2.5;
+            noiseFilter.Q.value = 1.8;
+            const noiseGain = audioContext.createGain();
+            noiseGain.gain.setValueAtTime(volume * 0.12, now);
+            noiseGain.gain.exponentialRampToValueAtTime(0.001, now + chiffDuration);
+            noiseSource.connect(noiseFilter);
+            noiseFilter.connect(noiseGain);
+            noiseGain.connect(audioContext.destination);
+            noiseSource.start(now);
+            noiseSource.stop(now + chiffDuration);
+        }
+
         function playOscillator(frequency, duration, gainValue, type) {
             const osc = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
@@ -1571,7 +1946,9 @@ function updateTempoChange() {
             
             currentNotes.forEach((note, noteIdx) => {
                 if (grid[noteIdx][currentBeat]) {
-                    playTone(note.freq, beatDuration * 0.8);
+                    // Stop ALL currently ringing voices before starting the new note
+                    Object.keys(legatoVoices).forEach(idx => stopLegatoVoice(parseInt(idx)));
+                    playTone(note.freq, beatDuration, noteIdx);
                     const cell = document.querySelector(`[data-note="${noteIdx}"][data-beat="${currentBeat}"]`);
                     if (cell) cell.classList.add('playing');
                 }
@@ -1582,6 +1959,15 @@ function updateTempoChange() {
             });
             
             currentBeat = (currentBeat + 1) % beats;
+
+// If we just wrapped to beat 0, stop any voices not retriggered at beat 0
+if (currentBeat === 0) {
+    currentNotes.forEach((note, noteIdx) => {
+        if (!grid[noteIdx][0]) {
+            stopLegatoVoice(noteIdx);
+        }
+    });
+}
 
 // Check if we completed a cycle for tempo change
 if (currentBeat === 0 && tempoChangeActive) {
@@ -1616,6 +2002,9 @@ if (currentBeat === 0 && tempoChangeActive) {
                 } catch (e) {}
             });
             activeOscillators = [];
+
+            // Stop all legato voices
+            Object.keys(legatoVoices).forEach(idx => stopLegatoVoice(parseInt(idx)));
             
             document.querySelectorAll('.grid-cell.playing').forEach(cell => {
                 cell.classList.remove('playing');
@@ -1803,6 +2192,451 @@ bpmRange.addEventListener('input', (e) => {
         // Initial setup calls
         populatePresetDropdown(); 
         initGrid();
+
+        // ===== SOLO STRUCTURE CONTROLLER LOGIC =====
+
+        function toggleControllerPanel() {
+            const panel = document.getElementById('controllerPanel');
+            const btn = document.querySelector('.controller-toggle-btn');
+            if (panel.style.display === 'none') {
+                panel.style.display = 'block';
+                btn.textContent = '🎵 Solo Structure Controller ▲';
+            } else {
+                panel.style.display = 'none';
+                btn.textContent = '🎵 Solo Structure Controller ▼';
+            }
+        }
+
+        // Controller state
+        let ctrlSections = [
+            { name: 'Section 1', beats: 16, bpm: 120, cycles: 2, division: 2, preset: '' }
+        ];
+        let ctrlIsPlaying = false;
+        let ctrlCurrentSectionIndex = -1;
+        let ctrlCurrentCycle = 0;
+        let ctrlCurrentBeat = 0;
+        let ctrlIntervalId = null;
+        let ctrlIntroEnabled = false;
+        let ctrlOutroEnabled = false;
+        let ctrlIsIntro = false;
+        let ctrlIsOutro = false;
+        let ctrlNextSectionRequested = false;
+        let ctrlCurrentGrid = [];
+
+        // Build a preset name list from lehra6C's newPresets
+        function getCtrlPresetNames() {
+            return Object.keys(newPresets).sort((a, b) => {
+                const numA = parseInt(a), numB = parseInt(b);
+                if (numA !== numB) return numA - numB;
+                return a.localeCompare(b);
+            });
+        }
+
+        function ctrlRenderSections() {
+            const container = document.getElementById('ctrlSectionsContainer');
+            const presetNames = getCtrlPresetNames();
+            container.innerHTML = ctrlSections.map((s, i) => {
+                const isActive = ctrlIsPlaying && i === ctrlCurrentSectionIndex && !ctrlIsIntro && !ctrlIsOutro;
+                const isCompleted = ctrlIsPlaying && (i < ctrlCurrentSectionIndex || (ctrlIsOutro));
+                let cls = 'ctrl-section-item';
+                if (isActive) cls += ' active';
+                else if (isCompleted) cls += ' completed';
+
+                const presetOptions = presetNames.map(n =>
+                    `<option value="${n}" ${s.preset === n ? 'selected' : ''}>${n}</option>`
+                ).join('');
+
+                return `<div class="${cls}" id="ctrlSection_${i}">
+                    <strong>${s.name || 'Section ' + (i+1)}</strong>
+                    <div class="ctrl-section-controls">
+                        <div>
+                            <label>Name</label>
+                            <input type="text" value="${s.name}" onchange="ctrlUpdateSection(${i}, 'name', this.value)">
+                        </div>
+                        <div>
+                            <label>Beats</label>
+                            <input type="number" min="1" max="201" value="${s.beats}" onchange="ctrlUpdateSection(${i}, 'beats', this.value)">
+                        </div>
+                        <div>
+                            <label>BPM</label>
+                            <input type="number" min="12" max="600" value="${s.bpm}" onchange="ctrlUpdateSection(${i}, 'bpm', this.value)">
+                        </div>
+                        <div>
+                            <label>Cycles (0=loop)</label>
+                            <input type="number" min="0" value="${s.cycles}" onchange="ctrlUpdateSection(${i}, 'cycles', this.value)">
+                        </div>
+                        <div>
+                            <label>Division</label>
+                            <select onchange="ctrlUpdateSection(${i}, 'division', this.value)">
+                                <option value="1" ${s.division===1?'selected':''}>Quarter</option>
+                                <option value="2" ${s.division===2?'selected':''}>Eighth</option>
+                                <option value="4" ${s.division===4?'selected':''}>16th</option>
+                                <option value="8" ${s.division===8?'selected':''}>32nd</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Melody Preset</label>
+                            <select onchange="ctrlUpdateSection(${i}, 'preset', this.value)">
+                                <option value="">--- Current Grid ---</option>
+                                ${presetOptions}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ctrl-section-actions">
+                        <button class="ctrl-sm-btn ctrl-load-btn" onclick="ctrlLoadSectionIntoGrid(${i})">📋 Load into Grid</button>
+                        <button class="ctrl-sm-btn ctrl-delete-btn" onclick="ctrlDeleteSection(${i})">🗑 Delete</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function ctrlUpdateSection(index, field, value) {
+            if (field === 'beats' || field === 'bpm' || field === 'cycles' || field === 'division') {
+                ctrlSections[index][field] = parseInt(value);
+            } else {
+                ctrlSections[index][field] = value;
+            }
+            ctrlRenderSections();
+        }
+
+        function ctrlAddSection() {
+            ctrlSections.push({ name: 'Section ' + (ctrlSections.length + 1), beats: 16, bpm: 120, cycles: 2, division: 2, preset: '' });
+            ctrlRenderSections();
+        }
+
+        function ctrlDeleteSection(index) {
+            if (ctrlSections.length > 1) {
+                ctrlSections.splice(index, 1);
+                ctrlRenderSections();
+            }
+        }
+
+        function ctrlLoadSectionIntoGrid(index) {
+            const s = ctrlSections[index];
+            stopPlayback();
+            document.getElementById('beats').value = s.beats;
+            document.getElementById('divisionSelect').value = s.division;
+            document.getElementById('bpm').value = s.bpm;
+            document.getElementById('bpmInput').value = s.bpm;
+            document.getElementById('bpmValue').textContent = s.bpm;
+            division = s.division;
+            initGrid();
+            if (s.preset && newPresets[s.preset]) {
+                document.getElementById('presetSelect').value = s.preset;
+                loadSelectedPreset();
+            }
+        }
+
+        function ctrlCreateBeatIndicator(beats) {
+            const indicator = document.getElementById('ctrlBeatIndicator');
+            indicator.innerHTML = '';
+            for (let i = 0; i < beats; i++) {
+                const dot = document.createElement('div');
+                dot.className = `ctrl-beat-dot ${i === 0 ? 'sam' : ''}`;
+                dot.dataset.beat = i;
+                indicator.appendChild(dot);
+            }
+        }
+
+        function ctrlUpdateBeatIndicator(beat) {
+            document.querySelectorAll('.ctrl-beat-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === beat);
+            });
+        }
+
+        function ctrlLoadMelodyForSection(section) {
+            const totalBeats = section.beats * section.division;
+            ctrlCurrentGrid = Array(allNotes.length).fill().map(() => Array(totalBeats).fill(false));
+            if (section.preset && newPresets[section.preset]) {
+                const pattern = newPresets[section.preset].pattern;
+                pattern.forEach(([noteIdx, beat]) => {
+                    if (ctrlCurrentGrid[noteIdx] && beat < totalBeats) {
+                        ctrlCurrentGrid[noteIdx][beat] = true;
+                    }
+                });
+            } else {
+                // Use current grid (copy it), adjusting for section beats/division
+                const ctrlTotalBeats = section.beats * section.division;
+                grid.forEach((row, ni) => {
+                    row.forEach((active, bi) => {
+                        if (active && bi < ctrlTotalBeats) {
+                            ctrlCurrentGrid[ni][bi] = true;
+                        }
+                    });
+                });
+            }
+        }
+
+        function ctrlPlayBeat() {
+            const section = ctrlSections[ctrlCurrentSectionIndex];
+            const sectionDivision = section.division;
+            const totalBeats = section.beats * sectionDivision;
+            const beatDuration = 60 / (section.bpm * sectionDivision);
+
+            // Play notes
+            allNotes.forEach((note, noteIdx) => {
+                if (ctrlCurrentGrid[noteIdx] && ctrlCurrentGrid[noteIdx][ctrlCurrentBeat]) {
+                    Object.keys(legatoVoices).forEach(idx => stopLegatoVoice(parseInt(idx)));
+                    playTone(note.freq, beatDuration, noteIdx);
+                }
+            });
+
+            // Metronome
+            if (metronomeEnabled && ctrlCurrentBeat % sectionDivision === 0) {
+                playMetronome(ctrlCurrentBeat === 0 ? 1000 : 800);
+            }
+
+            document.getElementById('ctrlBeatDisplay').textContent = Math.floor(ctrlCurrentBeat / sectionDivision) + 1;
+            document.getElementById('ctrlBpmDisplay').textContent = section.bpm;
+            ctrlUpdateBeatIndicator(Math.floor(ctrlCurrentBeat / sectionDivision));
+
+            ctrlCurrentBeat++;
+
+            let endBeat = totalBeats;
+            if (ctrlIsOutro) {
+                const outroBeat = parseInt(document.getElementById('ctrlOutroBeat').value) || 1;
+                endBeat = outroBeat * sectionDivision;
+            }
+
+            const cycleComplete = ctrlCurrentBeat >= (ctrlIsIntro ? totalBeats : endBeat);
+
+            if (cycleComplete) {
+                ctrlCurrentBeat = 0;
+
+                if (ctrlIsIntro) {
+                    ctrlIsIntro = false;
+                    ctrlCurrentSectionIndex = 0;
+                    ctrlCurrentCycle = 1;
+                    const newSection = ctrlSections[0];
+                    ctrlLoadMelodyForSection(newSection);
+                    ctrlCreateBeatIndicator(newSection.beats);
+                    ctrlUpdateStatus();
+                    ctrlRenderSections();
+                    document.getElementById('ctrlNextBtn').disabled = false;
+                    clearInterval(ctrlIntervalId);
+                    ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (newSection.bpm * newSection.division)) * 1000);
+                } else if (ctrlIsOutro) {
+                    ctrlStop();
+                } else {
+                    ctrlCurrentCycle++;
+                    if (ctrlNextSectionRequested) {
+                        ctrlNextSectionRequested = false;
+                        ctrlProceedToNextSection();
+                    } else if (section.cycles === 0) {
+                        ctrlUpdateStatus();
+                    } else if (ctrlCurrentCycle > section.cycles) {
+                        ctrlProceedToNextSection();
+                    } else {
+                        ctrlUpdateStatus();
+                    }
+                }
+            }
+        }
+
+        function ctrlProceedToNextSection() {
+            if (ctrlCurrentSectionIndex < ctrlSections.length - 1) {
+                ctrlCurrentSectionIndex++;
+                ctrlCurrentCycle = 1;
+                ctrlCurrentBeat = 0;
+                const section = ctrlSections[ctrlCurrentSectionIndex];
+                ctrlLoadMelodyForSection(section);
+                ctrlCreateBeatIndicator(section.beats);
+                ctrlUpdateStatus();
+                ctrlRenderSections();
+                document.getElementById('ctrlNextBtn').disabled = false;
+                clearInterval(ctrlIntervalId);
+                ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (section.bpm * section.division)) * 1000);
+            } else {
+                if (ctrlOutroEnabled) {
+                    ctrlStartOutro();
+                } else {
+                    ctrlStop();
+                }
+            }
+        }
+
+        function ctrlStart() {
+            if (ctrlIsPlaying) return;
+            ctrlIsPlaying = true;
+            ctrlCurrentBeat = 0;
+            document.getElementById('ctrlStartBtn').disabled = true;
+            document.getElementById('ctrlStopBtn').disabled = false;
+
+            if (ctrlIntroEnabled) {
+                document.getElementById('ctrlNextBtn').disabled = true;
+                ctrlStartIntro();
+            } else {
+                ctrlCurrentSectionIndex = 0;
+                ctrlCurrentCycle = 1;
+                const section = ctrlSections[0];
+                ctrlLoadMelodyForSection(section);
+                ctrlCreateBeatIndicator(section.beats);
+                ctrlUpdateStatus();
+                ctrlRenderSections();
+                document.getElementById('ctrlNextBtn').disabled = false;
+                ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (section.bpm * section.division)) * 1000);
+            }
+        }
+
+        function ctrlNextSection() {
+            if (!ctrlIsPlaying) return;
+            ctrlNextSectionRequested = true;
+            document.getElementById('ctrlNextBtn').disabled = true;
+        }
+
+        function ctrlStop() {
+            ctrlIsPlaying = false;
+            ctrlIsIntro = false;
+            ctrlIsOutro = false;
+            ctrlNextSectionRequested = false;
+            if (ctrlIntervalId) { clearInterval(ctrlIntervalId); ctrlIntervalId = null; }
+            Object.keys(legatoVoices).forEach(idx => stopLegatoVoice(parseInt(idx)));
+            document.getElementById('ctrlStartBtn').disabled = false;
+            document.getElementById('ctrlStopBtn').disabled = true;
+            document.getElementById('ctrlNextBtn').disabled = true;
+            ctrlUpdateStatus();
+            ctrlRenderSections();
+            document.getElementById('ctrlBeatIndicator').innerHTML = '';
+        }
+
+        function ctrlReset() {
+            ctrlStop();
+            ctrlCurrentSectionIndex = -1;
+            ctrlCurrentCycle = 0;
+            ctrlCurrentBeat = 0;
+            document.getElementById('ctrlStatusTitle').textContent = 'Ready to Start';
+            document.getElementById('ctrlSectionDisplay').textContent = '-';
+            document.getElementById('ctrlCycleDisplay').textContent = '0/0';
+            document.getElementById('ctrlBeatDisplay').textContent = '-';
+            document.getElementById('ctrlBpmDisplay').textContent = '-';
+            ctrlRenderSections();
+        }
+
+        function ctrlStartIntro() {
+            ctrlIsIntro = true;
+            ctrlCurrentSectionIndex = 0;
+            const section = ctrlSections[0];
+            ctrlLoadMelodyForSection(section);
+            const introBeat = parseInt(document.getElementById('ctrlIntroBeat').value) || 1;
+            ctrlCurrentBeat = (introBeat - 1) * section.division;
+            ctrlCreateBeatIndicator(section.beats);
+            document.getElementById('ctrlStatusTitle').textContent = 'Playing Intro';
+            document.getElementById('ctrlSectionDisplay').textContent = 'Intro';
+            document.getElementById('ctrlCycleDisplay').textContent = '1/1';
+            ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (section.bpm * section.division)) * 1000);
+        }
+
+        function ctrlStartOutro() {
+            clearInterval(ctrlIntervalId);
+            ctrlIsOutro = true;
+            ctrlCurrentCycle = 0;
+            ctrlCurrentBeat = 0;
+            const section = ctrlSections[ctrlSections.length - 1];
+            ctrlLoadMelodyForSection(section);
+            ctrlCreateBeatIndicator(section.beats);
+            document.getElementById('ctrlStatusTitle').textContent = 'Playing Outro';
+            document.getElementById('ctrlSectionDisplay').textContent = 'Outro';
+            document.getElementById('ctrlCycleDisplay').textContent = '1/1';
+            ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (section.bpm * section.division)) * 1000);
+        }
+
+        function ctrlUpdateStatus() {
+            if (ctrlIsIntro) {
+                document.getElementById('ctrlStatusTitle').textContent = 'Playing Intro';
+                document.getElementById('ctrlSectionDisplay').textContent = 'Intro';
+                document.getElementById('ctrlCycleDisplay').textContent = '1/1';
+            } else if (ctrlIsOutro) {
+                document.getElementById('ctrlStatusTitle').textContent = 'Playing Outro';
+                document.getElementById('ctrlSectionDisplay').textContent = 'Outro';
+                document.getElementById('ctrlCycleDisplay').textContent = '1/1';
+            } else if (ctrlCurrentSectionIndex >= 0) {
+                const section = ctrlSections[ctrlCurrentSectionIndex];
+                document.getElementById('ctrlStatusTitle').textContent = 'Playing ' + section.name;
+                document.getElementById('ctrlSectionDisplay').textContent = section.name;
+                document.getElementById('ctrlCycleDisplay').textContent =
+                    section.cycles === 0 ? ctrlCurrentCycle + ' (looping)' : ctrlCurrentCycle + '/' + section.cycles;
+            }
+        }
+
+        function ctrlSaveStructurePreset() {
+            const name = prompt('Name for this solo structure:');
+            if (!name) return;
+            const key = 'ctrlStruct_' + name.replace(/[^a-zA-Z0-9\s]/g, '_').replace(/\s/g, '_');
+            const data = {
+                sections: ctrlSections.map(s => ({...s})),
+                introEnabled: ctrlIntroEnabled,
+                outroEnabled: ctrlOutroEnabled,
+                introBeat: parseInt(document.getElementById('ctrlIntroBeat').value) || 1,
+                outroBeat: parseInt(document.getElementById('ctrlOutroBeat').value) || 1,
+            };
+            localStorage.setItem(key, JSON.stringify(data));
+            ctrlPopulateStructurePresets();
+            alert('Structure saved!');
+        }
+
+        function ctrlLoadStructurePreset() {
+            const key = document.getElementById('ctrlStructurePreset').value;
+            if (!key) return;
+            try {
+                const data = JSON.parse(localStorage.getItem(key));
+                ctrlSections = data.sections.map(s => ({...s}));
+                ctrlIntroEnabled = data.introEnabled || false;
+                ctrlOutroEnabled = data.outroEnabled || false;
+                document.getElementById('ctrlIntroToggle').classList.toggle('active', ctrlIntroEnabled);
+                document.getElementById('ctrlOutroToggle').classList.toggle('active', ctrlOutroEnabled);
+                document.getElementById('ctrlIntroBeat').value = data.introBeat || 1;
+                document.getElementById('ctrlOutroBeat').value = data.outroBeat || 1;
+                ctrlRenderSections();
+                alert('Structure loaded!');
+            } catch(e) {
+                alert('Error loading: ' + e.message);
+            }
+        }
+
+        function ctrlDeleteStructurePreset() {
+            const key = document.getElementById('ctrlStructurePreset').value;
+            if (!key) return;
+            if (confirm('Delete this preset?')) {
+                localStorage.removeItem(key);
+                ctrlPopulateStructurePresets();
+                alert('Deleted!');
+            }
+        }
+
+        function ctrlPopulateStructurePresets() {
+            const select = document.getElementById('ctrlStructurePreset');
+            select.innerHTML = '<option value="">--- Select a Structure Preset ---</option>';
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('ctrlStruct_')) {
+                    const name = key.substring(11);
+                    const opt = document.createElement('option');
+                    opt.value = key;
+                    opt.textContent = name;
+                    select.appendChild(opt);
+                }
+            }
+        }
+
+        // Wire up controller buttons
+        document.getElementById('ctrlStartBtn').addEventListener('click', ctrlStart);
+        document.getElementById('ctrlNextBtn').addEventListener('click', ctrlNextSection);
+        document.getElementById('ctrlStopBtn').addEventListener('click', ctrlStop);
+        document.getElementById('ctrlResetBtn').addEventListener('click', ctrlReset);
+        document.getElementById('ctrlIntroToggle').addEventListener('click', function() {
+            ctrlIntroEnabled = !ctrlIntroEnabled;
+            this.classList.toggle('active');
+        });
+        document.getElementById('ctrlOutroToggle').addEventListener('click', function() {
+            ctrlOutroEnabled = !ctrlOutroEnabled;
+            this.classList.toggle('active');
+        });
+
+        // Initial controller render
+        ctrlRenderSections();
+        ctrlPopulateStructurePresets();
+
+        // ===== END SOLO STRUCTURE CONTROLLER =====
     </script>
 </body>
 </html>
