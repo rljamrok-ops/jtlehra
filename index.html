@@ -5,534 +5,484 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JamrokTabla Lehra 2026</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        /* ── Colour palette ─────────────────────────────────────────
+           Dusty rose / marigold / sage / ivory — pastel South-Asian
+        ────────────────────────────────────────────────────────── */
+        :root {
+            --bg-grad-a:   #e8d5c4;   /* warm ivory */
+            --bg-grad-b:   #d4b8a8;   /* dusty sandstone */
+            --surface:     #fdf8f2;   /* parchment */
+            --panel:       #f5ede3;   /* warm blush panel */
+            --border:      #c9a882;   /* marigold-sand border */
+            --border-soft: #ddc9b0;
+            --accent1:     #b85c38;   /* terracotta */
+            --accent2:     #d4956a;   /* marigold */
+            --accent3:     #7a9e7e;   /* sage green */
+            --accent4:     #a06b9a;   /* lotus purple */
+            --text-main:   #4a2e1a;   /* deep brown */
+            --text-mid:    #7a5540;
+            --text-soft:   #a08060;
+            /* tehai pastels */
+            --tehai1:      #d4e8c2;   /* sage mint */
+            --tehai2:      #f7d6d0;   /* petal rose */
+            --tehai3:      #fce8c3;   /* soft marigold */
+            /* active note highlight */
+            --note-active: #e8a020;
+            --note-play:   #c0392b;
+            /* controller accent */
+            --ctrl-bg:     #eef4f0;
+            --ctrl-border: #7a9e7e;
+            --ctrl-head:   #3d6b41;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
             margin: 0;
             padding: 20px;
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #8B4513 0%, #D2691E 50%, #CD853F 100%);
+            background: linear-gradient(150deg, var(--bg-grad-a) 0%, var(--bg-grad-b) 100%);
             min-height: 100vh;
         }
-        
+
         .container {
             max-width: 1600px;
             margin: 0 auto;
             margin-left: 80px;
-            background: rgba(255, 248, 220, 0.95);
-            border-radius: 15px;
+            background: var(--surface);
+            border-radius: 18px;
             padding: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            border: 3px solid #DAA520;
+            box-shadow: 0 6px 28px rgba(74,46,26,0.15);
+            border: 2px solid var(--border);
         }
-        
-        /* Updated Title */
+
         h1 {
             text-align: center;
-            color: #8B4513;
-            margin: 0 0 25px 0;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            color: var(--accent1);
+            margin: 0 0 24px 0;
+            font-size: 2.2em;
+            font-weight: 700;
+            letter-spacing: 0.02em;
         }
-        
+
+        /* ── Controls grid ─────────────────────────────────────── */
         .controls {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 columns for controls */
-            gap: 15px;
-            margin-bottom: 25px;
-            padding: 20px;
-            background: rgba(210, 180, 140, 0.3);
-            border-radius: 10px;
-            border: 2px solid #CD853F;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 22px;
+            padding: 18px;
+            background: var(--panel);
+            border-radius: 12px;
+            border: 1.5px solid var(--border-soft);
         }
-        
-        /* Manual placement for 3 rows */
         .control-group.row-1-col-1 { grid-area: 1 / 1 / 2 / 2; }
         .control-group.row-1-col-2 { grid-area: 1 / 2 / 2 / 3; }
         .control-group.row-1-col-3 { grid-area: 1 / 3 / 2 / 4; }
         .control-group.row-2-col-1 { grid-area: 2 / 1 / 3 / 2; }
         .control-group.row-2-col-2 { grid-area: 2 / 2 / 3 / 3; }
         .control-group.row-2-col-3 { grid-area: 2 / 3 / 3 / 4; }
-        .control-group.row-3-col-1 { grid-area: 3 / 1 / 4 / 3; } /* Spanning 2 columns */
+        .control-group.row-3-col-1 { grid-area: 3 / 1 / 4 / 3; }
         .control-group.row-3-col-3 { grid-area: 3 / 3 / 4 / 4; }
-
         @media (max-width: 1200px) {
-            .controls {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            }
-            .control-group.row-3-col-1 { grid-area: auto; }
-            .control-group.row-3-col-3 { grid-area: auto; }
-        }
-        
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        
-        label {
-            font-weight: bold;
-            color: #8B4513;
-            font-size: 0.9em;
-        }
-        
-        input[type="number"], input[type="range"], select {
-            padding: 8px;
-            border: 2px solid #CD853F;
-            border-radius: 5px;
-            background: white;
-            font-size: 1em;
+            .controls { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+            .control-group.row-3-col-1, .control-group.row-3-col-3 { grid-area: auto; }
         }
 
-        /* Added style for small number inputs next to sliders */
+        .control-group { display: flex; flex-direction: column; gap: 7px; }
+
+        label {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.85em;
+            letter-spacing: 0.01em;
+        }
+
+        input[type="number"], input[type="range"], select {
+            padding: 7px 10px;
+            border: 1.5px solid var(--border);
+            border-radius: 7px;
+            background: #fff;
+            font-size: 0.95em;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+        }
+        input[type="range"] { padding: 4px 0; accent-color: var(--accent2); }
         .control-group input[type="number"] {
-            padding: 4px;
-            margin-right: 5px;
-            width: 50px; 
+            padding: 4px 6px;
+            margin-right: 4px;
+            width: 54px;
             font-size: 0.9em;
         }
-        
+
+        /* ── Button group ──────────────────────────────────────── */
         .button-group {
             display: flex;
-            gap: 10px;
+            gap: 9px;
             flex-wrap: wrap;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
-        
+
         button {
-            padding: 12px 24px;
-            font-size: 1em;
-            font-weight: bold;
+            padding: 10px 22px;
+            font-size: 0.92em;
+            font-weight: 600;
             border: none;
-            border-radius: 8px;
+            border-radius: 9px;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.22s;
+            box-shadow: 0 3px 7px rgba(74,46,26,0.16);
+            font-family: 'Inter', sans-serif;
         }
-        
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
-        }
-        
-        .play-btn {
-            background: linear-gradient(135deg, #228B22, #32CD32);
-            color: white;
-        }
-        
-        .stop-btn {
-            background: linear-gradient(135deg, #DC143C, #FF6347);
-            color: white;
-        }
-        
-        .clear-btn {
-            background: linear-gradient(135deg, #FF8C00, #FFA500);
-            color: white;
-        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 10px rgba(74,46,26,0.22); }
 
-        .transpose-btn {
-            background: linear-gradient(135deg, #5D3FD3, #8A2BE2);
-            color: white;
-        }
+        .play-btn      { background: linear-gradient(135deg, #5a9e6f, #7abc8a); color: #fff; }
+        .stop-btn      { background: linear-gradient(135deg, #c0392b, #e05a50); color: #fff; }
+        .clear-btn     { background: linear-gradient(135deg, #c97d3a, #e0a060); color: #fff; }
+        .transpose-btn { background: linear-gradient(135deg, #7a5fa8, #9b7ec8); color: #fff; }
+        .preset-btn    { background: linear-gradient(135deg, #5a7bb5, #7a9ed8); color: #fff; font-size: 0.88em; padding: 7px 14px; }
 
-.tempo-btn {
-    background: linear-gradient(135deg, #FF1493, #FF69B4);
-    color: white;
-}
-        
-        .preset-btn {
-            background: linear-gradient(135deg, #4169E1, #6495ED);
-            color: white;
-            font-size: 0.9em;
-            padding: 8px 16px;
-        }
-        
+        /* ── Toggle switch ─────────────────────────────────────── */
         .toggle-switch {
-            position: relative;
-            width: 50px;
-            height: 26px;
-            background: #ccc;
-            border-radius: 13px;
-            cursor: pointer;
-            transition: background 0.3s;
+            position: relative; width: 48px; height: 25px;
+            background: #cfc0b0; border-radius: 13px; cursor: pointer;
+            transition: background 0.3s; flex-shrink: 0;
         }
-        
-        .toggle-switch.active {
-            background: #32CD32;
-        }
-        
+        .toggle-switch.active { background: var(--accent3); }
         .toggle-slider {
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 20px;
-            height: 20px;
-            background: white;
-            border-radius: 50%;
-            transition: left 0.3s;
+            position: absolute; top: 3px; left: 3px;
+            width: 19px; height: 19px; background: white;
+            border-radius: 50%; transition: left 0.3s;
         }
-        
-        .toggle-switch.active .toggle-slider {
-            left: 27px;
-        }
-        
+        .toggle-switch.active .toggle-slider { left: 26px; }
+
         .value-display {
-            display: inline-block;
-            min-width: 40px;
-            text-align: center;
-            font-weight: bold;
-            color: #8B4513;
+            display: inline-block; min-width: 38px;
+            text-align: center; font-weight: 700; color: var(--accent1);
         }
-        
+
+        /* ── Grid section ──────────────────────────────────────── */
         .grid-section {
-            background: white;
+            background: #fff;
             padding: 20px;
-            border-radius: 10px;
-            border: 3px solid #DAA520;
-            margin-bottom: 20px;
+            border-radius: 12px;
+            border: 2px solid var(--border-soft);
+            margin-bottom: 18px;
             position: relative;
-            /* New style for positioning the grid away from the left edge (80px in .container) */
             left: -50px;
         }
-        
-        .grid-with-sargam {
-            position: relative;
-        }
-        
+        .grid-with-sargam { position: relative; }
+
         .sargam-wheel {
-            position: absolute;
-            /* Allow horizontal movement, initial position is set by JS */
-            left: 0px; 
-            top: 0px;
-            background: rgba(210, 180, 140, 0.95);
-            border: 2px solid #CD853F;
-            border-radius: 5px;
-            padding: 5px 8px;
-            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
-            z-index: 10;
-            cursor: grab; /* Indicates drag capability */
-            user-select: none;
+            position: absolute; left: 0; top: 0;
+            background: rgba(245, 237, 227, 0.97);
+            border: 1.5px solid var(--border);
+            border-radius: 7px; padding: 4px 7px;
+            box-shadow: 2px 0 8px rgba(74,46,26,0.12);
+            z-index: 10; cursor: grab; user-select: none;
         }
-        
         .sargam-note {
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-weight: bold;
-            color: #8B4513;
-            background: rgba(139, 69, 19, 0.15);
-            border-radius: 3px;
-            font-size: 0.85em;
-            margin: 0;
-            min-width: 45px;
+            height: 40px; display: flex; align-items: center;
+            justify-content: center; text-align: center;
+            font-weight: 700; color: var(--accent1);
+            background: rgba(184,92,56,0.10);
+            border-radius: 4px; font-size: 0.82em; margin: 0; min-width: 44px;
         }
-        
         .sargam-note.blank {
-            background: rgba(139, 69, 19, 0.05);
-            border: 1px dashed #CD853F;
+            background: rgba(184,92,56,0.03);
+            border: 1px dashed var(--border-soft);
         }
-        
+
         .grid-wrapper {
-            overflow-x: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            /* Push grid content over to make space for sargam wheel */
-            padding-left: 55px; 
+            overflow-x: auto; background: white;
+            padding: 20px; border-radius: 10px; padding-left: 55px;
         }
-        
-        .grid-row {
-            display: flex;
-            margin: 0;
-        }
-        
-        .tehai-row, .beat-label-row, .playback-row {
-            min-height: 30px;
-        }
-        
-        .beat-label-row {
-            min-height: 35px;
-        }
-        
-        .pitch-row {
-            min-height: 40px;
-        }
-        
-        .playback-row {
-            min-height: 25px;
-        }
-        
+        .grid-row { display: flex; margin: 0; }
+        .tehai-row, .beat-label-row, .playback-row { min-height: 30px; }
+        .beat-label-row  { min-height: 35px; }
+        .pitch-row       { min-height: 40px; }
+        .playback-row    { min-height: 25px; }
+
         .row-label {
-            width: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #8B4513;
-            background: rgba(210, 180, 140, 0.3);
-            border-right: 2px solid #CD853F;
-            flex-shrink: 0;
-            font-size: 0.85em;
+            width: 80px; display: flex; align-items: center;
+            justify-content: center; font-weight: 600;
+            color: var(--text-main);
+            background: rgba(201,168,130,0.18);
+            border-right: 2px solid var(--border-soft);
+            flex-shrink: 0; font-size: 0.82em;
         }
-        
-        .grid-cells {
-            display: flex;
-            flex: 1;
-        }
-        
+        .grid-cells { display: flex; flex: 1; }
+
         .grid-cell {
-            border: 1px solid #CD853F;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85em;
-            font-weight: bold;
+            border: 1px solid var(--border-soft);
+            cursor: pointer; transition: all 0.18s;
+            background: #fff; display: flex; align-items: center;
+            justify-content: center; font-size: 0.82em; font-weight: 600;
         }
-        
-        .grid-cell:hover {
-            background: rgba(218, 165, 32, 0.2);
-        }
-        
-        /* Tehai Color Coding */
-        .grid-cell.tehai-group-1 {
-            background: #90EE90; /* Light Green */
-        }
-        .grid-cell.tehai-group-2 {
-            background: #FFB6C1; /* Light Red/Pink */
-        }
-        .grid-cell.tehai-group-3 {
-            background: rgba(139, 69, 19, 0.15); /* Brown */
-        }
+        .grid-cell:hover { background: rgba(212,149,106,0.18); }
 
-        /* Active/Playing states for Tehai cells */
+        /* Tehai — pastel */
+        .grid-cell.tehai-group-1 { background: var(--tehai1); }
+        .grid-cell.tehai-group-2 { background: var(--tehai2); }
+        .grid-cell.tehai-group-3 { background: var(--tehai3); }
+
+        /* Active note */
         .grid-cell.active {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #f0c060, #e8a020);
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.22);
         }
-        .grid-cell.tehai-group-1.active {
-            background: linear-gradient(135deg, #00FF00, #32CD32);
-        }
-        .grid-cell.tehai-group-2.active {
-            background: linear-gradient(135deg, #FF4500, #DC143C);
-        }
-        .grid-cell.tehai-group-3.active {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-        }
-        
+        .grid-cell.tehai-group-1.active { background: linear-gradient(135deg, #a8d8a8, #6aae6a); }
+        .grid-cell.tehai-group-2.active { background: linear-gradient(135deg, #e8a0a0, #c05050); }
+        .grid-cell.tehai-group-3.active { background: linear-gradient(135deg, #f0c060, #e8a020); }
+
         .grid-cell.playing {
-            background: linear-gradient(135deg, #FF6347, #DC143C);
-            animation: pulse 0.3s;
+            background: linear-gradient(135deg, #e07060, #c0392b);
+            animation: pulse 0.28s;
         }
-        
-        /* --- START OF USER-REQUESTED CSS CHANGES --- */
+
+        /* Beat label */
         .beat-label-input {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: transparent;
-            text-align: center;
-            font-size: 0.75em;
-            color: #8B4513; /* Typed/Filled text color: Dark Brown (to stand out) */
-            font-weight: bold; /* Typed/Filled text is bold */
-            padding: 2px;
+            width: 100%; height: 100%; border: none; background: transparent;
+            text-align: center; font-size: 0.75em;
+            color: var(--accent1); font-weight: 700; padding: 2px;
+            font-family: 'Inter', sans-serif;
         }
+        .beat-label-input::placeholder { color: #b8a898; font-weight: 400; opacity: 1; }
+        .beat-label-input:focus { outline: 2px solid var(--accent3); background: #fffaf5; }
 
-        /* Style the placeholder text (the pre-filled beat number) */
-        .beat-label-input::placeholder {
-            color: #AAAAAA; /* Light grey for the pre-filled number */
-            font-weight: normal; /* Ensure the pre-filled number is not bold */
-            opacity: 1; /* For cross-browser visibility of color */
-        }
-        
-        /* --- END OF USER-REQUESTED CSS CHANGES --- */
+        .measure-start { border-left: 2.5px solid var(--accent1); }
 
-        .beat-label-input:focus {
-            outline: 2px solid #3b82f6;
-            background: white;
-        }
-        
-        .measure-start {
-            border-left: 3px solid #8B4513;
-        }
-        
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        .preset-section {
-            background: rgba(210, 180, 140, 0.2);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-        
-        .preset-list {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 10px;
+            50%       { transform: scale(1.08); }
         }
 
-        /* ===== SOLO CONTROLLER STYLES ===== */
+        /* ── Preset section ────────────────────────────────────── */
+        .preset-section {
+            background: var(--panel);
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 14px;
+            border: 1.5px solid var(--border-soft);
+        }
+        .preset-list { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+
+        /* ── Solo Controller ───────────────────────────────────── */
         .controller-toggle-btn {
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            color: white;
-            padding: 10px 20px;
-            font-size: 1em;
-            font-weight: bold;
+            background: linear-gradient(135deg, var(--ctrl-head), #5a9e6f);
+            color: #fff;
+            padding: 9px 20px;
+            font-size: 0.93em;
+            font-weight: 700;
             border: none;
-            border-radius: 8px;
+            border-radius: 9px;
             cursor: pointer;
             margin-bottom: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            transition: all 0.3s;
+            box-shadow: 0 3px 8px rgba(61,107,65,0.25);
+            transition: all 0.22s;
+            letter-spacing: 0.02em;
         }
         .controller-toggle-btn:hover { transform: translateY(-2px); }
 
         .controller-panel {
-            background: rgba(30, 58, 138, 0.06);
-            border: 2px solid #3b82f6;
-            border-radius: 12px;
+            background: var(--ctrl-bg);
+            border: 1.5px solid var(--ctrl-border);
+            border-radius: 14px;
             padding: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
         .controller-panel h2 {
-            color: #1e3a8a;
-            margin: 0 0 15px 0;
-            font-size: 1.4em;
+            color: var(--ctrl-head);
+            margin: 0 0 14px 0;
+            font-size: 1.25em;
+            font-weight: 700;
         }
+
+        /* status bar */
         .ctrl-status-bar {
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            padding: 14px 20px;
+            background: linear-gradient(135deg, #3d6b41, #5a9e6f);
+            padding: 14px 18px;
             border-radius: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 14px;
             color: white;
         }
-        .ctrl-status-bar h3 { margin: 0 0 8px 0; font-size: 1.2em; }
-        .ctrl-status-info {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+        .ctrl-status-bar h3 { margin: 0 0 8px 0; font-size: 1.1em; }
+        .ctrl-status-info { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px; }
         .ctrl-status-item {
-            background: rgba(255,255,255,0.2);
-            padding: 8px 14px;
-            border-radius: 6px;
-            min-width: 90px;
-            text-align: center;
+            background: rgba(255,255,255,0.18);
+            padding: 8px 14px; border-radius: 8px; min-width: 90px; text-align: center;
         }
-        .ctrl-status-label { font-size: 0.8em; opacity: 0.9; }
-        .ctrl-status-value { font-size: 1.3em; font-weight: bold; }
+        .ctrl-status-label { font-size: 0.78em; opacity: 0.88; }
+        .ctrl-status-value { font-size: 1.25em; font-weight: 700; }
         .ctrl-beat-indicator { display: flex; gap: 4px; margin-top: 8px; flex-wrap: wrap; }
         .ctrl-beat-dot {
-            width: 16px; height: 16px; border-radius: 50%;
-            background: #e5e7eb; transition: all 0.2s;
+            width: 14px; height: 14px; border-radius: 50%;
+            background: rgba(255,255,255,0.3); transition: all 0.18s;
         }
-        .ctrl-beat-dot.active { background: #22c55e; transform: scale(1.3); box-shadow: 0 0 8px rgba(34,197,94,0.5); }
-        .ctrl-beat-dot.sam { border: 2px solid #ef4444; }
+        .ctrl-beat-dot.active { background: #f0d060; transform: scale(1.35); box-shadow: 0 0 7px rgba(240,208,96,0.6); }
+        .ctrl-beat-dot.sam { border: 2px solid #fff; }
 
-        .ctrl-main-controls {
-            display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;
-        }
-        .ctrl-start-btn { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
-        .ctrl-next-btn  { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
-        .ctrl-stop-btn  { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
-        .ctrl-reset-btn { background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; }
+        /* controller buttons */
+        .ctrl-main-controls { display: flex; gap: 9px; flex-wrap: wrap; margin-bottom: 14px; }
+        .ctrl-start-btn { background: linear-gradient(135deg, #5a9e6f, #7abc8a); color: #fff; }
+        .ctrl-next-btn  { background: linear-gradient(135deg, #c97d3a, #e0a060); color: #fff; }
+        .ctrl-stop-btn  { background: linear-gradient(135deg, #c0392b, #e05a50); color: #fff; }
+        .ctrl-reset-btn { background: linear-gradient(135deg, #7a5fa8, #9b7ec8); color: #fff; }
         .ctrl-main-controls button {
-            padding: 10px 20px; font-size: 0.95em; font-weight: bold;
+            padding: 9px 18px; font-size: 0.9em; font-weight: 700;
             border: none; border-radius: 8px; cursor: pointer;
-            transition: all 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: all 0.22s; box-shadow: 0 3px 7px rgba(0,0,0,0.16);
+            font-family: 'Inter', sans-serif;
         }
         .ctrl-main-controls button:hover:not(:disabled) { transform: translateY(-2px); }
-        .ctrl-main-controls button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .ctrl-main-controls button:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
 
+        /* intro/outro block */
         .ctrl-intro-outro {
-            background: rgba(168,85,247,0.08);
-            border: 1px solid #a855f7;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 12px;
+            background: rgba(160,107,154,0.09);
+            border: 1.5px solid rgba(160,107,154,0.35);
+            border-radius: 10px; padding: 12px; margin-bottom: 12px;
         }
-        .ctrl-intro-outro h4 { margin: 0 0 10px 0; color: #6d28d9; }
+        .ctrl-intro-outro h4 { margin: 0 0 10px 0; color: var(--accent4); font-size: 0.92em; font-weight: 700; }
 
-        .ctrl-toggle-row {
-            display: flex; align-items: center; gap: 10px; margin: 6px 0;
+        /* tempo ramp block */
+        .ctrl-tempo-block {
+            background: rgba(184,92,56,0.07);
+            border: 1.5px solid rgba(184,92,56,0.3);
+            border-radius: 10px; padding: 14px; margin-bottom: 12px;
         }
+        .ctrl-tempo-block h4 { margin: 0 0 10px 0; color: var(--accent1); font-size: 0.92em; font-weight: 700; }
+        .tempo-ramp-grid {
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 10px;
+        }
+        .tempo-ramp-grid label { font-weight: 600; color: var(--text-main); font-size: 0.82em; display: block; margin-bottom: 3px; }
+        .tempo-ramp-grid input[type="number"] {
+            padding: 6px 8px; border: 1.5px solid var(--border-soft); border-radius: 6px;
+            font-size: 0.9em; width: 100%; color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+        }
+        .tempo-ramp-status {
+            display: flex; align-items: center; gap: 10px; margin-top: 8px;
+            font-size: 0.83em; color: var(--text-mid);
+        }
+        .tempo-ramp-bar-wrap {
+            flex: 1; height: 8px; background: rgba(184,92,56,0.15);
+            border-radius: 4px; overflow: hidden;
+        }
+        .tempo-ramp-bar {
+            height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            border-radius: 4px; transition: width 0.4s;
+        }
+        .tempo-ramp-active { color: var(--accent1); font-weight: 700; }
+
+        .ctrl-toggle-row { display: flex; align-items: center; gap: 10px; margin: 5px 0; }
         .ctrl-toggle {
-            position: relative; width: 44px; height: 22px;
-            background: #cbd5e1; border-radius: 11px; cursor: pointer;
-            transition: background 0.3s;
+            position: relative; width: 42px; height: 21px;
+            background: #c0b0a0; border-radius: 11px; cursor: pointer;
+            transition: background 0.28s; flex-shrink: 0;
         }
-        .ctrl-toggle.active { background: #22c55e; }
+        .ctrl-toggle.active { background: var(--accent3); }
         .ctrl-toggle-knob {
             position: absolute; top: 2px; left: 2px;
-            width: 18px; height: 18px; background: white;
-            border-radius: 50%; transition: left 0.3s;
+            width: 17px; height: 17px; background: white;
+            border-radius: 50%; transition: left 0.28s;
         }
-        .ctrl-toggle.active .ctrl-toggle-knob { left: 24px; }
+        .ctrl-toggle.active .ctrl-toggle-knob { left: 23px; }
 
+        /* structure preset strip */
         .ctrl-preset-strip {
-            background: rgba(99,102,241,0.08);
-            border: 1px solid #6366f1;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 12px;
+            background: rgba(90,155,110,0.08);
+            border: 1.5px solid rgba(90,155,110,0.3);
+            border-radius: 10px; padding: 12px; margin-bottom: 12px;
         }
-        .ctrl-preset-strip h4 { margin: 0 0 8px 0; color: #4338ca; }
-        .ctrl-preset-strip-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
-        .ctrl-preset-strip select { padding: 6px; border: 1px solid #6366f1; border-radius: 5px; font-size: 0.9em; flex: 1; min-width: 160px; }
+        .ctrl-preset-strip h4 { margin: 0 0 8px 0; color: var(--ctrl-head); font-size: 0.92em; font-weight: 700; }
 
-        .ctrl-sections-area { }
-        .ctrl-sections-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 10px;
-        }
-        .ctrl-sections-header h4 { margin: 0; color: #1e3a8a; }
+        /* section items */
+        .ctrl-sections-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .ctrl-sections-header h4 { margin: 0; color: var(--ctrl-head); font-size: 0.95em; font-weight: 700; }
+
+        /* section card: collapsed summary row + expandable detail */
         .ctrl-section-item {
-            background: white;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            border: 2px solid #e5e7eb;
-            transition: all 0.3s;
+            background: #fff; border-radius: 10px;
+            margin-bottom: 8px; border: 1.5px solid #d8e8da; transition: border-color 0.22s, box-shadow 0.22s;
+            overflow: hidden;
         }
-        .ctrl-section-item.active {
-            border-color: #22c55e;
-            background: #f0fdf4;
-            box-shadow: 0 4px 6px rgba(34,197,94,0.2);
+        .ctrl-section-item.active { border-color: var(--accent3); box-shadow: 0 3px 8px rgba(90,158,111,0.22); }
+        .ctrl-section-item.completed { opacity: 0.52; border-color: #c8c8c8; }
+
+        .ctrl-section-summary {
+            display: flex; align-items: center; gap: 8px; padding: 10px 12px;
+            cursor: pointer; user-select: none; flex-wrap: wrap;
         }
-        .ctrl-section-item.completed { opacity: 0.6; border-color: #9ca3af; }
+        .ctrl-section-summary:hover { background: rgba(90,158,111,0.06); }
+        .ctrl-section-num {
+            min-width: 22px; height: 22px; border-radius: 50%;
+            background: var(--border-soft); display: flex; align-items: center; justify-content: center;
+            font-size: 0.75em; font-weight: 700; color: var(--text-mid); flex-shrink: 0;
+        }
+        .ctrl-section-item.active .ctrl-section-num { background: var(--accent3); color: #fff; }
+        .ctrl-section-name-pill {
+            font-weight: 700; color: var(--text-main); font-size: 0.9em; flex: 1; min-width: 80px;
+        }
+        .ctrl-section-chips { display: flex; gap: 5px; flex-wrap: wrap; }
+        .ctrl-chip {
+            background: rgba(201,168,130,0.18); border: 1px solid var(--border-soft);
+            border-radius: 12px; padding: 2px 8px; font-size: 0.76em; color: var(--text-mid);
+            font-weight: 600; white-space: nowrap;
+        }
+        .ctrl-chip.preset { background: rgba(90,155,110,0.12); border-color: rgba(90,155,110,0.3); color: var(--ctrl-head); }
+        .ctrl-chip.cycles0 { background: rgba(160,107,154,0.1); border-color: rgba(160,107,154,0.3); color: var(--accent4); }
+        .ctrl-section-expand-btn {
+            background: none; border: none; cursor: pointer; padding: 2px 5px;
+            color: var(--text-soft); font-size: 0.85em; transition: transform 0.2s; flex-shrink: 0;
+        }
+        .ctrl-section-item.expanded .ctrl-section-expand-btn { transform: rotate(180deg); }
+
+        .ctrl-section-detail {
+            display: none; padding: 0 12px 12px 12px; border-top: 1px solid #eee;
+        }
+        .ctrl-section-item.expanded .ctrl-section-detail { display: block; }
+
         .ctrl-section-controls {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 8px;
-            margin-top: 8px;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px; margin-top: 10px;
         }
-        .ctrl-section-controls label { font-weight: 600; color: #1e3a8a; font-size: 0.85em; }
+        .ctrl-section-controls label { font-weight: 600; color: var(--text-main); font-size: 0.82em; display: block; margin-bottom: 3px; }
         .ctrl-section-controls input[type="number"],
         .ctrl-section-controls input[type="text"],
         .ctrl-section-controls select {
-            padding: 6px; border: 1px solid #cbd5e1; border-radius: 5px;
-            font-size: 0.9em; width: 100%; box-sizing: border-box;
+            padding: 6px 8px; border: 1.5px solid var(--border-soft); border-radius: 6px;
+            font-size: 0.88em; width: 100%; color: var(--text-main);
+            font-family: 'Inter', sans-serif;
         }
-        .ctrl-section-actions { display: flex; gap: 8px; margin-top: 8px; }
+        .ctrl-section-actions { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+        .ctrl-section-reorder { display: flex; gap: 4px; margin-left: auto; }
+
         .ctrl-sm-btn {
-            padding: 6px 12px; font-size: 0.85em; font-weight: bold;
-            border: none; border-radius: 6px; cursor: pointer;
-            transition: all 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            padding: 5px 11px; font-size: 0.82em; font-weight: 700;
+            border: none; border-radius: 7px; cursor: pointer;
+            transition: all 0.22s; box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+            font-family: 'Inter', sans-serif;
         }
         .ctrl-sm-btn:hover { transform: translateY(-1px); }
-        .ctrl-add-btn    { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
-        .ctrl-delete-btn { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
-        .ctrl-load-btn   { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
-        /* ===== END CONTROLLER STYLES ===== */
+        .ctrl-sm-btn:disabled { opacity: 0.38; cursor: not-allowed; transform: none; }
+        .ctrl-add-btn    { background: linear-gradient(135deg, #5a9e6f, #7abc8a); color: #fff; }
+        .ctrl-delete-btn { background: linear-gradient(135deg, #c0392b, #e05a50); color: #fff; }
+        .ctrl-load-btn   { background: linear-gradient(135deg, #c97d3a, #e0a060); color: #fff; }
+        .ctrl-dupe-btn   { background: linear-gradient(135deg, #5a7bb5, #7a9ed8); color: #fff; }
+        .ctrl-capture-btn { background: linear-gradient(135deg, #a06b9a, #c08ab8); color: #fff; }
+        .ctrl-move-btn   { background: rgba(120,100,80,0.12); color: var(--text-mid); box-shadow: none; border: 1px solid var(--border-soft); }
+        .ctrl-move-btn:hover { background: rgba(120,100,80,0.22); }
+        .ctrl-tempo-btn  { background: linear-gradient(135deg, var(--accent1), var(--accent2)); color: #fff; }
+
+        /* keyboard shortcut hint */
+        .kbd-hint { font-size: 0.75em; color: var(--text-soft); margin-left: 4px; }
+        kbd { display: inline-block; padding: 1px 5px; border: 1px solid var(--border-soft);
+              border-radius: 4px; background: #f8f4ee; font-size: 0.9em; font-family: monospace; }
+        /* ── END STYLES ── */
     </style>
 </head>
 <body>
@@ -614,6 +564,33 @@
                 </div>
             </div>
 
+            <div class="ctrl-tempo-block">
+                <h4>⏱️ Tempo Ramp</h4>
+                <div class="tempo-ramp-grid">
+                    <div>
+                        <label>Start BPM</label>
+                        <input type="number" id="tempoRampStart" min="12" max="600" placeholder="Current">
+                    </div>
+                    <div>
+                        <label>Target BPM</label>
+                        <input type="number" id="tempoRampTarget" min="12" max="600" placeholder="e.g. 160">
+                    </div>
+                    <div>
+                        <label>Over # Cycles</label>
+                        <input type="number" id="tempoRampCycles" min="1" max="200" placeholder="e.g. 8">
+                    </div>
+                </div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                    <button class="ctrl-sm-btn ctrl-tempo-btn" onclick="activateTempoRamp()">▶ Arm Ramp</button>
+                    <button class="ctrl-sm-btn ctrl-delete-btn" onclick="cancelTempoRamp()">✕ Cancel</button>
+                    <div class="tempo-ramp-status" id="tempoRampStatus">
+                        <span id="tempoRampLabel">Not armed</span>
+                        <div class="tempo-ramp-bar-wrap"><div class="tempo-ramp-bar" id="tempoRampBar"></div></div>
+                        <span id="tempoRampPct"></span>
+                    </div>
+                </div>
+            </div>
+
             <div class="ctrl-sections-area">
                 <div class="ctrl-sections-header">
                     <h4>Solo Sections</h4>
@@ -625,6 +602,7 @@
         <!-- ===== END CONTROLLER PANEL ===== -->
         
         <div class="controls">
+            <div class="control-group row-1-col-1">
                 <label>Beats:</label>
                 <input type="number" id="beats" min="1" max="201" value="16" onchange="initGrid()">
             </div>
@@ -635,9 +613,6 @@
                     <option value="harmonium">Harmonium (Reed)</option>
                     <option value="harmonium_bright">Harmonium (Bright)</option>
                     <option value="harmonium_warm" selected>Harmonium (Warm)</option>
-                    <option value="smooth">Smooth (Sine)</option>
-                    <option value="sharp">Sharp (Square)</option>
-                    <option value="octave">Note + Low Octave</option>
                 </select>
             </div>
 
@@ -688,13 +663,12 @@
         </div>
         
         <div class="button-group">
-            <button class="play-btn" id="playBtn">▶ Play</button>
+            <button class="play-btn" id="playBtn">▶ Play <span class="kbd-hint"><kbd>Space</kbd></span></button>
             <button class="stop-btn" id="stopBtn">■ Stop</button>
             <button class="clear-btn" id="clearBtn">Clear Grid</button>
             <button class="clear-btn" id="applyBtn">Apply Settings</button>
             <button class="transpose-btn" onclick="transposeMelody('up')">▲ Transpose Up</button>
             <button class="transpose-btn" onclick="transposeMelody('down')">▼ Transpose Down</button>
-<button class="tempo-btn" onclick="setupTempoChange()">⏱️ Tempo Change</button>
         </div>
         
         <div class="grid-section">
@@ -1228,8 +1202,70 @@ const tehaiPatterns = {
                     [noteToIdx['A#4'], 40]
                 ]
             },
-            // FIX: Corrected 29 (7 1/4) preset to match the user's requested 29-beat pattern.
-            '29 (7 1/4)': { 
+'23': {
+    beats: 23,
+    division: 2,
+    soundType: 'harmonium_warm',
+    pattern: [
+        [noteToIdx['C5'], 0],
+        [noteToIdx['C5'], 2],
+        [noteToIdx['C5'], 4],
+        [noteToIdx['B4'], 6],
+        [noteToIdx['B4'], 44],
+        [noteToIdx['G#4'], 8],
+        [noteToIdx['G#4'], 42],
+        [noteToIdx['G4'], 10],
+        [noteToIdx['F#4'], 12],
+        [noteToIdx['F#4'], 30],
+        [noteToIdx['F#4'], 40],
+        [noteToIdx['F4'], 24],
+        [noteToIdx['F4'], 26],
+        [noteToIdx['E4'], 14],
+        [noteToIdx['E4'], 28],
+        [noteToIdx['E4'], 32],
+        [noteToIdx['E4'], 38],
+        [noteToIdx['C#4'], 16],
+        [noteToIdx['C#4'], 20],
+        [noteToIdx['C#4'], 34],
+        [noteToIdx['C4'], 18],
+        [noteToIdx['C4'], 22],
+        [noteToIdx['C4'], 36]
+    ]
+},
+'25': {
+    beats: 25,
+    division: 2,
+    soundType: 'harmonium_warm',
+    pattern: [
+        [noteToIdx['C5'], 0],
+        [noteToIdx['C5'], 2],
+        [noteToIdx['C5'], 4],
+        [noteToIdx['B4'], 6],
+        [noteToIdx['B4'], 48],
+        [noteToIdx['G#4'], 8],
+        [noteToIdx['G#4'], 46],
+        [noteToIdx['G4'], 10],
+        [noteToIdx['F#4'], 12],
+        [noteToIdx['F#4'], 34],
+        [noteToIdx['F#4'], 44],
+        [noteToIdx['F4'], 20],
+        [noteToIdx['F4'], 22],
+        [noteToIdx['F4'], 28],
+        [noteToIdx['F4'], 30],
+        [noteToIdx['E4'], 14],
+        [noteToIdx['E4'], 24],
+        [noteToIdx['E4'], 26],
+        [noteToIdx['E4'], 32],
+        [noteToIdx['E4'], 36],
+        [noteToIdx['E4'], 42],
+        [noteToIdx['C#4'], 16],
+        [noteToIdx['C#4'], 38],
+        [noteToIdx['C4'], 18],
+        [noteToIdx['C4'], 40]
+    ]
+},
+            // FIX: Corrected 29 (7.25) preset to match the user's requested 29-beat pattern.
+            '29 (7.25)': { 
                 beats: 29,
                 division: 2,
                 soundType: 'harmonium_warm',
@@ -1264,7 +1300,137 @@ const tehaiPatterns = {
                     [noteToIdx['G4'], 54],  // Beat 28
                     [noteToIdx['B4'], 56]   // Beat 29
                 ]
-            }
+            },
+'31 (15.5) ': {
+    beats: 31,
+    division: 4,
+    soundType: 'harmonium_warm',
+    pattern: [
+        [noteToIdx['G4'], 40],
+        [noteToIdx['G4'], 48],
+        [noteToIdx['G4'], 56],
+        [noteToIdx['E4'], 24],
+        [noteToIdx['E4'], 32],
+        [noteToIdx['E4'], 64],
+        [noteToIdx['E4'], 72],
+        [noteToIdx['E4'], 108],
+        [noteToIdx['E4'], 120],
+        [noteToIdx['D#4'], 80],
+        [noteToIdx['D#4'], 88],
+        [noteToIdx['D#4'], 96],
+        [noteToIdx['D#4'], 104],
+        [noteToIdx['D#4'], 112],
+        [noteToIdx['D#4'], 116],
+        [noteToIdx['C4'], 0],
+        [noteToIdx['C4'], 8],
+        [noteToIdx['C4'], 16]
+    ]
+},
+'31 (7.75)': {
+    beats: 31,
+    division: 2,
+    soundType: 'harmonium_warm',
+    pattern: [
+        [noteToIdx['C5'], 0],
+        [noteToIdx['C5'], 58],
+        [noteToIdx['B4'], 8],
+        [noteToIdx['B4'], 56],
+        [noteToIdx['B4'], 60],
+        [noteToIdx['G#4'], 16],
+        [noteToIdx['G#4'], 52],
+        [noteToIdx['G4'], 20],
+        [noteToIdx['G4'], 40],
+        [noteToIdx['G4'], 48],
+        [noteToIdx['F4'], 32],
+        [noteToIdx['D#4'], 36],
+        [noteToIdx['D#4'], 44]
+    ]
+},
+'35 (8.75)': {
+    beats: 35,
+    division: 2,
+    soundType: 'harmonium_warm',
+    pattern: [
+        [noteToIdx['G4'], 24],
+        [noteToIdx['F4'], 16],
+        [noteToIdx['F4'], 28],
+        [noteToIdx['E4'], 0],
+        [noteToIdx['E4'], 20],
+        [noteToIdx['D#4'], 32],
+        [noteToIdx['D#4'], 60],
+        [noteToIdx['C4'], 44],
+        [noteToIdx['C4'], 56],
+        [noteToIdx['C4'], 64],
+        [noteToIdx['C4'], 68],
+        [noteToIdx['B3'], 48],
+        [noteToIdx['B3'], 66]
+    ]
+},
+'39 (9.75)': {
+    beats: 39,
+    division: 2,
+    soundType: 'harmonium_warm',
+    pattern: [
+        [noteToIdx['C5'], 0],
+        [noteToIdx['G#4'], 8],
+        [noteToIdx['G4'], 76],
+        [noteToIdx['F4'], 16],
+        [noteToIdx['F4'], 64],
+        [noteToIdx['F4'], 74],
+        [noteToIdx['D#4'], 24],
+        [noteToIdx['D#4'], 56],
+        [noteToIdx['D#4'], 72],
+        [noteToIdx['D4'], 32],
+        [noteToIdx['D4'], 48],
+        [noteToIdx['D4'], 68],
+        [noteToIdx['A#3'], 40]
+    ]
+},
+'41 (10.25)': {
+    beats: 41,
+    division: 2,
+    soundType: 'harmonium_warm',
+    pattern: [
+        [noteToIdx['G4'], 20],
+        [noteToIdx['F#4'], 16],
+        [noteToIdx['F#4'], 24],
+        [noteToIdx['E4'], 12],
+        [noteToIdx['E4'], 14],
+        [noteToIdx['E4'], 40],
+        [noteToIdx['D4'], 0],
+        [noteToIdx['D4'], 36],
+        [noteToIdx['D4'], 38],
+        [noteToIdx['C4'], 44],
+        [noteToIdx['C4'], 50],
+        [noteToIdx['C4'], 56],
+        [noteToIdx['B3'], 48],
+        [noteToIdx['B3'], 52],
+        [noteToIdx['B3'], 54],
+        [noteToIdx['B3'], 58],
+        [noteToIdx['B3'], 76],
+        [noteToIdx['A3'], 70],
+        [noteToIdx['G3'], 64]
+    ]
+},
+'45 (11.25)': {
+    beats: 45,
+    division: 2,
+    soundType: 'harmonium_warm',
+    pattern: [
+        [noteToIdx['G4'], 32],
+        [noteToIdx['F4'], 24],
+        [noteToIdx['F4'], 48],
+        [noteToIdx['E4'], 0],
+        [noteToIdx['E4'], 16],
+        [noteToIdx['E4'], 56],
+        [noteToIdx['D4'], 64],
+        [noteToIdx['D4'], 82],
+        [noteToIdx['D4'], 88],
+        [noteToIdx['C4'], 80],
+        [noteToIdx['C4'], 84],
+        [noteToIdx['C4'], 86]
+    ]
+},
         };
 
         
@@ -1337,58 +1503,77 @@ const tehaiPatterns = {
             grid = newGrid;
             renderGrid();
         }
-// Tempo change over X cycles
+// ── Inline Tempo Ramp ──────────────────────────────────────────────
 let tempoChangeActive = false;
-let tempoChangeInterval = null;
 let startBPM = 0;
 let targetBPM = 0;
 let totalCycles = 0;
 let currentCycle = 0;
 
-function setupTempoChange() {
-    const beats = parseInt(document.getElementById('beats').value);
-    const currentBPM = parseInt(document.getElementById('bpm').value);
-    
-    const target = prompt(`Current BPM: ${currentBPM}\nEnter target BPM:`);
-    if (!target || isNaN(parseInt(target))) return;
-    
-    const cycles = prompt('Enter number of cycles for tempo change:');
-    if (!cycles || isNaN(parseInt(cycles))) return;
-    
-    targetBPM = parseInt(target);
-    totalCycles = parseInt(cycles);
-    startBPM = currentBPM;
+function activateTempoRamp() {
+    const startVal = parseInt(document.getElementById('tempoRampStart').value);
+    const targetVal = parseInt(document.getElementById('tempoRampTarget').value);
+    const cyclesVal = parseInt(document.getElementById('tempoRampCycles').value);
+    if (isNaN(targetVal) || targetVal < 12 || targetVal > 600) {
+        document.getElementById('tempoRampLabel').textContent = '⚠ Set a valid Target BPM';
+        return;
+    }
+    if (isNaN(cyclesVal) || cyclesVal < 1) {
+        document.getElementById('tempoRampLabel').textContent = '⚠ Set cycles (≥1)';
+        return;
+    }
+    startBPM = isNaN(startVal) ? parseInt(document.getElementById('bpm').value) || 120 : startVal;
+    targetBPM = targetVal;
+    totalCycles = cyclesVal;
     currentCycle = 0;
     tempoChangeActive = true;
-    
-    if (!isPlaying) {
-        alert('Tempo change will begin when you press Play');
-    }
+    document.getElementById('tempoRampStart').value = startBPM;
+    document.getElementById('bpm').value = startBPM;
+    document.getElementById('bpmInput').value = startBPM;
+    document.getElementById('bpmValue').textContent = startBPM;
+    updateTempoRampUI();
+}
+
+function cancelTempoRamp() {
+    tempoChangeActive = false;
+    currentCycle = 0;
+    document.getElementById('tempoRampLabel').textContent = 'Not armed';
+    document.getElementById('tempoRampBar').style.width = '0%';
+    document.getElementById('tempoRampPct').textContent = '';
+    document.getElementById('tempoRampLabel').classList.remove('tempo-ramp-active');
+}
+
+function updateTempoRampUI() {
+    const label = document.getElementById('tempoRampLabel');
+    const bar = document.getElementById('tempoRampBar');
+    const pct = document.getElementById('tempoRampPct');
+    if (!tempoChangeActive) return;
+    const progress = Math.min(currentCycle / totalCycles, 1);
+    label.textContent = `Ramping: ${startBPM}→${targetBPM} BPM`;
+    label.classList.add('tempo-ramp-active');
+    bar.style.width = (progress * 100) + '%';
+    pct.textContent = Math.round(progress * 100) + '%';
 }
 
 function updateTempoChange() {
     if (!tempoChangeActive) return;
-    
     currentCycle++;
-    
     if (currentCycle >= totalCycles) {
-        // Reached target
         document.getElementById('bpm').value = targetBPM;
         document.getElementById('bpmInput').value = targetBPM;
         document.getElementById('bpmValue').textContent = targetBPM;
         tempoChangeActive = false;
+        document.getElementById('tempoRampLabel').textContent = `Done: ${targetBPM} BPM`;
+        document.getElementById('tempoRampBar').style.width = '100%';
+        document.getElementById('tempoRampPct').textContent = '100%';
         return;
     }
-    
-    // Linear interpolation
     const progress = currentCycle / totalCycles;
     const newBPM = Math.round(startBPM + (targetBPM - startBPM) * progress);
-    
     document.getElementById('bpm').value = newBPM;
     document.getElementById('bpmInput').value = newBPM;
     document.getElementById('bpmValue').textContent = newBPM;
-    
-    // Update interval without resetting currentBeat
+    updateTempoRampUI();
     if (intervalId) {
         clearInterval(intervalId);
         const interval = (60 / (newBPM * division)) * 1000;
@@ -1544,7 +1729,7 @@ function updateTempoChange() {
                 // Save to browser's localStorage
                 const key = 'preset_' + name.replace(/[^a-zA-Z0-9\s]/g, '_').replace(/\s/g, '_'); // Sanitize key
                 localStorage.setItem(key, JSON.stringify(preset));
-                alert('Preset saved! (Stored in your browser)');
+                showToast('✓ Preset saved: ' + name);
                 populatePresetDropdown(); // Update the dropdown with the new saved preset
                 document.getElementById('presetSelect').value = key; // Select the new preset
             }
@@ -1593,12 +1778,9 @@ function updateTempoChange() {
             const tehaiMap = {};
             tehaiBeats.forEach(t => { tehaiMap[t.beat] = t; });
             
-            const containerWidth = wrapper.offsetWidth - 100;
-            let cellWidth = cellWidthOverride || Math.max(30, Math.min(80, containerWidth / beats));
-            
-            if (cellWidthOverride > 0) {
-                cellWidth = cellWidthOverride;
-            }
+            const containerWidth = wrapper.clientWidth - 80 - 55; // subtract row-label (80px) + padding-left (55px)
+            const autoCell = Math.floor(containerWidth / beats);
+            let cellWidth = cellWidthOverride > 0 ? cellWidthOverride : Math.max(22, Math.min(80, autoCell));
             
             let html = '';
             
@@ -1908,23 +2090,42 @@ function updateTempoChange() {
             }, duration * 1000);
         }
         
-        // NEW: playMetronome accepts frequency argument
-        function playMetronome(frequency) {
+        // Warm low-pitched tabla-like metronome click
+        function playMetronome(isBeat1) {
+            const now = audioContext.currentTime;
+            const vol = parseInt(document.getElementById('volume').value) / 100;
+
+            // Fundamental tone — low wooden thud
             const osc = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            osc.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            osc.type = 'square';
-            osc.frequency.value = frequency; // Use the provided frequency
-            
-            const volume = parseInt(document.getElementById('volume').value) / 100;
-            gainNode.gain.setValueAtTime(volume * 0.15, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
-            
-            osc.start(audioContext.currentTime);
-            osc.stop(audioContext.currentTime + 0.05);
+            const oscGain = audioContext.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = isBeat1 ? 200 : 140; // beat-1 slightly higher
+            osc.frequency.setTargetAtTime(isBeat1 ? 100 : 80, now, 0.025);
+            oscGain.gain.setValueAtTime(vol * 0.45, now);
+            oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+            osc.connect(oscGain);
+            oscGain.connect(audioContext.destination);
+            osc.start(now);
+            osc.stop(now + 0.13);
+
+            // Short noise transient for the "click" character
+            const bufSize = Math.floor(audioContext.sampleRate * 0.04);
+            const buf = audioContext.createBuffer(1, bufSize, audioContext.sampleRate);
+            const data = buf.getChannelData(0);
+            for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1);
+            const noise = audioContext.createBufferSource();
+            noise.buffer = buf;
+            const noiseFilter = audioContext.createBiquadFilter();
+            noiseFilter.type = 'lowpass';
+            noiseFilter.frequency.value = 400;
+            const noiseGain = audioContext.createGain();
+            noiseGain.gain.setValueAtTime(vol * 0.18, now);
+            noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+            noise.connect(noiseFilter);
+            noiseFilter.connect(noiseGain);
+            noiseGain.connect(audioContext.destination);
+            noise.start(now);
+            noise.stop(now + 0.04);
         }
         
         function playBeat() {
@@ -1936,12 +2137,10 @@ function updateTempoChange() {
                 cell.classList.remove('playing');
             });
             
-            // NEW: Metronome logic updated for high/low beep
+            // Warm metronome click
             if (metronomeEnabled && currentBeat % division === 0) {
-                // Check if it's the first *main beat* (index 0)
-                const isBeatOneStart = currentBeat === 0;
-                const frequency = isBeatOneStart ? 1000 : 800; // 1000Hz (High) on Beat 1, 800Hz (Low) on others.
-                playMetronome(frequency);
+                const isBeat1 = currentBeat === 0;
+                playMetronome(isBeat1);
             }
             
             currentNotes.forEach((note, noteIdx) => {
@@ -2209,7 +2408,7 @@ bpmRange.addEventListener('input', (e) => {
 
         // Controller state
         let ctrlSections = [
-            { name: 'Section 1', beats: 16, bpm: 120, cycles: 2, division: 2, preset: '' }
+            { name: 'Section 1', beats: '', bpm: 120, cycles: 0, division: '', preset: '' }
         ];
         let ctrlIsPlaying = false;
         let ctrlCurrentSectionIndex = -1;
@@ -2232,81 +2431,187 @@ bpmRange.addEventListener('input', (e) => {
             });
         }
 
+        // Track which section cards are expanded (by index)
+        const ctrlExpandedSections = new Set([0]);
+
         function ctrlRenderSections() {
             const container = document.getElementById('ctrlSectionsContainer');
             const presetNames = getCtrlPresetNames();
+            const currentDivision = parseInt(document.getElementById('divisionSelect').value) || 2;
+            const currentBpmGlobal = parseInt(document.getElementById('bpm').value) || 120;
+
             container.innerHTML = ctrlSections.map((s, i) => {
-                const isActive = ctrlIsPlaying && i === ctrlCurrentSectionIndex && !ctrlIsIntro && !ctrlIsOutro;
-                const isCompleted = ctrlIsPlaying && (i < ctrlCurrentSectionIndex || (ctrlIsOutro));
+                const isActive    = ctrlIsPlaying && i === ctrlCurrentSectionIndex && !ctrlIsIntro && !ctrlIsOutro;
+                const isCompleted = ctrlIsPlaying && (i < ctrlCurrentSectionIndex || ctrlIsOutro);
+                const isExpanded  = ctrlExpandedSections.has(i);
+
                 let cls = 'ctrl-section-item';
-                if (isActive) cls += ' active';
-                else if (isCompleted) cls += ' completed';
+                if (isActive)    cls += ' active';
+                if (isCompleted) cls += ' completed';
+                if (isExpanded)  cls += ' expanded';
+
+                const presetData      = s.preset && newPresets[s.preset] ? newPresets[s.preset] : null;
+                const displayBeats    = s.beats    !== '' ? s.beats    : (presetData ? presetData.beats    : parseInt(document.getElementById('beats').value) || 16);
+                const displayDivision = s.division !== '' ? s.division : (presetData ? presetData.division : currentDivision);
+                const displayCycles   = (s.cycles  !== '' && s.cycles  !== undefined) ? s.cycles  : 0;
+                const displayBpm      = s.bpm      !== '' ? s.bpm      : currentBpmGlobal;
+
+                const divLabel = { 1:'♩ Quarter', 2:'♪ 8th', 4:'♬ 16th', 8:'32nd' }[displayDivision] || displayDivision;
+                const cycleLabel = displayCycles === 0 ? '∞ loop' : `×${displayCycles}`;
 
                 const presetOptions = presetNames.map(n =>
                     `<option value="${n}" ${s.preset === n ? 'selected' : ''}>${n}</option>`
                 ).join('');
 
+                // Progress indicator for active section
+                const progressLine = isActive ? `
+                    <div style="height:3px;background:rgba(90,158,111,0.15);border-radius:2px;margin-top:4px;overflow:hidden">
+                        <div style="height:100%;width:${Math.min(100,(ctrlCurrentCycle/(s.cycles||1))*100)}%;background:var(--accent3);border-radius:2px;transition:width 0.5s"></div>
+                    </div>` : '';
+
                 return `<div class="${cls}" id="ctrlSection_${i}">
-                    <strong>${s.name || 'Section ' + (i+1)}</strong>
-                    <div class="ctrl-section-controls">
-                        <div>
-                            <label>Name</label>
-                            <input type="text" value="${s.name}" onchange="ctrlUpdateSection(${i}, 'name', this.value)">
+                    <div class="ctrl-section-summary" onclick="ctrlToggleExpand(${i})">
+                        <div class="ctrl-section-num">${i+1}</div>
+                        <div class="ctrl-section-name-pill">${s.name || 'Section '+(i+1)}</div>
+                        <div class="ctrl-section-chips">
+                            <span class="ctrl-chip">${displayBpm} BPM</span>
+                            <span class="ctrl-chip">${displayBeats} beats</span>
+                            <span class="ctrl-chip">${divLabel}</span>
+                            <span class="ctrl-chip ${displayCycles===0?'cycles0':''}">${cycleLabel}</span>
+                            ${s.preset ? `<span class="ctrl-chip preset" title="${s.preset}">${s.preset.length>16?s.preset.slice(0,15)+'…':s.preset}</span>` : ''}
                         </div>
-                        <div>
-                            <label>Beats</label>
-                            <input type="number" min="1" max="201" value="${s.beats}" onchange="ctrlUpdateSection(${i}, 'beats', this.value)">
-                        </div>
-                        <div>
-                            <label>BPM</label>
-                            <input type="number" min="12" max="600" value="${s.bpm}" onchange="ctrlUpdateSection(${i}, 'bpm', this.value)">
-                        </div>
-                        <div>
-                            <label>Cycles (0=loop)</label>
-                            <input type="number" min="0" value="${s.cycles}" onchange="ctrlUpdateSection(${i}, 'cycles', this.value)">
-                        </div>
-                        <div>
-                            <label>Division</label>
-                            <select onchange="ctrlUpdateSection(${i}, 'division', this.value)">
-                                <option value="1" ${s.division===1?'selected':''}>Quarter</option>
-                                <option value="2" ${s.division===2?'selected':''}>Eighth</option>
-                                <option value="4" ${s.division===4?'selected':''}>16th</option>
-                                <option value="8" ${s.division===8?'selected':''}>32nd</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label>Melody Preset</label>
-                            <select onchange="ctrlUpdateSection(${i}, 'preset', this.value)">
-                                <option value="">--- Current Grid ---</option>
-                                ${presetOptions}
-                            </select>
-                        </div>
+                        <button class="ctrl-section-expand-btn" title="Expand/collapse">▼</button>
                     </div>
-                    <div class="ctrl-section-actions">
-                        <button class="ctrl-sm-btn ctrl-load-btn" onclick="ctrlLoadSectionIntoGrid(${i})">📋 Load into Grid</button>
-                        <button class="ctrl-sm-btn ctrl-delete-btn" onclick="ctrlDeleteSection(${i})">🗑 Delete</button>
+                    ${progressLine}
+                    <div class="ctrl-section-detail">
+                        <div class="ctrl-section-controls">
+                            <div>
+                                <label>Name</label>
+                                <input type="text" value="${s.name}" onchange="ctrlUpdateSection(${i},'name',this.value)">
+                            </div>
+                            <div>
+                                <label>BPM</label>
+                                <input type="number" min="12" max="600" value="${displayBpm}" onchange="ctrlUpdateSection(${i},'bpm',this.value)">
+                            </div>
+                            <div>
+                                <label>Beats</label>
+                                <input type="number" min="1" max="201" value="${displayBeats}" onchange="ctrlUpdateSection(${i},'beats',this.value)">
+                            </div>
+                            <div>
+                                <label>Cycles <small style="font-weight:400;color:var(--text-soft)">(0=∞)</small></label>
+                                <input type="number" min="0" value="${displayCycles}" onchange="ctrlUpdateSection(${i},'cycles',this.value)">
+                            </div>
+                            <div>
+                                <label>Division</label>
+                                <select onchange="ctrlUpdateSection(${i},'division',this.value)">
+                                    <option value="1" ${displayDivision==1?'selected':''}>Quarter Notes</option>
+                                    <option value="2" ${displayDivision==2?'selected':''}>Eighth Notes</option>
+                                    <option value="4" ${displayDivision==4?'selected':''}>16th Notes</option>
+                                    <option value="8" ${displayDivision==8?'selected':''}>32nd Notes</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Melody Preset</label>
+                                <select onchange="ctrlUpdateSectionPreset(${i},this.value)">
+                                    <option value="">— Current Grid —</option>
+                                    ${presetOptions}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="ctrl-section-actions">
+                            <button class="ctrl-sm-btn ctrl-load-btn" onclick="ctrlLoadSectionIntoGrid(${i})" title="Load this section into the main grid">📋 To Grid</button>
+                            <button class="ctrl-sm-btn ctrl-dupe-btn"  onclick="ctrlDuplicateSection(${i})"   title="Duplicate this section">⧉ Dupe</button>
+                            <button class="ctrl-sm-btn ctrl-capture-btn" onclick="ctrlCaptureGrid(${i})"      title="Capture current grid settings into this section">⬇ Capture Grid</button>
+                            <div class="ctrl-section-reorder">
+                                <button class="ctrl-sm-btn ctrl-move-btn" onclick="ctrlMoveSection(${i},-1)" ${i===0?'disabled':''} title="Move up">↑</button>
+                                <button class="ctrl-sm-btn ctrl-move-btn" onclick="ctrlMoveSection(${i},+1)" ${i===ctrlSections.length-1?'disabled':''} title="Move down">↓</button>
+                                <button class="ctrl-sm-btn ctrl-delete-btn" onclick="ctrlDeleteSection(${i})" ${ctrlSections.length===1?'disabled':''} title="Delete section">✕</button>
+                            </div>
+                        </div>
                     </div>
                 </div>`;
             }).join('');
         }
 
-        function ctrlUpdateSection(index, field, value) {
-            if (field === 'beats' || field === 'bpm' || field === 'cycles' || field === 'division') {
-                ctrlSections[index][field] = parseInt(value);
+        function ctrlToggleExpand(index) {
+            if (ctrlExpandedSections.has(index)) {
+                ctrlExpandedSections.delete(index);
             } else {
-                ctrlSections[index][field] = value;
+                ctrlExpandedSections.add(index);
             }
             ctrlRenderSections();
         }
 
+        function ctrlDuplicateSection(index) {
+            const copy = { ...ctrlSections[index], name: ctrlSections[index].name + ' (copy)' };
+            ctrlSections.splice(index + 1, 0, copy);
+            ctrlExpandedSections.add(index + 1);
+            ctrlRenderSections();
+        }
+
+        function ctrlMoveSection(index, direction) {
+            const newIndex = index + direction;
+            if (newIndex < 0 || newIndex >= ctrlSections.length) return;
+            // Swap
+            [ctrlSections[index], ctrlSections[newIndex]] = [ctrlSections[newIndex], ctrlSections[index]];
+            // Update expanded set
+            const wasExpanded = ctrlExpandedSections.has(index);
+            const targetWasExpanded = ctrlExpandedSections.has(newIndex);
+            wasExpanded ? ctrlExpandedSections.add(newIndex) : ctrlExpandedSections.delete(newIndex);
+            targetWasExpanded ? ctrlExpandedSections.add(index) : ctrlExpandedSections.delete(index);
+            ctrlRenderSections();
+        }
+
+        function ctrlCaptureGrid(index) {
+            const beats    = parseInt(document.getElementById('beats').value);
+            const div      = parseInt(document.getElementById('divisionSelect').value);
+            const bpm      = parseInt(document.getElementById('bpm').value);
+            const preset   = document.getElementById('presetSelect').value;
+            ctrlSections[index].beats    = beats;
+            ctrlSections[index].division = div;
+            ctrlSections[index].bpm      = bpm;
+            ctrlSections[index].preset   = (preset && !preset.startsWith('preset_')) ? preset : '';
+            ctrlExpandedSections.add(index);
+            ctrlRenderSections();
+        }
+
+        function ctrlUpdateSectionPreset(index, presetName) {
+            ctrlSections[index].preset = presetName;
+            if (presetName && newPresets[presetName]) {
+                const p = newPresets[presetName];
+                ctrlSections[index].beats    = p.beats;
+                ctrlSections[index].division = p.division || 2;
+            }
+            ctrlRenderSections();
+        }
+
+        function ctrlUpdateSection(index, field, value) {
+            if (['beats','bpm','cycles','division'].includes(field)) {
+                ctrlSections[index][field] = parseInt(value);
+            } else {
+                ctrlSections[index][field] = value;
+            }
+            // Only re-render the summary chips, not whole list (preserve scroll + focus)
+            // Lightweight: just re-render sections without clearing expanded state
+            ctrlRenderSections();
+        }
+
         function ctrlAddSection() {
-            ctrlSections.push({ name: 'Section ' + (ctrlSections.length + 1), beats: 16, bpm: 120, cycles: 2, division: 2, preset: '' });
+            const newIdx = ctrlSections.length;
+            ctrlSections.push({ name: 'Section ' + (newIdx + 1), beats: '', bpm: parseInt(document.getElementById('bpm').value) || 120, cycles: 0, division: '', preset: '' });
+            ctrlExpandedSections.add(newIdx);
             ctrlRenderSections();
         }
 
         function ctrlDeleteSection(index) {
             if (ctrlSections.length > 1) {
                 ctrlSections.splice(index, 1);
+                ctrlExpandedSections.delete(index);
+                // Re-map expanded indices above the deleted one
+                const updated = new Set();
+                ctrlExpandedSections.forEach(i => { updated.add(i > index ? i - 1 : i); });
+                ctrlExpandedSections.clear();
+                updated.forEach(i => ctrlExpandedSections.add(i));
                 ctrlRenderSections();
             }
         }
@@ -2314,12 +2619,16 @@ bpmRange.addEventListener('input', (e) => {
         function ctrlLoadSectionIntoGrid(index) {
             const s = ctrlSections[index];
             stopPlayback();
-            document.getElementById('beats').value = s.beats;
-            document.getElementById('divisionSelect').value = s.division;
-            document.getElementById('bpm').value = s.bpm;
-            document.getElementById('bpmInput').value = s.bpm;
-            document.getElementById('bpmValue').textContent = s.bpm;
-            division = s.division;
+            const presetData = s.preset && newPresets[s.preset] ? newPresets[s.preset] : null;
+            const resolvedBeats = s.beats !== '' ? s.beats : (presetData ? presetData.beats : parseInt(document.getElementById('beats').value) || 16);
+            const resolvedDiv   = s.division !== '' ? s.division : (presetData ? presetData.division : parseInt(document.getElementById('divisionSelect').value) || 2);
+            const resolvedBpm   = s.bpm !== '' ? s.bpm : parseInt(document.getElementById('bpm').value) || 120;
+            document.getElementById('beats').value = resolvedBeats;
+            document.getElementById('divisionSelect').value = resolvedDiv;
+            document.getElementById('bpm').value = resolvedBpm;
+            document.getElementById('bpmInput').value = resolvedBpm;
+            document.getElementById('bpmValue').textContent = resolvedBpm;
+            division = parseInt(resolvedDiv);
             initGrid();
             if (s.preset && newPresets[s.preset]) {
                 document.getElementById('presetSelect').value = s.preset;
@@ -2345,21 +2654,24 @@ bpmRange.addEventListener('input', (e) => {
         }
 
         function ctrlLoadMelodyForSection(section) {
-            const totalBeats = section.beats * section.division;
+            const resolvedPreset = section.preset && newPresets[section.preset] ? newPresets[section.preset] : null;
+            const resolvedBeats    = section.beats    || (resolvedPreset ? resolvedPreset.beats    : parseInt(document.getElementById('beats').value) || 16);
+            const resolvedDivision = section.division || (resolvedPreset ? resolvedPreset.division : parseInt(document.getElementById('divisionSelect').value) || 2);
+            const totalBeats = resolvedBeats * resolvedDivision;
             ctrlCurrentGrid = Array(allNotes.length).fill().map(() => Array(totalBeats).fill(false));
-            if (section.preset && newPresets[section.preset]) {
-                const pattern = newPresets[section.preset].pattern;
-                pattern.forEach(([noteIdx, beat]) => {
+            // store resolved values back for playback
+            section._resolvedBeats    = resolvedBeats;
+            section._resolvedDivision = resolvedDivision;
+            if (resolvedPreset) {
+                resolvedPreset.pattern.forEach(([noteIdx, beat]) => {
                     if (ctrlCurrentGrid[noteIdx] && beat < totalBeats) {
                         ctrlCurrentGrid[noteIdx][beat] = true;
                     }
                 });
             } else {
-                // Use current grid (copy it), adjusting for section beats/division
-                const ctrlTotalBeats = section.beats * section.division;
                 grid.forEach((row, ni) => {
                     row.forEach((active, bi) => {
-                        if (active && bi < ctrlTotalBeats) {
+                        if (active && bi < totalBeats) {
                             ctrlCurrentGrid[ni][bi] = true;
                         }
                     });
@@ -2369,9 +2681,11 @@ bpmRange.addEventListener('input', (e) => {
 
         function ctrlPlayBeat() {
             const section = ctrlSections[ctrlCurrentSectionIndex];
-            const sectionDivision = section.division;
-            const totalBeats = section.beats * sectionDivision;
-            const beatDuration = 60 / (section.bpm * sectionDivision);
+            const sectionDivision = section._resolvedDivision || section.division || parseInt(document.getElementById('divisionSelect').value) || 2;
+            const sectionBeats    = section._resolvedBeats    || section.beats    || parseInt(document.getElementById('beats').value) || 16;
+            const totalBeats = sectionBeats * sectionDivision;
+            const sectionBpm = section.bpm || parseInt(document.getElementById('bpm').value) || 120;
+            const beatDuration = 60 / (sectionBpm * sectionDivision);
 
             // Play notes
             allNotes.forEach((note, noteIdx) => {
@@ -2383,14 +2697,19 @@ bpmRange.addEventListener('input', (e) => {
 
             // Metronome
             if (metronomeEnabled && ctrlCurrentBeat % sectionDivision === 0) {
-                playMetronome(ctrlCurrentBeat === 0 ? 1000 : 800);
+                playMetronome(ctrlCurrentBeat === 0);
             }
 
+            // Sync BPM to main slider so it always reflects the playing tempo
+            ctrlSyncBpmToMain(sectionBpm);
+
             document.getElementById('ctrlBeatDisplay').textContent = Math.floor(ctrlCurrentBeat / sectionDivision) + 1;
-            document.getElementById('ctrlBpmDisplay').textContent = section.bpm;
+            document.getElementById('ctrlBpmDisplay').textContent = sectionBpm;
             ctrlUpdateBeatIndicator(Math.floor(ctrlCurrentBeat / sectionDivision));
 
             ctrlCurrentBeat++;
+
+            const sectionCycles = (section.cycles !== '' && section.cycles !== undefined) ? parseInt(section.cycles) : 0;
 
             let endBeat = totalBeats;
             if (ctrlIsOutro) {
@@ -2409,12 +2728,14 @@ bpmRange.addEventListener('input', (e) => {
                     ctrlCurrentCycle = 1;
                     const newSection = ctrlSections[0];
                     ctrlLoadMelodyForSection(newSection);
-                    ctrlCreateBeatIndicator(newSection.beats);
+                    const nrd = newSection._resolvedDivision; const nrb = newSection._resolvedBeats;
+                    const nrbpm = newSection.bpm || parseInt(document.getElementById('bpm').value) || 120;
+                    ctrlCreateBeatIndicator(nrb);
                     ctrlUpdateStatus();
                     ctrlRenderSections();
                     document.getElementById('ctrlNextBtn').disabled = false;
                     clearInterval(ctrlIntervalId);
-                    ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (newSection.bpm * newSection.division)) * 1000);
+                    ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (nrbpm * nrd)) * 1000);
                 } else if (ctrlIsOutro) {
                     ctrlStop();
                 } else {
@@ -2422,9 +2743,9 @@ bpmRange.addEventListener('input', (e) => {
                     if (ctrlNextSectionRequested) {
                         ctrlNextSectionRequested = false;
                         ctrlProceedToNextSection();
-                    } else if (section.cycles === 0) {
+                    } else if (sectionCycles === 0) {
                         ctrlUpdateStatus();
-                    } else if (ctrlCurrentCycle > section.cycles) {
+                    } else if (ctrlCurrentCycle > sectionCycles) {
                         ctrlProceedToNextSection();
                     } else {
                         ctrlUpdateStatus();
@@ -2440,12 +2761,14 @@ bpmRange.addEventListener('input', (e) => {
                 ctrlCurrentBeat = 0;
                 const section = ctrlSections[ctrlCurrentSectionIndex];
                 ctrlLoadMelodyForSection(section);
-                ctrlCreateBeatIndicator(section.beats);
+                const rb = section._resolvedBeats; const rd = section._resolvedDivision;
+                const rbpm = section.bpm || parseInt(document.getElementById('bpm').value) || 120;
+                ctrlCreateBeatIndicator(rb);
                 ctrlUpdateStatus();
                 ctrlRenderSections();
                 document.getElementById('ctrlNextBtn').disabled = false;
                 clearInterval(ctrlIntervalId);
-                ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (section.bpm * section.division)) * 1000);
+                ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (rbpm * rd)) * 1000);
             } else {
                 if (ctrlOutroEnabled) {
                     ctrlStartOutro();
@@ -2470,11 +2793,13 @@ bpmRange.addEventListener('input', (e) => {
                 ctrlCurrentCycle = 1;
                 const section = ctrlSections[0];
                 ctrlLoadMelodyForSection(section);
-                ctrlCreateBeatIndicator(section.beats);
+                const rb = section._resolvedBeats; const rd = section._resolvedDivision;
+                const rbpm = section.bpm || parseInt(document.getElementById('bpm').value) || 120;
+                ctrlCreateBeatIndicator(rb);
                 ctrlUpdateStatus();
                 ctrlRenderSections();
                 document.getElementById('ctrlNextBtn').disabled = false;
-                ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (section.bpm * section.division)) * 1000);
+                ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (rbpm * rd)) * 1000);
             }
         }
 
@@ -2517,13 +2842,15 @@ bpmRange.addEventListener('input', (e) => {
             ctrlCurrentSectionIndex = 0;
             const section = ctrlSections[0];
             ctrlLoadMelodyForSection(section);
+            const rd = section._resolvedDivision;
+            const rbpm = section.bpm || parseInt(document.getElementById('bpm').value) || 120;
             const introBeat = parseInt(document.getElementById('ctrlIntroBeat').value) || 1;
-            ctrlCurrentBeat = (introBeat - 1) * section.division;
-            ctrlCreateBeatIndicator(section.beats);
+            ctrlCurrentBeat = (introBeat - 1) * rd;
+            ctrlCreateBeatIndicator(section._resolvedBeats);
             document.getElementById('ctrlStatusTitle').textContent = 'Playing Intro';
             document.getElementById('ctrlSectionDisplay').textContent = 'Intro';
             document.getElementById('ctrlCycleDisplay').textContent = '1/1';
-            ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (section.bpm * section.division)) * 1000);
+            ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (rbpm * rd)) * 1000);
         }
 
         function ctrlStartOutro() {
@@ -2533,11 +2860,13 @@ bpmRange.addEventListener('input', (e) => {
             ctrlCurrentBeat = 0;
             const section = ctrlSections[ctrlSections.length - 1];
             ctrlLoadMelodyForSection(section);
-            ctrlCreateBeatIndicator(section.beats);
+            const rd = section._resolvedDivision;
+            const rbpm = section.bpm || parseInt(document.getElementById('bpm').value) || 120;
+            ctrlCreateBeatIndicator(section._resolvedBeats);
             document.getElementById('ctrlStatusTitle').textContent = 'Playing Outro';
             document.getElementById('ctrlSectionDisplay').textContent = 'Outro';
             document.getElementById('ctrlCycleDisplay').textContent = '1/1';
-            ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (section.bpm * section.division)) * 1000);
+            ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (rbpm * rd)) * 1000);
         }
 
         function ctrlUpdateStatus() {
@@ -2571,7 +2900,7 @@ bpmRange.addEventListener('input', (e) => {
             };
             localStorage.setItem(key, JSON.stringify(data));
             ctrlPopulateStructurePresets();
-            alert('Structure saved!');
+            showToast('✓ Structure saved: ' + name);
         }
 
         function ctrlLoadStructurePreset() {
@@ -2587,7 +2916,7 @@ bpmRange.addEventListener('input', (e) => {
                 document.getElementById('ctrlIntroBeat').value = data.introBeat || 1;
                 document.getElementById('ctrlOutroBeat').value = data.outroBeat || 1;
                 ctrlRenderSections();
-                alert('Structure loaded!');
+                showToast('✓ Structure loaded');
             } catch(e) {
                 alert('Error loading: ' + e.message);
             }
@@ -2596,10 +2925,10 @@ bpmRange.addEventListener('input', (e) => {
         function ctrlDeleteStructurePreset() {
             const key = document.getElementById('ctrlStructurePreset').value;
             if (!key) return;
-            if (confirm('Delete this preset?')) {
+            if (confirm('Delete this structure preset?')) {
                 localStorage.removeItem(key);
                 ctrlPopulateStructurePresets();
-                alert('Deleted!');
+                showToast('Preset deleted');
             }
         }
 
@@ -2635,6 +2964,50 @@ bpmRange.addEventListener('input', (e) => {
         // Initial controller render
         ctrlRenderSections();
         ctrlPopulateStructurePresets();
+
+        // ── BPM sync during controller playback ──────────────────────────
+        // Already done inline in ctrlPlayBeat via ctrlBpmDisplay.
+        // Also mirror controller BPM to the main slider so it's always visible:
+        function ctrlSyncBpmToMain(bpm) {
+            document.getElementById('bpm').value = bpm;
+            document.getElementById('bpmInput').value = bpm;
+            document.getElementById('bpmValue').textContent = bpm;
+        }
+
+        // ── Keyboard shortcut: Space = play/stop ─────────────────────────
+        document.addEventListener('keydown', (e) => {
+            // Only if focus is NOT on an input/select/textarea
+            const tag = document.activeElement.tagName;
+            if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (isPlaying) {
+                    stopPlayback();
+                } else {
+                    startPlayback();
+                }
+            }
+        });
+
+        // ── Inline toast notification (replaces alert() for presets) ─────
+        function showToast(msg, type='ok') {
+            let toast = document.getElementById('lehra-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'lehra-toast';
+                toast.style.cssText = `position:fixed;bottom:26px;left:50%;transform:translateX(-50%);
+                    padding:10px 22px;border-radius:10px;font-family:'Inter',sans-serif;
+                    font-size:0.9em;font-weight:600;z-index:9999;pointer-events:none;
+                    box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:opacity 0.4s;`;
+                document.body.appendChild(toast);
+            }
+            toast.style.background = type === 'err' ? '#c0392b' : '#3d6b41';
+            toast.style.color = '#fff';
+            toast.textContent = msg;
+            toast.style.opacity = '1';
+            clearTimeout(toast._t);
+            toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 2200);
+        }
 
         // ===== END SOLO STRUCTURE CONTROLLER =====
     </script>
